@@ -1,1 +1,1 @@
-# daynz.github.io
+# [daynz.github.io](https://daynz.github.io/)
