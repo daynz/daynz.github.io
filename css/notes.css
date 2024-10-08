@@ -1,0 +1,96 @@
+/* 重置一些基本的样式 */
+body, h1, div {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 设置整体的字体和背景 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f9;
+    padding: 20px;
+}
+
+/* 标题样式 */
+h1 {
+    color: #8a2be2;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 容器样式 */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* 内容区域样式 */
+#content {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+/* 链接样式 */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 代码块样式 */
+pre {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* 表格样式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* 块引用样式 */
+blockquote {
+    background-color: #f9f9f9;
+    border-left: 5px solid #ccc;
+    padding: 10px 20px;
+    margin: 20px 0;
+}
+
+/* 图片样式 */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 加粗文本样式 */
+strong {
+    font-weight: bold;
+}
+
+/* 强调文本样式 */
+em {
+    font-style: italic;
+}

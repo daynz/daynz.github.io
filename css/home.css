@@ -1,0 +1,122 @@
+/* 重置一些浏览器默认的样式 */
+body, h1, h2, h3, h4, h5, h6, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    color: inherit;
+}
+
+/* 设置整体字体和背景 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* 导航栏样式 */
+#main-navbar.navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.collapse_nav {
+    display: none;
+}
+
+.navbar_list {
+    display: flex;
+}
+
+.nav-item {
+    margin-left: 20px;
+}
+
+.nav-link {
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ddd;
+}
+
+/* 首页样式 */
+.main-banner {
+    background-image: url('your-background-image.jpg'); /* 替换为你的背景图片 */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 960px; /* 根据实际需要调整 */
+}
+
+.heading {
+    width: 100%;
+}
+
+.home-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.home-bottom {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.home-bottom:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.iconfont {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .navbar_list {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .collapse_nav {
+        display: block;
+    }
+
+    .nav-item {
+        margin: 10px 0;
+    }
+
+    .main-banner {
+        height: auto;
+    }
+}

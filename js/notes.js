@@ -1,5 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
-    fetchMarkdown('./example.md').then(markdown => {
+document.addEventListener('DOMContentLoaded', function () {
+    const note = new URLSearchParams(window.location.search).get('note');
+    const markdownFilePath = `./markdown/${note}.md`;
+    fetchMarkdown(markdownFilePath).then(markdown => {
         const html = marked.parse(markdown);
         document.getElementById('content').innerHTML = html;
     }).catch(error => {
