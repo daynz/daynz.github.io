@@ -26,8 +26,8 @@
 <meta property="og:site_name" content="daynz 的博客">
 <meta property="og:description" content="GC 垃圾回收 [toc] 垃圾的产生 核心定义 GC 中的垃圾，指托管堆中无有效引用指向、程序逻辑不再使用、后续代码无法访问的托管对象。这类对象占用的堆内存失去存在意义，无法被业务逻辑复用，属于无效占用内存，需要由 GC 识别并回收释放，避免内存持续堆积。 产生：引用失效是垃圾形成的核心条件 托管对象只要存在有效根引用链，就会被判定为存活对象；一旦引用链断裂、引用被覆盖或销毁，对象即刻沦为垃圾，">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-08-08T09:30:45.564Z">
-<meta property="article:modified_time" content="2026-04-26T03:59:02.000Z">
+<meta property="article:published_time" content="2026-08-08T10:04:25.339Z">
+<meta property="article:modified_time" content="2026-08-08T10:04:25.339Z">
 <meta property="article:author" content="daynz">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -121,6 +121,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                
+                <span>笔记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
@@ -199,6 +211,20 @@
                 <div class="mobile-grid-item">
                   <i class="iconfont icon-home-fill"></i>
                   <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/notes/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>笔记</span>
                 </div>
               </a>
             </div>

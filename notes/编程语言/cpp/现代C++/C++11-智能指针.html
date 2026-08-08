@@ -26,8 +26,8 @@
 <meta property="og:site_name" content="daynz 的博客">
 <meta property="og:description" content="[toc] 智能指针基础 本质是封装了原生指针的类模板，核心目标是自动管理内存，避免手动 new&#x2F;delete 导致的内存泄漏、野指针、重复释放等问题。 它遵循 RAII（资源获取即初始化）原则，利用对象的生命周期（构造时获取资源，析构时释放资源）来保证内存安全。其核心逻辑：  构造时：接管原始指针的所有权，申请动态资源； 析构时：自动释放接管的资源（无需手动调用 delete）； 使用时：重载">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-08-08T09:30:45.543Z">
-<meta property="article:modified_time" content="2026-05-11T13:16:21.000Z">
+<meta property="article:published_time" content="2026-08-08T10:04:25.370Z">
+<meta property="article:modified_time" content="2026-08-08T10:04:25.370Z">
 <meta property="article:author" content="daynz">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -121,6 +121,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                
+                <span>笔记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
@@ -199,6 +211,20 @@
                 <div class="mobile-grid-item">
                   <i class="iconfont icon-home-fill"></i>
                   <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/notes/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>笔记</span>
                 </div>
               </a>
             </div>
