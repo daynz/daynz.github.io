@@ -1,0 +1,566 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="2.1数制与码制 进制转换 定点数表示 一、基础概念：符号位与数值位  符号位：最高位固定为符号位（0&#x3D;正，1&#x3D;负），其余位为数值位。  二、原码  定义：直接表示符号和数值，符号位+绝对值的二进制形式。 转换规则：  正数：符号位为0，数值位为该数绝对值的二进制。 例：+5的原码 → 00000101（符号位0，数值位5的二进制0000101）。 负数：符号位为1，数值位为该数绝对值的二进制。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E9%A2%98/02%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="2.1数制与码制 进制转换 定点数表示 一、基础概念：符号位与数值位  符号位：最高位固定为符号位（0&#x3D;正，1&#x3D;负），其余位为数值位。  二、原码  定义：直接表示符号和数值，符号位+绝对值的二进制形式。 转换规则：  正数：符号位为0，数值位为该数绝对值的二进制。 例：+5的原码 → 00000101（符号位0，数值位5的二进制0000101）。 负数：符号位为1，数值位为该数绝对值的二进制。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.989Z">
+<meta property="article:modified_time" content="2025-11-01T02:52:11.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h2 id="2-1数制与码制">2.1数制与码制</h2>
+<h3 id="进制转换">进制转换</h3>
+<h3 id="定点数表示">定点数表示</h3>
+<h4 id="一、基础概念：符号位与数值位">一、基础概念：符号位与数值位</h4>
+<ul>
+<li><strong>符号位</strong>：最高位固定为符号位（0=正，1=负），其余位为数值位。</li>
+</ul>
+<h4 id="二、原码">二、原码</h4>
+<ul>
+<li><strong>定义</strong>：直接表示符号和数值，符号位+绝对值的二进制形式。</li>
+<li><strong>转换规则</strong>：
+<ul>
+<li>正数：符号位为0，数值位为该数绝对值的二进制。<br>
+例：+5的原码 → 00000101（符号位0，数值位5的二进制0000101）。</li>
+<li>负数：符号位为1，数值位为该数绝对值的二进制。<br>
+例：-5的原码 → 10000101（符号位1，数值位5的二进制0000101）。</li>
+</ul>
+</li>
+<li><strong>特殊值</strong>：0有两种原码（+0=00000000，-0=10000000）。</li>
+</ul>
+<h4 id="三、反码">三、反码</h4>
+<ul>
+<li><strong>定义</strong>：负数对原码的数值位取反（0变1，1变0），<strong>符号位不变</strong>。</li>
+<li><strong>转换规则</strong>：
+<ul>
+<li>正数：反码 = 原码（数值位不变）。<br>
+例：+5的原码=00000101 → 反码=00000101。</li>
+<li>负数：符号位不变，数值位按位取反。<br>
+例：-5的原码=10000101 → 反码=11111010（数值位0000101取反为1111010）。</li>
+</ul>
+</li>
+<li><strong>特殊值</strong>：0有两种反码（+0=00000000，-0=11111111）。</li>
+</ul>
+<h4 id="四、补码">四、补码</h4>
+<ul>
+<li><strong>定义</strong>：解决反码中“0有两种表示”和“减法运算复杂”的问题，是计算机中实际存储的编码。</li>
+<li><strong>转换规则</strong>：
+<ul>
+<li><strong>正数：补码 = 原码 = 反码（三者相同）</strong>。<br>
+例：+5的补码=00000101。</li>
+<li>负数：补码 = 反码 + 1（符号位不变，数值位先取反再+1）。<br>
+例：-5的反码=11111010 → 补码=11111010 + 1=11111011。</li>
+</ul>
+</li>
+<li><strong>特殊值</strong>：<strong>0只有一种补码（00000000）</strong>，<strong>8位补码范围：-128~+127（-128的补码为10000000，无原码/反码对应）。</strong></li>
+</ul>
+<h4 id="五、移码">五、移码</h4>
+<ul>
+<li><strong>定义</strong>：用于表示浮点数的阶码，将补码的符号位取反（本质是加一个偏移量，使所有数均为非负）。</li>
+<li><strong>转换规则</strong>：
+<ul>
+<li>移码 = <strong>补码的符号位取反（数值位不变）</strong>。<br>
+例：+5的补码=00000101 → 移码=10000101（符号位0变1）。<br>
+例：-5的补码=11111011 → 移码=01111011（符号位1变0）。</li>
+</ul>
+</li>
+<li><strong>特点</strong>：移码的大小顺序与真值一致，方便比较（如10000101 &gt; 01111011 对应 +5 &gt; -5）。</li>
+</ul>
+<h4 id="六、转换关系总结（以8位为例）">六、转换关系总结（以8位为例）</h4>
+<table>
+<thead>
+<tr>
+<th>真值</th>
+<th>原码</th>
+<th>反码</th>
+<th>补码</th>
+<th>移码（补码符号位取反）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+5</td>
+<td>00000101</td>
+<td>00000101</td>
+<td>00000101</td>
+<td>10000101</td>
+</tr>
+<tr>
+<td>-5</td>
+<td>10000101</td>
+<td>11111010</td>
+<td>11111011</td>
+<td>01111011</td>
+</tr>
+<tr>
+<td>+0</td>
+<td>00000000</td>
+<td>00000000</td>
+<td>00000000</td>
+<td>10000000</td>
+</tr>
+<tr>
+<td>-0</td>
+<td>10000000</td>
+<td>11111111</td>
+<td>00000000</td>
+<td>10000000</td>
+</tr>
+<tr>
+<td>-128</td>
+<td>无</td>
+<td>无</td>
+<td>10000000</td>
+<td>00000000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-2定点数计算">2-2定点数计算</h2>
+<h3 id="加减">加减</h3>
+<h3 id="乘">乘</h3>
+<h3 id="除">除</h3>
+<h2 id="2-3浮点数的表示与计算">2-3浮点数的表示与计算</h2>
+<h3 id="浮点数的表示">浮点数的表示</h3>
+<h3 id="浮点数计算">浮点数计算</h3>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

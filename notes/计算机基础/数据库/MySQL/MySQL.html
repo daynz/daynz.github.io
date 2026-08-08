@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MySQL MySQL简介  登录  1mysql -u root -p MySQL的数据模型  SQL SQL的通用语法  SQL语句可以使用单行或者多行书写，以分号结尾 SQL语句可以使用空格、缩进来增强语句的可读性 MySQL数据库的SQL语句不区分大小写，关键字建议使用大写 注释： a. 单行注释： --注释内容 或者 # 注释内容（MySQL特有） b. 多行注释：&#x2F;* 注释内容 *&#x2F;">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/MySQL.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="MySQL MySQL简介  登录  1mysql -u root -p MySQL的数据模型  SQL SQL的通用语法  SQL语句可以使用单行或者多行书写，以分号结尾 SQL语句可以使用空格、缩进来增强语句的可读性 MySQL数据库的SQL语句不区分大小写，关键字建议使用大写 注释： a. 单行注释： --注释内容 或者 # 注释内容（MySQL特有） b. 多行注释：&#x2F;* 注释内容 *&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/assets/image-20241118143318958-1731911605131-1-1731911608682-3.png">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/assets/1668066948051-da0c0c2c-129a-45c8-b3a1-cc82dad402ab-1731913493433-7.webp">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/assets/1668069085799-1907da56-2042-427b-9d33-d724f1e7a174.webp">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/assets/1668070097743-9f3452b1-6281-482e-9cee-3ea85a9960ea.webp">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/assets/1668355409352-f8744c8a-6ee5-46fd-93f4-59a7b7828863.webp">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/assets/1668355425767-664902f8-34d5-44a7-a765-092079882f1e.webp">
+<meta property="article:published_time" content="2026-08-08T09:30:45.749Z">
+<meta property="article:modified_time" content="2025-01-05T12:23:06.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/assets/image-20241118143318958-1731911605131-1-1731911608682-3.png">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="mysql">MySQL</h1>
+<h2 id="MySQL简介">MySQL简介</h2>
+<ul>
+<li>登录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mysql -u root -p<br></code></pre></td></tr></table></figure>
+<h2 id="MySQL的数据模型">MySQL的数据模型</h2>
+<p><img src="./assets/image-20241118143318958-1731911605131-1-1731911608682-3.png" srcset="/img/loading.gif" lazyload alt="image-20241118143318958"></p>
+<h2 id="SQL">SQL</h2>
+<h3 id="SQL的通用语法">SQL的通用语法</h3>
+<ol>
+<li>SQL语句可以使用单行或者多行书写，以分号结尾</li>
+<li>SQL语句可以使用空格、缩进来增强语句的可读性</li>
+<li>MySQL数据库的SQL语句不区分大小写，关键字建议使用大写</li>
+<li>注释：<br>
+a. 单行注释： --注释内容 或者 # 注释内容（MySQL特有）<br>
+b. 多行注释：/* 注释内容 */</li>
+</ol>
+<h3 id="SQL的分类">SQL的分类</h3>
+<p>DDL   Data Definition Language    数据定义语言，用来定义数据库对象（数据库，表，字段）</p>
+<p>DML  Data Manipulation Language  数据操作语言，用来对数据库表中的数据进行增改查</p>
+<p>DQL  Data Query Language  数据查询语言，用力啊查询数据库中表的记录</p>
+<p>DCL  Data Control Language  数据控制语言，用来创建数据库用户，控制数据库的访问权限</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>中文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDL</td>
+<td>数据定义语言</td>
+<td>定义数据库对象</td>
+</tr>
+<tr>
+<td>DML</td>
+<td>数据操作语言</td>
+<td>对表中的数据进行增删改</td>
+</tr>
+<tr>
+<td>DQL</td>
+<td>操作查询语言</td>
+<td>查询数据库中表的记录</td>
+</tr>
+<tr>
+<td>DCL</td>
+<td>操作控制语言</td>
+<td>创建数据库用户、控制数据库访问权限</td>
+</tr>
+</tbody>
+</table>
+<h3 id="DDL">DDL</h3>
+<h4 id="数据库操作">数据库操作</h4>
+<ul>
+<li>查询</li>
+</ul>
+<p>查询所有数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SHOW DATABASES;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT DATABSE();<br></code></pre></td></tr></table></figure>
+<ul>
+<li>创建数据库</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE DATABASE [IF NOT EXISTS] 数据库名 [DEFAULT CHARSET 字符集] [COLLATE 排序规则];<br></code></pre></td></tr></table></figure>
+<ul>
+<li>删除数据库</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DROP DATABASE [IF EXISTS] 数据库名;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>使用数据库</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">USE 数据库名;<br></code></pre></td></tr></table></figure>
+<h4 id="表操作">表操作</h4>
+<ul>
+<li>查询表</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SHOW TABLES;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>查询表结构</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DESC 表名;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>查询建表语句</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SHOW CREATE TABLE 表名;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>创建表</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE 表名(<br>	字段1 字段1类型 [COMMENT 字段1注释],<br>  	字段2 字段2类型 [COMMENT 字段2注释],<br>  	字段3 字段3类型 [COMMENT 字段3注释],<br>  	......<br>  	字段n 字段n类型 [COMMENT 字段n注释]<br>)[COMMENT 表注释];<br></code></pre></td></tr></table></figure>
+<ul>
+<li>修改表-添加字段</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 表名 ADD 字段名 类型(长度) [COMMENT 注释] [约束];<br></code></pre></td></tr></table></figure>
+<ul>
+<li>修改表-修改数据类型</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 表名 MODIFY 字段名 新数据类型(长度);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>修改表-修改字段名和字段类型</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 表名 CHANGE 旧字段名 旧字段 新字段 类型(长度) [comment 注释][约束];<br></code></pre></td></tr></table></figure>
+<ul>
+<li>修改表-删除字段</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 表名 DROP 字段名;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>修改表-修改表名</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 表名 RENAME TO 新表名;<br></code></pre></td></tr></table></figure>
+<h4 id="数据类型">数据类型</h4>
+<ul>
+<li>数值类型</li>
+</ul>
+<p><img src="./assets/1668066948051-da0c0c2c-129a-45c8-b3a1-cc82dad402ab-1731913493433-7.webp" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ul>
+<li>字符串类型</li>
+</ul>
+<p><img src="./assets/1668069085799-1907da56-2042-427b-9d33-d724f1e7a174.webp" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ul>
+<li>日期时间类型</li>
+</ul>
+<p><img src="./assets/1668070097743-9f3452b1-6281-482e-9cee-3ea85a9960ea.webp" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id="案例">案例</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql"><br><br></code></pre></td></tr></table></figure>
+<h3 id="DML">DML</h3>
+<h4 id="添加数据">添加数据</h4>
+<ul>
+<li>给指定字段添加数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">INSERT INTO 表名 (字段名1，字段名2，.....) VALUES (值1，值2，.....);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>给全部字段添加数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">INSERT INTO 表名 VALUES (值1, 值2,......);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>批量添加数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mysql">INSERT INTO 表名 (字段名1，字段名2，....) VALUES (值1，值2，..),(值1，值2，...),(值1，值2,...);<br><br>INSERT INTO 表名 values (值1，值2，..),(值1，值2，...),(值1，值2,...);<br></code></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol>
+<li>
+<p>插入数据时，指定的字段顺序需要与值的顺序是一一对应的。</p>
+</li>
+<li>
+<p>字符串和日期类型数据应该包含在引号中，单引号双引号都可以。</p>
+</li>
+<li>
+<p>插入的数据大小，应该在字段的规定范围内。</p>
+</li>
+</ol>
+<h4 id="修改数据">修改数据</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">UPDATE 表名 SET 字段名1=值1, 字段名2=值2, 字段名3=值3,....[WHERE 条件];<br></code></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol>
+<li>没有where则作用于整张表。</li>
+</ol>
+<h4 id="删除数据">删除数据</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DELETE FROM 表名 [WHERE 条件];<br></code></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol>
+<li>delete语句不能删除某一个字段的值（可以使用update为null）。</li>
+</ol>
+<h3 id="案例-2">案例</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql"><br><br></code></pre></td></tr></table></figure>
+<h3 id="DQL">DQL</h3>
+<p><strong>关键字：SELECT</strong></p>
+<h4 id="语法">语法</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT<br>	字段列表<br>FROM<br>	表名列表<br>WHERE<br>	条件查询<br>GROUP BY<br>	分组字段列表<br>HAVING<br>	分组后条件列表<br>ORDER BY<br>	排序字段列表<br>LIMIT<br>	分页参数<br></code></pre></td></tr></table></figure>
+<h4 id="基本查询">基本查询</h4>
+<ul>
+<li>查询多个字段</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段1, 字段2, 字段3,.... FROM 表名;<br>SELECT * FROM 表名;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>设置别名</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段1 [AS 别名1], 字段2 [AS 别名2],.... FROM 表名;#AS可以省略<br></code></pre></td></tr></table></figure>
+<ul>
+<li>去除重复记录</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT DISTINCT 字段列表 FROM 表名;<br></code></pre></td></tr></table></figure>
+<h4 id="条件查询">条件查询</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表名 WHERE 条件列表;<br></code></pre></td></tr></table></figure>
+<img src="./assets/1668355409352-f8744c8a-6ee5-46fd-93f4-59a7b7828863.webp" srcset="/img/loading.gif" lazyload alt="image.png" style="zoom:67%;" />
+<img src="./assets/1668355425767-664902f8-34d5-44a7-a765-092079882f1e.webp" srcset="/img/loading.gif" lazyload alt="image.png" style="zoom:67%;" />
+<h4 id="聚合查询">聚合查询</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT func(字段) FROM 表名 WHERE 条件列表;<br></code></pre></td></tr></table></figure>
+<p>将一列数据作为一个整体，进行纵向计算。</p>
+<p><strong>常见聚合函数</strong></p>
+<p>count：统计数量</p>
+<p>max：最大值</p>
+<p>min：最小值</p>
+<p>avg：平均值</p>
+<p>sum：求和</p>
+<p>**注意：**null值不参与所有聚合函数运算。</p>
+<h4 id="分组查询">分组查询</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表名 [WHERE 条件] GROUP BY 分组字段名 HAVING [分组后过滤条件];<br></code></pre></td></tr></table></figure>
+<h4 id="排序查询">排序查询</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表名 ORDER BY 字段1 排序方式1, 字段2 排序方式2;<br></code></pre></td></tr></table></figure>
+<p><strong>排序方式</strong></p>
+<ul>
+<li><strong>ASC</strong> ：升序（默认值）</li>
+<li><strong>DESC</strong>：降序</li>
+</ul>
+<p>**注意：**如果是多字段排序，当第一个字段值相同时，才会根据第二个字段进行排序。</p>
+<h4 id="分页查询">分页查询</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表名 LIMIT 起始索引,查询记录数;<br></code></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ul>
+<li>起始索引从0开始，起始索引 =（查询页码 - 1）* 每页显示记录数</li>
+<li>分页查询是数据库的方言，不同的数据库有不同的实现，MySQL中是limit</li>
+<li>如果查询的是第一页数据，起始索引可以省略，直接简写为limit10</li>
+</ul>
+<h3 id="案例-3">案例</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql"><br><br></code></pre></td></tr></table></figure>
+<h3 id="DCL">DCL</h3>
+<h4 id="创建用户">创建用户</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE USER &#x27;用户名&#x27;@&#x27;主机&#x27; IDENTIFIED BY &#x27;密码&#x27;;# 可用%表示任意主机<br></code></pre></td></tr></table></figure>
+<h4 id="修改密码">修改密码</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER USER &#x27;用户名&#x27;@&#x27;主机&#x27; IDENTIFIED WITH mysql_native_password BY &#x27;新密码&#x27;;<br></code></pre></td></tr></table></figure>
+<h4 id="删除用户">删除用户</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DROP USER &#x27;用户名&#x27;@&#x27;主机&#x27;;<br></code></pre></td></tr></table></figure>
+<h4 id="查询权限">查询权限</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SHOW GRANTS FOR &#x27;用户名&#x27;@&#x27;主机名&#x27;;<br></code></pre></td></tr></table></figure>
+<h4 id="授予权限">授予权限</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">GRANT 权限列表 ON 数据库名.表名 TO &#x27;用户名&#x27;@&#x27;主机名&#x27;;<br></code></pre></td></tr></table></figure>
+<h4 id="撤销权限">撤销权限</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">REVOKE 权限列表 ON 数据库名.表名 FROM &#x27;用户名&#x27;@&#x27;主机名&#x27;;<br></code></pre></td></tr></table></figure>
+<h2 id="函数">函数</h2>
+<h2 id="约束">约束</h2>
+<h3 id="基础约束">基础约束</h3>
+<p>概念：约束是作用于表中字段上的规则，用于限制存储在表中的数据。</p>
+<p>目的：保证数据库中数据的正确、有效性和完整性。</p>
+<p>分类：</p>
+<table>
+<thead>
+<tr>
+<th><strong>约束</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>关键字</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非空约束</td>
+<td>限制该字段的数据不能为null</td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td>唯一约束</td>
+<td>保证该字段的所有数据都是唯一、不重复的</td>
+<td>UNIQUE</td>
+</tr>
+<tr>
+<td>主键约束</td>
+<td>主键是一行数据的唯一标识，要求非空且唯一</td>
+<td>PRIMARY KEY</td>
+</tr>
+<tr>
+<td>默认约束</td>
+<td>保存数据时，如果未指定该字段的值，则采用默认值</td>
+<td>DEFAULT</td>
+</tr>
+<tr>
+<td>检查约束</td>
+<td>保证字段值满足某一个条件</td>
+<td>CHECK</td>
+</tr>
+<tr>
+<td>外键约束</td>
+<td>用来让两张图的数据之间建立连接，保证数据的一致性和完整性</td>
+<td>FOREIGN KEY</td>
+</tr>
+</tbody>
+</table>
+<p>注意：约束是作用于表中字段上的，可以在创建表和修改表的时候添加约束。</p>
+<p>字段AUTO-INCREMENT：自动增长</p>
+<h3 id="外键约束">外键约束</h3>
+<p>让两张表的数据之间建立连接，保证数据的一致性和完整性。</p>
+<h4 id="添加外键">添加外键</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE 表名(<br>	字段名 数据类型,<br>    ...<br>    [CONSTRAINT] [外键名称] FOREIGN KEY (外键字段名) REFERENCES 主表 (主表列名)<br>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY (外键字段名) REFERENCES 主表(主表列名);<br></code></pre></td></tr></table></figure>
+<h4 id="删除外键">删除外键</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 表名 DROP FOREIGN KEY 外键名称;<br></code></pre></td></tr></table></figure>
+<h4 id="删除-更新行为">删除/更新行为</h4>
+<table>
+<thead>
+<tr>
+<th><strong>行为</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NO ACTION</td>
+<td>当在父表中删除/更新对应记录时，首先检查该记录是否有对应外键，如果有则不允许删除/更新（与RESTRICT一致）</td>
+</tr>
+<tr>
+<td>RESTRICT</td>
+<td>当在父表中删除/更新对应记录时，首先检查该记录是否有对应外键，如果有则不允许删除/更新（与NO ACTION一致）</td>
+</tr>
+<tr>
+<td><strong>CASCADE级联</strong></td>
+<td>当在父表中删除/更新对应记录时，首先检查该记录是否有对应外键，如果有则也删除/更新外键在子表中的记录</td>
+</tr>
+<tr>
+<td>SET NULL</td>
+<td>当在父表中删除/更新对应记录时，首先检查该记录是否有对应外键，如果有则设置子表中该外键值为null（要求该外键允许为null）</td>
+</tr>
+<tr>
+<td>SET DEFAULT</td>
+<td>父表有变更时，子表将外键设为一个默认值（Innodb不支持）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY (外键字段) REFERENCES 主表名(主表字段名) ON UPDATE 行为 ON DELETE 行为;<br></code></pre></td></tr></table></figure>
+<h3 id="案例-4">案例</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql"><br><br></code></pre></td></tr></table></figure>
+<h2 id="多表查询">多表查询</h2>
+<h3 id="分类">分类</h3>
+<ul>
+<li>
+<p>连接查询</p>
+<ul>
+<li>内连接：查询A，B交集部分数据。</li>
+<li>外连接
+<ul>
+<li>左外连接：查询<strong>左表</strong>所有数据，和两表交集部分数据。</li>
+<li>右外连接：查询<strong>右表</strong>所有数据，和两表交集部分数据。</li>
+</ul>
+</li>
+<li>自连接：当前表与自身的连接查询，自连接必须使用表别名。</li>
+</ul>
+</li>
+<li>
+<p>子连接</p>
+</li>
+</ul>
+<h3 id="连接查询">连接查询</h3>
+<h4 id="内连接">内连接</h4>
+<ul>
+<li>隐式内连接</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表1，表2 WHERE 条件...;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>显示内连接</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表1 [INNER] JOIN 表2 ON 连接条件...;<br></code></pre></td></tr></table></figure>
+<h4 id="外连接">外连接</h4>
+<ul>
+<li>左外连接</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表1 LEFT [OUTER] JOIN 表2 ON 条件...;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>右外连接</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表1 RIGHT [OUTER] JOIN 表2 ON 条件...;<br></code></pre></td></tr></table></figure>
+<h4 id="自连接">自连接</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表A 别名A JOIN 表A 别名B ON 条件...;<br></code></pre></td></tr></table></figure>
+<h4 id="联合查询">联合查询</h4>
+<p>把多次查询的结合合并起来，形成一个新的查询结果集。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT 字段列表 FROM 表A ...<br>UNION [ALL]<br>SELECT 字段列表 FROM 表B ...;<br></code></pre></td></tr></table></figure>
+<p>多张表的列数必须保持一致，字段类型也要保持一致。</p>
+<p><code>union all</code>会将全部的数据直接合并到一起，<code>union</code>会对合并后的数据去重。</p>
+<h3 id="案例-5">案例</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql"><br><br></code></pre></td></tr></table></figure>
+<h3 id="子查询">子查询</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT * FROM t1 WHERE column1 = (SELECT column1 FROM t2);<br></code></pre></td></tr></table></figure>
+<p>子查询的外部语句可以是<code>INSERT</code> / <code>UPDATE</code> / <code>DELETE</code> / <code>SELECT</code>的任何一个。</p>
+<ul>
+<li>根据子查询结果不同，分为：
+<ul>
+<li>标量子查询（子查询结果为单个值）
+<ul>
+<li>常用操作符：=，&lt;&gt;，&gt;，&gt;=，&lt;，&lt;=</li>
+</ul>
+</li>
+<li>列子查询（结果为一列）
+<ul>
+<li>常用操作符：IN，NOT IN，ANY，SOME，ALL</li>
+</ul>
+</li>
+<li>行子查询（结果为一行）
+<ul>
+<li>常用操作符：=，&lt;&gt;，IN，NOT IN</li>
+</ul>
+</li>
+<li>查子查询（结果为多列多行）
+<ul>
+<li>常用操作符：IN</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="案例-6">案例</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql"><br><br></code></pre></td></tr></table></figure>
+<h2 id="事务">事务</h2>
+<h2 id="SQL优化">SQL优化</h2>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

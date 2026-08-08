@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Lambda基础 Lambda 表达式是 C++11 引入的一种便捷语法，用于创建一个临时的、匿名的函数对象。 它允许你在需要函数的地方就地（in-place）定义一个简单的函数，无需预先声明一个独立的函数或类。 本质：Lambda 在编译时会被转换成一个未命名的函数对象类。 主要用途：  配合 STL 算法（如 std::sort, std::find_if, std::for_each）使用。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/cpp/%E7%8E%B0%E4%BB%A3C++/C++11-Lambda.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="Lambda基础 Lambda 表达式是 C++11 引入的一种便捷语法，用于创建一个临时的、匿名的函数对象。 它允许你在需要函数的地方就地（in-place）定义一个简单的函数，无需预先声明一个独立的函数或类。 本质：Lambda 在编译时会被转换成一个未命名的函数对象类。 主要用途：  配合 STL 算法（如 std::sort, std::find_if, std::for_each）使用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.537Z">
+<meta property="article:modified_time" content="2026-04-06T11:03:38.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="lambda基础">Lambda基础</h1>
+<p>Lambda 表达式是 C++11 引入的一种便捷语法，用于创建一个<strong>临时的、匿名的函数对象</strong>。</p>
+<p>它允许你在需要函数的地方就地（in-place）定义一个简单的函数，无需预先声明一个独立的函数或类。</p>
+<p><strong>本质</strong>：Lambda 在编译时会被转换成一个未命名的函数对象类。</p>
+<p><strong>主要用途</strong>：</p>
+<ul>
+<li>配合 STL 算法（如 <code>std::sort</code>, <code>std::find_if</code>, <code>std::for_each</code>）使用。</li>
+<li>作为回调函数（Callback）。</li>
+<li>简化代码，提高可读性。</li>
+</ul>
+<h2 id="基本语法">基本语法</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">[capture-list] (parameters) -&gt; <span class="hljs-keyword">return</span>-type &#123; function-body; &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>[capture-list]</code> (捕获列表)</strong>：定义 Lambda 如何访问其定义位置的外部作用域中的变量。这是 Lambda 的核心特性。</li>
+<li><strong><code>(parameters)</code> (参数列表)</strong>：与普通函数相同，可以为空 <code>()</code>。</li>
+<li><strong><code>-&gt; return-type</code> (返回类型)</strong>：可选。如果函数体只有一个 <code>return</code> 语句，编译器可以自动推导；若函数体为空，则返回 <code>void</code>。</li>
+<li><strong><code>{ function-body }</code> (函数体)</strong>：具体的实现代码。</li>
+</ul>
+<h2 id="捕获列表详解">捕获列表详解</h2>
+<p>捕获列表决定了外部变量如何被引入到 Lambda 内部。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">捕获方式</th>
+<th style="text-align:center">语法</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">示例</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>值捕获</strong></td>
+<td style="text-align:center"><code>[var]</code></td>
+<td style="text-align:left">按值拷贝 <code>var</code> 到 Lambda 内部。内部修改不影响外部。</td>
+<td style="text-align:left"><code>[x]() { return x; }</code></td>
+<td style="text-align:left">捕获 <code>x</code> 的值。</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>引用捕获</strong></td>
+<td style="text-align:center"><code>[&amp;var]</code></td>
+<td style="text-align:left">按引用捕获 <code>var</code>。内部修改直接影响外部。</td>
+<td style="text-align:left"><code>[&amp;x]() { x++; }</code></td>
+<td style="text-align:left">捕获 <code>x</code> 的引用。</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>隐式值捕获</strong></td>
+<td style="text-align:center"><code>[=]</code></td>
+<td style="text-align:left">捕获函数体内使用的所有外部变量，均为<strong>值拷贝</strong>。</td>
+<td style="text-align:left"><code>[=]() { return a + b; }</code></td>
+<td style="text-align:left">捕获所有用到的变量。</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>隐式引用捕获</strong></td>
+<td style="text-align:center"><code>[&amp;]</code></td>
+<td style="text-align:left">捕获函数体内使用的所有外部变量，均为<strong>引用</strong>。</td>
+<td style="text-align:left"><code>[&amp;]() { a++; b++; }</code></td>
+<td style="text-align:left">捕获所有用到的变量。</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>混合捕获</strong></td>
+<td style="text-align:center"><code>[&amp;, var]</code></td>
+<td style="text-align:left">默认按引用，但 <code>var</code> 按值捕获。</td>
+<td style="text-align:left"><code>[&amp;, x]() { x++; y++; }</code></td>
+<td style="text-align:left"><code>y</code> 是引用，<code>x</code> 是值拷贝。</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"><code>[=, &amp;var]</code></td>
+<td style="text-align:left">默认按值，但 <code>var</code> 按引用捕获。</td>
+<td style="text-align:left"><code>[=, &amp;y]() { x++; y++; }</code></td>
+<td style="text-align:left"><code>x</code> 是值拷贝，<code>y</code> 是引用。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="使用">使用</h2>
+<h3 id="无参数、无返回值">无参数、无返回值</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//匿名Lambda：定义后立即调用（末尾的()是调用符）</span><br>[]() &#123; std::cout &lt;&lt; <span class="hljs-string">&quot;1.1 Hello from Lambda!&quot;</span> &lt;&lt; std::endl; &#125;();<br><br><span class="hljs-comment">//命名Lambda：先定义，后调用（用auto推导类型）</span><br><span class="hljs-keyword">auto</span> simple_lambda = []() &#123; std::cout &lt;&lt; <span class="hljs-string">&quot;1.2 Hello again!&quot;</span> &lt;&lt; std::endl; &#125;;<br><span class="hljs-built_in">simple_lambda</span>();<br></code></pre></td></tr></table></figure>
+<h3 id="有返回值，自动推导">有返回值，自动推导</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> add = [](<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b) &#123; <span class="hljs-keyword">return</span> a + b; &#125;;<br><span class="hljs-type">int</span> sum1 = <span class="hljs-built_in">add</span>(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">// 调用Lambda 输出: Sum is: 8</span><br></code></pre></td></tr></table></figure>
+<h3 id="捕获外部变量（值捕获）">捕获外部变量（值捕获）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::vector&lt;<span class="hljs-type">int</span>&gt; numbers1 = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>, <span class="hljs-number">9</span>, <span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">4</span> &#125;;<br><span class="hljs-type">int</span> threshold = <span class="hljs-number">4</span>;<br><span class="hljs-comment">// 用accumulate累加：仅累加大于threshold的元素</span><br><span class="hljs-comment">// Lambda值捕获threshold（拷贝一份，不影响外部变量）</span><br><span class="hljs-type">int</span> sum2 = std::<span class="hljs-built_in">accumulate</span>(numbers<span class="hljs-number">1.</span><span class="hljs-built_in">begin</span>(), numbers<span class="hljs-number">1.</span><span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>, <span class="hljs-comment">//0为初始值</span><br>    [threshold](<span class="hljs-type">int</span> current_sum, <span class="hljs-type">int</span> num) &#123;<br>        <span class="hljs-keyword">return</span> num &gt; threshold ? current_sum + num : current_sum;<br>    &#125;);<br>std::cout &lt;&lt; <span class="hljs-string">&quot;Sum of numbers greater than &quot;</span> &lt;&lt; threshold &lt;&lt; <span class="hljs-string">&quot; is: &quot;</span> &lt;&lt; sum2 &lt;&lt; std::endl;<br></code></pre></td></tr></table></figure>
+<h3 id="参数引用-值捕获">参数引用 + 值捕获</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::vector&lt;<span class="hljs-type">int</span>&gt; numbers2 = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> &#125;;<br><span class="hljs-type">int</span> multiplier = <span class="hljs-number">10</span>;<br><span class="hljs-comment">// Lambda值捕获multiplier，参数n是引用（可修改原数组）</span><br>std::for_each(numbers<span class="hljs-number">2.</span><span class="hljs-built_in">begin</span>(), numbers<span class="hljs-number">2.</span><span class="hljs-built_in">end</span>(),<br>    [multiplier](<span class="hljs-type">int</span>&amp; n) &#123; <span class="hljs-comment">// n是numbers2元素的引用，修改n即修改原数组</span><br>        n *= multiplier;<br>    &#125;);<br></code></pre></td></tr></table></figure>
+<h3 id="多变量值捕获">多变量值捕获</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::vector&lt;Player&gt; players = &#123;<br>    &#123;<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1500</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">5</span>, <span class="hljs-number">800</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;Charlie&quot;</span>, <span class="hljs-number">15</span>, <span class="hljs-number">2200</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;David&quot;</span>, <span class="hljs-number">12</span>, <span class="hljs-number">1800</span>&#125;<br>&#125;;<br><span class="hljs-type">int</span> min_level = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> min_score = <span class="hljs-number">1600</span>;<br><br><span class="hljs-comment">// 用find_if筛选：Lambda值捕获min_level/min_score，判断玩家是否满足双条件</span><br><span class="hljs-keyword">auto</span> it = std::<span class="hljs-built_in">find_if</span>(players.<span class="hljs-built_in">begin</span>(), players.<span class="hljs-built_in">end</span>(),<br>    [min_level, min_score](<span class="hljs-type">const</span> Player&amp; p) &#123;<br>        <span class="hljs-keyword">return</span> p.level &gt;= min_level &amp;&amp; p.score &gt;= min_score;<br>    &#125;);<br><br><span class="hljs-keyword">if</span> (it != players.<span class="hljs-built_in">end</span>()) &#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;5.1 Found high-level, high-score player: &quot;</span><br>        &lt;&lt; it-&gt;name &lt;&lt; <span class="hljs-string">&quot; (Level: &quot;</span> &lt;&lt; it-&gt;level &lt;&lt; <span class="hljs-string">&quot;, Score: &quot;</span> &lt;&lt; it-&gt;score &lt;&lt; <span class="hljs-string">&quot;)&quot;</span> &lt;&lt; std::endl;<br>    <span class="hljs-comment">// 输出: Found high-level, high-score player: David (Level: 12, Score: 1800)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="Lambda工厂函数（返回Lambda）">Lambda工厂函数（返回Lambda）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 6.1 调用工厂函数：生成乘2、乘3的Lambda</span><br><span class="hljs-keyword">auto</span> double_it = <span class="hljs-built_in">make_multiplier</span>(<span class="hljs-number">2</span>);<br><span class="hljs-keyword">auto</span> triple_it = <span class="hljs-built_in">make_multiplier</span>(<span class="hljs-number">3</span>);<br><br><span class="hljs-comment">// 6.2 调用工厂返回的Lambda</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;6.1 Double 5: &quot;</span> &lt;&lt; <span class="hljs-built_in">double_it</span>(<span class="hljs-number">5</span>) &lt;&lt; std::endl; <span class="hljs-comment">// 输出: Double 5: 10</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;6.2 Triple 4: &quot;</span> &lt;&lt; <span class="hljs-built_in">triple_it</span>(<span class="hljs-number">4</span>) &lt;&lt; std::endl; <span class="hljs-comment">// 输出: Triple 4: 12</span><br><br><span class="hljs-comment">// 6.3 结合transform算法：用Lambda修改数组</span><br>std::vector&lt;<span class="hljs-type">int</span>&gt; nums = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span> &#125;;<br>std::cout &lt;&lt; <span class="hljs-string">&quot;6.3 Original: &quot;</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> n : nums) std::cout &lt;&lt; n &lt;&lt; <span class="hljs-string">&quot; &quot;</span>; std::cout &lt;&lt; std::endl;<br><br>std::<span class="hljs-built_in">transform</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>(), nums.<span class="hljs-built_in">begin</span>(), double_it);<br><br>std::cout &lt;&lt; <span class="hljs-string">&quot;6.4 Doubled:  &quot;</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> n : nums) std::cout &lt;&lt; n &lt;&lt; <span class="hljs-string">&quot; &quot;</span>; std::cout &lt;&lt; std::endl;<br><span class="hljs-comment">// 输出: Doubled:  2 4 6</span><br></code></pre></td></tr></table></figure>
+<h3 id="Lambda回调（引用捕获-多回调注册）">Lambda回调（引用捕获 + 多回调注册）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 7.1 准备游戏对象和碰撞管理器</span><br><span class="hljs-function">GameObject <span class="hljs-title">player</span><span class="hljs-params">(<span class="hljs-string">&quot;Player&quot;</span>)</span></span>;<br><span class="hljs-function">GameObject <span class="hljs-title">enemy</span><span class="hljs-params">(<span class="hljs-string">&quot;Enemy&quot;</span>)</span></span>;<br>CollisionManager manager;<br><br><span class="hljs-comment">// 7.2 注册回调1：碰撞时扣血（无捕获，直接修改对象引用）</span><br>manager.<span class="hljs-built_in">register_callback</span>([](GameObject&amp; obj1, GameObject&amp; obj2) &#123;<br>    obj<span class="hljs-number">1.</span>health -= <span class="hljs-number">10</span>;<br>    obj<span class="hljs-number">2.</span>health -= <span class="hljs-number">10</span>;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;7.1 &quot;</span> &lt;&lt; obj<span class="hljs-number">1.</span>name &lt;&lt; <span class="hljs-string">&quot; and &quot;</span> &lt;&lt; obj<span class="hljs-number">2.</span>name &lt;&lt; <span class="hljs-string">&quot; took damage!&quot;</span> &lt;&lt; std::endl;<br>    &#125;);<br><br><span class="hljs-comment">// 7.3 注册回调2：碰撞时打印日志（引用捕获log_count，统计日志次数）</span><br><span class="hljs-type">int</span> log_count = <span class="hljs-number">0</span>; <span class="hljs-comment">// 外部变量：日志计数</span><br>manager.<span class="hljs-built_in">register_callback</span>([&amp;log_count](GameObject&amp; obj1, GameObject&amp; obj2) &#123;<br>    log_count++;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;7.2 [LOG &quot;</span> &lt;&lt; log_count &lt;&lt; <span class="hljs-string">&quot;] Collision between &quot;</span> &lt;&lt; obj<span class="hljs-number">1.</span>name &lt;&lt; <span class="hljs-string">&quot; and &quot;</span> &lt;&lt; obj<span class="hljs-number">2.</span>name &lt;&lt; std::endl;<br>    &#125;);<br><br><span class="hljs-comment">// 7.4 触发碰撞：执行所有注册的Lambda回调</span><br>manager.<span class="hljs-built_in">trigger_collision</span>(player, enemy);<br><br><span class="hljs-comment">// 7.5 输出最终状态</span><br>std::cout &lt;&lt; <span class="hljs-string">&quot;\n7.3 Final Stats:&quot;</span> &lt;&lt; std::endl;<br>std::cout &lt;&lt; player.name &lt;&lt; <span class="hljs-string">&quot; HP: &quot;</span> &lt;&lt; player.health &lt;&lt; std::endl; <span class="hljs-comment">// HP: 90</span><br>std::cout &lt;&lt; enemy.name &lt;&lt; <span class="hljs-string">&quot; HP: &quot;</span> &lt;&lt; enemy.health &lt;&lt; std::endl;   <span class="hljs-comment">// HP: 90</span><br></code></pre></td></tr></table></figure>
+<h4 id="依赖">依赖</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 1. 定义Player结构体（Lambda筛选场景使用）</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Player</span> &#123;<br>    std::string name;   <span class="hljs-comment">// 玩家名称</span><br>    <span class="hljs-type">int</span> level;          <span class="hljs-comment">// 玩家等级</span><br>    <span class="hljs-type">int</span> score;          <span class="hljs-comment">// 玩家分数</span><br>&#125;;<br><br><span class="hljs-comment">// 2. 定义GameObject结构体（Lambda回调场景使用）</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">GameObject</span> &#123;<br>    std::string name;   <span class="hljs-comment">// 游戏对象名称</span><br>    <span class="hljs-type">int</span> health = <span class="hljs-number">100</span>;   <span class="hljs-comment">// 生命值，默认100</span><br>    <span class="hljs-comment">// 构造函数：初始化游戏对象名称</span><br>    <span class="hljs-built_in">GameObject</span>(<span class="hljs-type">const</span> std::string&amp; n) : <span class="hljs-built_in">name</span>(n) &#123;&#125;<br>&#125;;<br><br><span class="hljs-comment">// 3. 定义CollisionManager类（Lambda回调注册/触发场景使用）</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">CollisionManager</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 定义回调函数类型：接收两个GameObject引用，无返回值</span><br>    <span class="hljs-keyword">using</span> Callback = std::function&lt;<span class="hljs-built_in">void</span>(GameObject&amp; obj1, GameObject&amp; obj2)&gt;;<br>    <span class="hljs-comment">// 存储所有注册的回调函数</span><br>    std::vector&lt;Callback&gt; callbacks;<br><br>    <span class="hljs-comment">// 注册回调函数：将Lambda（或其他可调用对象）加入回调列表</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">register_callback</span><span class="hljs-params">(Callback cb)</span> </span>&#123;<br>        callbacks.<span class="hljs-built_in">push_back</span>(cb);<br>    &#125;<br><br>    <span class="hljs-comment">// 触发碰撞：执行所有注册的回调函数</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">trigger_collision</span><span class="hljs-params">(GameObject&amp; a, GameObject&amp; b)</span> </span>&#123;<br>        std::cout &lt;&lt; a.name &lt;&lt; <span class="hljs-string">&quot; collided with &quot;</span> &lt;&lt; b.name &lt;&lt; <span class="hljs-string">&quot;!&quot;</span> &lt;&lt; std::endl;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; cb : callbacks) &#123;<br>            <span class="hljs-built_in">cb</span>(a, b); <span class="hljs-comment">// 执行每个Lambda回调</span><br>        &#125;<br>    &#125;<br>&#125;;<br><br><span class="hljs-comment">// 4. 定义返回Lambda的工厂函数（C++14及以上支持auto返回值）</span><br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">make_multiplier</span><span class="hljs-params">(<span class="hljs-type">int</span> factor)</span> </span>&#123;<br>    <span class="hljs-comment">// 捕获factor的值，返回一个专用的乘法器Lambda</span><br>    <span class="hljs-keyword">return</span> [factor](<span class="hljs-type">int</span> value) &#123; <span class="hljs-keyword">return</span> value * factor; &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="lambda进阶">Lambda进阶</h1>
+<h2 id="泛型Lambda">泛型Lambda</h2>
+<p>C++14 对 Lambda 表达式的核心增强是<strong>泛型 Lambda</strong>（也叫 “多态 Lambda”），允许 Lambda 的参数使用自动类型推导（<code>auto</code>关键字），无需显式指定参数类型。这让 Lambda 具备了模板函数的 “泛型” 能力，能处理任意类型的参数，大幅提升了 Lambda 的灵活性和复用性。</p>
+<p>泛型Lambda的核心价值：<strong>用<code>auto</code>推导参数类型，让单个Lambda处理任意类型的参数</strong>，等价于“匿名的模板函数”，彻底解决C++11 Lambda类型固定的问题。</p>
+<h3 id="背景">背景</h3>
+<p>C++11的Lambda必须显式指定参数类型，导致Lambda只能处理固定类型的参数，复用性差：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// C++11 Lambda：仅能处理int类型</span><br><span class="hljs-keyword">auto</span> add_int = [](<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b) &#123; <span class="hljs-keyword">return</span> a + b; &#125;;<br>cout &lt;&lt; <span class="hljs-built_in">add_int</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>) &lt;&lt; endl; <span class="hljs-comment">// 正常输出3</span><br><br><span class="hljs-comment">// 尝试处理double类型：编译报错（参数类型不匹配）</span><br><span class="hljs-comment">// cout &lt;&lt; add_int(1.5, 2.5) &lt;&lt; endl;</span><br><br><span class="hljs-comment">// 需重新定义处理double的Lambda，代码冗余</span><br><span class="hljs-keyword">auto</span> add_double = [](<span class="hljs-type">double</span> a, <span class="hljs-type">double</span> b) &#123; <span class="hljs-keyword">return</span> a + b; &#125;;<br>cout &lt;&lt; <span class="hljs-built_in">add_double</span>(<span class="hljs-number">1.5</span>, <span class="hljs-number">2.5</span>) &lt;&lt; endl; <span class="hljs-comment">// 输出4.0</span><br></code></pre></td></tr></table></figure>
+<h3 id="核心语法">核心语法</h3>
+<p>泛型Lambda的核心是将参数类型替换为<code>auto</code>，编译器会根据调用时的实参自动推导参数类型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// C++14 泛型Lambda：参数用auto，支持任意类型</span><br><span class="hljs-keyword">auto</span> generic_add = [](<span class="hljs-keyword">auto</span> a, <span class="hljs-keyword">auto</span> b) &#123; <span class="hljs-keyword">return</span> a + b; &#125;;<br></code></pre></td></tr></table></figure>
+<p>编译器会将这个Lambda隐式转换为一个模板函数，等价于：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span> U&gt;<br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">generic_add</span><span class="hljs-params">(T a, U b)</span> </span>&#123; <span class="hljs-keyword">return</span> a + b; &#125;<br></code></pre></td></tr></table></figure>
+<p><strong>通用加法Lambda</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 泛型Lambda：支持任意可相加的类型</span><br><span class="hljs-keyword">auto</span> add = [](<span class="hljs-keyword">auto</span> a, <span class="hljs-keyword">auto</span> b) &#123; <span class="hljs-keyword">return</span> a + b; &#125;;<br><span class="hljs-comment">// 处理int</span><br>cout &lt;&lt; <span class="hljs-built_in">add</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>) &lt;&lt; endl; <span class="hljs-comment">// 3</span><br><span class="hljs-comment">// 处理double</span><br>cout &lt;&lt; <span class="hljs-built_in">add</span>(<span class="hljs-number">1.5</span>, <span class="hljs-number">2.5</span>) &lt;&lt; endl; <span class="hljs-comment">// 4.0</span><br><span class="hljs-comment">// 处理string</span><br>cout &lt;&lt; <span class="hljs-built_in">add</span>(<span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;hello &quot;</span>), <span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;world&quot;</span>)) &lt;&lt; endl; <span class="hljs-comment">// hello world</span><br><span class="hljs-comment">// 处理不同类型（int + double）</span><br>cout &lt;&lt; <span class="hljs-built_in">add</span>(<span class="hljs-number">3</span>, <span class="hljs-number">4.5</span>) &lt;&lt; endl; <span class="hljs-comment">// 7.5</span><br></code></pre></td></tr></table></figure>
+<p><strong>关键</strong>：只要参数类型支持<code>+</code>运算符，泛型Lambda就能处理，无需修改Lambda本身。</p>
+<h4 id="混合固定类型与泛型参数">混合固定类型与泛型参数</h4>
+<p>泛型Lambda支持部分参数用<code>auto</code>，部分参数显式指定类型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 第一个参数固定为int，第二个参数泛型</span><br><span class="hljs-keyword">auto</span> print_int_and_any = [](<span class="hljs-type">int</span> num, <span class="hljs-keyword">auto</span> val) &#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;整数：&quot;</span> &lt;&lt; num &lt;&lt; <span class="hljs-string">&quot;，任意类型值：&quot;</span> &lt;&lt; val &lt;&lt; endl;<br>&#125;;<br><span class="hljs-built_in">print_int_and_any</span>(<span class="hljs-number">10</span>, <span class="hljs-number">3.14</span>); <span class="hljs-comment">// 整数：10，任意类型值：3.14</span><br><span class="hljs-built_in">print_int_and_any</span>(<span class="hljs-number">20</span>, <span class="hljs-string">&quot;hello&quot;</span>); <span class="hljs-comment">// 整数：20，任意类型值：hello</span><br></code></pre></td></tr></table></figure>
+<h4 id="返回值类型推导（C-14-Lambda默认支持）">返回值类型推导（C++14 Lambda默认支持）</h4>
+<p>C++11 Lambda的返回值类型需显式指定（或通过<code>-&gt; decltype(...)</code>推导），C++14泛型Lambda默认支持返回值自动推导：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// C++11需显式指定返回值：[](int a, int b) -&gt; int &#123; return a + b; &#125;</span><br><span class="hljs-comment">// C++14泛型Lambda自动推导返回值</span><br><span class="hljs-keyword">auto</span> func = [](<span class="hljs-keyword">auto</span> a, <span class="hljs-keyword">auto</span> b) &#123;<br>    <span class="hljs-keyword">if</span> (a &gt; b) <span class="hljs-keyword">return</span> a; <span class="hljs-comment">// 返回a的类型</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> b;       <span class="hljs-comment">// 返回b的类型（需与a的类型兼容）</span><br>&#125;;<br>cout &lt;&lt; <span class="hljs-built_in">func</span>(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>) &lt;&lt; endl; <span class="hljs-comment">// 20（int）</span><br>cout &lt;&lt; <span class="hljs-built_in">func</span>(<span class="hljs-number">3.14</span>, <span class="hljs-number">2.71</span>) &lt;&lt; endl; <span class="hljs-comment">// 3.14（double）</span><br></code></pre></td></tr></table></figure>
+<h3 id="核心使用场景">核心使用场景</h3>
+<p><strong>通用算法/工具函数</strong></p>
+<p>用泛型Lambda实现通用的工具逻辑，替代多个类型特定的Lambda：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 泛型Lambda：打印任意类型的容器元素</span><br><span class="hljs-keyword">auto</span> print_container = [](<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; container) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; elem : container) &#123;<br>        cout &lt;&lt; elem &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    &#125;<br>    cout &lt;&lt; endl;<br>&#125;;<br><span class="hljs-comment">// 处理vector&lt;int&gt;</span><br>vector&lt;<span class="hljs-type">int</span>&gt; vec_int = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>&#125;;<br><span class="hljs-built_in">print_container</span>(vec_int); <span class="hljs-comment">// 1 2 3 4</span><br><span class="hljs-comment">// 处理vector&lt;string&gt;</span><br>vector&lt;string&gt; vec_str = &#123;<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>&#125;;<br><span class="hljs-built_in">print_container</span>(vec_str); <span class="hljs-comment">// a b c</span><br><span class="hljs-comment">// 处理数组</span><br><span class="hljs-type">int</span> arr[] = &#123;<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>&#125;;<br><span class="hljs-built_in">print_container</span>(arr); <span class="hljs-comment">// 10 20 30</span><br></code></pre></td></tr></table></figure>
+<p><strong>STL算法中的泛型谓词</strong></p>
+<p>STL算法（如<code>sort</code>/<code>find_if</code>）结合泛型Lambda，实现通用的比较/判断逻辑：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 泛型Lambda：比较两个元素的大小（支持任意可比较类型）</span><br><span class="hljs-keyword">auto</span> compare_greater = [](<span class="hljs-keyword">auto</span> a, <span class="hljs-keyword">auto</span> b) &#123;<br>    <span class="hljs-keyword">return</span> a &gt; b;<br>&#125;;<br><span class="hljs-comment">// 排序int数组</span><br>vector&lt;<span class="hljs-type">int</span>&gt; vec_int = &#123;<span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>&#125;;<br><span class="hljs-built_in">sort</span>(vec_int.<span class="hljs-built_in">begin</span>(), vec_int.<span class="hljs-built_in">end</span>(), compare_greater);<br><span class="hljs-built_in">print_container</span>(vec_int); <span class="hljs-comment">// 4 3 2 1</span><br><span class="hljs-comment">// 排序string数组</span><br>vector&lt;string&gt; vec_str = &#123;<span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-string">&quot;apple&quot;</span>, <span class="hljs-string">&quot;cherry&quot;</span>&#125;;<br><span class="hljs-built_in">sort</span>(vec_str.<span class="hljs-built_in">begin</span>(), vec_str.<span class="hljs-built_in">end</span>(), compare_greater);<br><span class="hljs-built_in">print_container</span>(vec_str); <span class="hljs-comment">// cherry banana apple</span><br></code></pre></td></tr></table></figure>
+<p><strong>泛型Lambda与模板函数结合</strong></p>
+<p>泛型Lambda可作为模板函数的参数，实现更高层次的泛型编程：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 模板函数：接收泛型Lambda，处理任意类型的两个值</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Func, <span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span> U&gt;<br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">apply_func</span><span class="hljs-params">(Func f, T a, U b)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">f</span>(a, b);<br>&#125;<br><span class="hljs-comment">// 泛型Lambda：乘法</span><br><span class="hljs-keyword">auto</span> multiply = [](<span class="hljs-keyword">auto</span> a, <span class="hljs-keyword">auto</span> b) &#123; <span class="hljs-keyword">return</span> a * b; &#125;;<br><span class="hljs-comment">// 处理int*int</span><br>cout &lt;&lt; <span class="hljs-built_in">apply_func</span>(multiply, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>) &lt;&lt; endl; <span class="hljs-comment">// 30</span><br><span class="hljs-comment">// 处理double*int</span><br>cout &lt;&lt; <span class="hljs-built_in">apply_func</span>(multiply, <span class="hljs-number">2.5</span>, <span class="hljs-number">4</span>) &lt;&lt; endl; <span class="hljs-comment">// 10.0</span><br><span class="hljs-comment">// 处理string*int（重复字符串）</span><br>cout &lt;&lt; <span class="hljs-built_in">apply_func</span>(multiply, <span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;hi&quot;</span>), <span class="hljs-number">3</span>) &lt;&lt; endl; <span class="hljs-comment">// hihihi</span><br></code></pre></td></tr></table></figure>
+<p><strong>泛型Lambda捕获<code>this</code>（类内使用）</strong></p>
+<p>在类成员函数中，泛型Lambda可捕获<code>this</code>，处理类的任意类型成员：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">int</span> num = <span class="hljs-number">10</span>; string str = <span class="hljs-string">&quot;hello&quot;</span>;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">process</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 泛型Lambda：捕获this，访问类成员，处理任意类型</span><br>        <span class="hljs-keyword">auto</span> print_member = [<span class="hljs-keyword">this</span>](<span class="hljs-keyword">auto</span> member_name) &#123;<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">constexpr</span> (is_same_v&lt;<span class="hljs-keyword">decltype</span>(member_name), string&gt;) &#123;<br>                cout &lt;&lt; <span class="hljs-string">&quot;字符串成员：&quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;str &lt;&lt; endl;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                cout &lt;&lt; <span class="hljs-string">&quot;整数成员：&quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;num &lt;&lt; endl;<br>            &#125;<br>        &#125;;<br>        <span class="hljs-built_in">print_member</span>(<span class="hljs-string">&quot;num&quot;</span>); <span class="hljs-comment">// 整数成员：10</span><br>        <span class="hljs-built_in">print_member</span>(<span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;str&quot;</span>)); <span class="hljs-comment">// 字符串成员：hello</span><br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><strong>注意</strong>：<code>if constexpr</code>是C++17特性，用于在编译期判断类型，配合泛型Lambda实现类型分支逻辑。</p>
+<h3 id="核心规则与注意事项">核心规则与注意事项</h3>
+<p><strong>泛型Lambda的本质</strong></p>
+<p>编译器会将泛型Lambda转换为<strong>带有模板调用运算符的匿名类</strong>，例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 泛型Lambda</span><br><span class="hljs-keyword">auto</span> add = [](<span class="hljs-keyword">auto</span> a, <span class="hljs-keyword">auto</span> b) &#123; <span class="hljs-keyword">return</span> a + b; &#125;;<br><span class="hljs-comment">// 编译器等价转换为：</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">AnonymousLambda</span> &#123;<br>    <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span> U&gt;<br>    <span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(T a, U b)</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> a + b;<br>    &#125;<br>&#125;;<br>AnonymousLambda add;<br></code></pre></td></tr></table></figure>
+<p>因此，泛型Lambda的调用本质是模板实例化，遵循模板的类型推导规则。</p>
+<p><strong>类型兼容性要求</strong></p>
+<p>泛型Lambda的逻辑需适用于所有可能的参数类型，否则会编译报错：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> wrong_func = [](<span class="hljs-keyword">auto</span> a, <span class="hljs-keyword">auto</span> b) &#123;<br>    <span class="hljs-keyword">return</span> a / b; <span class="hljs-comment">// 若b为0或类型不支持/，则调用时报错</span><br>&#125;;<br><span class="hljs-comment">// 正确调用</span><br>cout &lt;&lt; <span class="hljs-built_in">wrong_func</span>(<span class="hljs-number">10</span>, <span class="hljs-number">2</span>) &lt;&lt; endl; <span class="hljs-comment">// 5</span><br><span class="hljs-comment">// 错误调用：编译报错（string不支持/）</span><br>cout &lt;&lt; <span class="hljs-built_in">wrong_func</span>(<span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;a&quot;</span>), <span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;b&quot;</span>)) &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+<h2 id="Lambda初始化捕获">Lambda初始化捕获</h2>
+<p>C++14 对 Lambda 表达式的另一核心增强是<strong>初始化捕获</strong>（也叫 “广义捕获” Generalized Capture），允许在 Lambda 捕获列表中直接定义并初始化新变量，或移动（而非拷贝）对象到 Lambda 中。这解决了 C++11 Lambda 捕获的两大痛点：无法捕获未命名变量、无法移动捕获对象，大幅扩展了 Lambda 的捕获能力和灵活性。</p>
+<p>初始化捕获的核心价值：<strong>在捕获列表中直接初始化变量</strong>，支持移动语义，可重命名捕获变量，彻底解决 C++11 捕获的局限性。</p>
+<h3 id="背景-2">背景</h3>
+<p>C++11 的 Lambda 捕获规则非常受限：</p>
+<ol>
+<li>只能捕获<strong>当前作用域中已命名的变量</strong>，无法直接定义新变量或捕获临时对象；</li>
+<li>仅支持拷贝捕获（<code>[var]</code>）或引用捕获（<code>[&amp;var]</code>），无法移动（<code>std::move</code>）捕获对象（如<code>std::unique_ptr</code>这类不可拷贝的对象）；</li>
+<li>无法为捕获的变量重命名。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// C++11 痛点1：无法捕获临时对象/未命名变量</span><br><span class="hljs-comment">// 错误：临时值100无名称，无法直接捕获</span><br><span class="hljs-keyword">auto</span> func = [<span class="hljs-number">100</span>]() &#123; <span class="hljs-keyword">return</span> <span class="hljs-number">100</span>; &#125;;<br><span class="hljs-comment">// C++11 痛点2：无法移动捕获不可拷贝对象</span><br>unique_ptr&lt;<span class="hljs-type">int</span>&gt; ptr = <span class="hljs-built_in">make_unique</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">42</span>);<br><span class="hljs-comment">// 错误：unique_ptr不可拷贝，无法捕获</span><br><span class="hljs-keyword">auto</span> func2 = [ptr]() &#123; cout &lt;&lt; *ptr &lt;&lt; endl; &#125;;<br><span class="hljs-comment">// C++11 痛点3：无法重命名捕获变量</span><br><span class="hljs-type">int</span> x = <span class="hljs-number">5</span>;<br><span class="hljs-comment">// 只能捕获x，无法命名为其他名称</span><br><span class="hljs-keyword">auto</span> func3 = [x]() &#123; <span class="hljs-keyword">return</span> x; &#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="核心语法-2">核心语法</h3>
+<p>初始化捕获的核心是在捕获列表中使用 <code>变量名 = 初始化表达式</code> 的形式，定义并初始化 Lambda 的捕获变量</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 基础语法：[捕获变量名 = 初始化表达式](参数) &#123; 逻辑 &#125;</span><br><span class="hljs-keyword">auto</span> lambda = [x = <span class="hljs-number">100</span>]() &#123; <span class="hljs-keyword">return</span> x; &#125;; <span class="hljs-comment">// 定义x并初始化为100</span><br></code></pre></td></tr></table></figure>
+<p>编译器会将这个捕获变量作为 Lambda 匿名类的成员变量，等价于：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">AnonymousLambda</span> &#123;<br>    <span class="hljs-type">int</span> x; <span class="hljs-comment">// 捕获变量作为成员</span><br>    <span class="hljs-built_in">AnonymousLambda</span>() : <span class="hljs-built_in">x</span>(<span class="hljs-number">100</span>) &#123;&#125; <span class="hljs-comment">// 初始化</span><br>    <span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; <span class="hljs-keyword">return</span> x; &#125;<br>&#125;;<br>AnonymousLambda lambda;<br></code></pre></td></tr></table></figure>
+<p><strong>捕获临时变量 / 重命名变量</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 示例1：捕获临时变量（C++11不支持，C++14初始化捕获支持）</span><br><span class="hljs-keyword">auto</span> add_100 = [x = <span class="hljs-number">100</span>](<span class="hljs-type">int</span> a) &#123; <span class="hljs-keyword">return</span> a + x; &#125;;<br>cout &lt;&lt; <span class="hljs-built_in">add_100</span>(<span class="hljs-number">50</span>) &lt;&lt; endl; <span class="hljs-comment">// 150</span><br><span class="hljs-comment">// 示例2：重命名捕获现有变量</span><br><span class="hljs-type">int</span> num = <span class="hljs-number">200</span>;<br><span class="hljs-comment">// 将num拷贝到捕获变量y中（重命名）</span><br><span class="hljs-keyword">auto</span> add_y = [y = num](<span class="hljs-type">int</span> a) &#123; <span class="hljs-keyword">return</span> a + y; &#125;;<br>cout &lt;&lt; <span class="hljs-built_in">add_y</span>(<span class="hljs-number">50</span>) &lt;&lt; endl; <span class="hljs-comment">// 250</span><br><span class="hljs-comment">// 示例3：捕获表达式结果</span><br><span class="hljs-keyword">auto</span> calc = [sum = <span class="hljs-number">10</span> + <span class="hljs-number">20</span>](<span class="hljs-type">int</span> a) &#123; <span class="hljs-keyword">return</span> sum * a; &#125;;<br>cout &lt;&lt; <span class="hljs-built_in">calc</span>(<span class="hljs-number">3</span>) &lt;&lt; endl; <span class="hljs-comment">// 90</span><br></code></pre></td></tr></table></figure>
+<p><strong>关键</strong>：初始化捕获的变量作用域仅限于 Lambda 内部，是 Lambda 匿名类的成员，与外部变量互不干扰（除非显式引用）。</p>
+<h4 id="移动捕获（Move-Capture）">移动捕获（Move Capture）</h4>
+<p>初始化捕获结合<code>std::move</code>，可捕获不可拷贝但可移动的对象（如<code>std::unique_ptr</code>、<code>std::string</code>、<code>std::vector</code>等），解决 C++11 无法捕获这类对象的问题</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 示例1：移动捕获unique_ptr（不可拷贝）</span><br>unique_ptr&lt;<span class="hljs-type">int</span>&gt; ptr = <span class="hljs-built_in">make_unique</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">42</span>);<br><span class="hljs-comment">// 将ptr移动到捕获变量p中，外部ptr变为空</span><br><span class="hljs-keyword">auto</span> func = [p = <span class="hljs-built_in">move</span>(ptr)]() &#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;移动捕获的值：&quot;</span> &lt;&lt; *p &lt;&lt; endl; <span class="hljs-comment">// 42</span><br>&#125;;<br><span class="hljs-built_in">func</span>();<br><span class="hljs-comment">// 验证外部ptr已空</span><br><span class="hljs-keyword">if</span> (!ptr) cout &lt;&lt; <span class="hljs-string">&quot;外部ptr已为空&quot;</span> &lt;&lt; endl;<br><span class="hljs-comment">// 示例2：移动捕获vector</span><br>vector&lt;<span class="hljs-type">int</span>&gt; vec = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>&#125;;<br><span class="hljs-keyword">auto</span> process_vec = [v = <span class="hljs-built_in">move</span>(vec)]() &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i : v) cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>; <span class="hljs-comment">// 1 2 3 4</span><br>&#125;;<br><span class="hljs-built_in">process_vec</span>();<br><span class="hljs-comment">// 外部vec已空</span><br>cout &lt;&lt; <span class="hljs-string">&quot;\n外部vec大小：&quot;</span> &lt;&lt; vec.<span class="hljs-built_in">size</span>() &lt;&lt; endl; <span class="hljs-comment">// 0</span><br></code></pre></td></tr></table></figure>
+<p><strong>注意</strong>：移动捕获后，原对象会处于 “有效但未指定” 的状态，不可再使用（除非重新赋值）。</p>
+<h4 id="引用捕获结合初始化">引用捕获结合初始化</h4>
+<p>初始化捕获也支持引用语义，通过<code>&amp;</code>声明捕获变量为引用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> base = <span class="hljs-number">100</span>;<br><span class="hljs-comment">// 捕获base的引用到变量ref中</span><br><span class="hljs-keyword">auto</span> add_ref = [&amp;ref = base](<span class="hljs-type">int</span> a) &#123;<br>    ref += a; <span class="hljs-comment">// 修改的是外部base的值</span><br>    <span class="hljs-keyword">return</span> ref;<br>&#125;;<br>cout &lt;&lt; <span class="hljs-built_in">add_ref</span>(<span class="hljs-number">50</span>) &lt;&lt; endl; <span class="hljs-comment">// 150</span><br>cout &lt;&lt; base &lt;&lt; endl; <span class="hljs-comment">// 150（外部变量已被修改）</span><br></code></pre></td></tr></table></figure>
+<h4 id="初始化捕获与泛型-Lambda-结合">初始化捕获与泛型 Lambda 结合</h4>
+<p>C++14 的初始化捕获可与泛型 Lambda（auto 参数）结合</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 初始化捕获：默认前缀 + 泛型参数</span><br><span class="hljs-keyword">auto</span> print_with_prefix = [prefix = <span class="hljs-string">&quot;结果：&quot;</span>](<span class="hljs-keyword">auto</span> val) &#123;<br>    cout &lt;&lt; prefix &lt;&lt; val &lt;&lt; endl;<br>&#125;;<br><span class="hljs-built_in">print_with_prefix</span>(<span class="hljs-number">123</span>); <span class="hljs-comment">// 结果：123</span><br><span class="hljs-built_in">print_with_prefix</span>(<span class="hljs-number">3.14</span>); <span class="hljs-comment">// 结果：3.14</span><br><span class="hljs-built_in">print_with_prefix</span>(<span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;hello&quot;</span>)); <span class="hljs-comment">// 结果：hello</span><br><br><span class="hljs-comment">// 移动捕获 + 泛型</span><br>string msg = <span class="hljs-string">&quot;hello world&quot;</span>;<br><span class="hljs-keyword">auto</span> process_msg = [m = <span class="hljs-built_in">move</span>(msg)](<span class="hljs-keyword">auto</span> suffix) &#123;<br>    <span class="hljs-keyword">return</span> m + suffix;<br>&#125;;<br>cout &lt;&lt; <span class="hljs-built_in">process_msg</span>(<span class="hljs-string">&quot;!&quot;</span>) &lt;&lt; endl; <span class="hljs-comment">// hello world!</span><br></code></pre></td></tr></table></figure>
+<h3 id="核心使用场景-2">核心使用场景</h3>
+<p><strong>捕获不可拷贝的对象</strong></p>
+<p>最常用场景：捕获<code>std::unique_ptr</code>、<code>std::future</code>等不可拷贝但可移动的对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 创建不可拷贝的unique_ptr</span><br><span class="hljs-keyword">auto</span> data = <span class="hljs-built_in">make_unique</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">1000</span>);<br><span class="hljs-comment">// 移动捕获到线程Lambda中</span><br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">([d = move(data)]() &#123;</span></span><br><span class="hljs-params"><span class="hljs-function">    std::this_thread::sleep_for(std::chrono::seconds(<span class="hljs-number">1</span>));</span></span><br><span class="hljs-params"><span class="hljs-function">    cout &lt;&lt; <span class="hljs-string">&quot;线程中访问：&quot;</span> &lt;&lt; *d &lt;&lt; endl; <span class="hljs-comment">// 1000</span></span></span><br><span class="hljs-params"><span class="hljs-function">&#125;)</span></span>;<br>t.<span class="hljs-built_in">join</span>();<br></code></pre></td></tr></table></figure>
+<p><strong>捕获临时表达式 / 计算结果</strong></p>
+<p>无需提前定义变量，直接捕获表达式结果</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 捕获计算结果（圆的面积公式）</span><br><span class="hljs-keyword">auto</span> calc_area = [pi = <span class="hljs-number">3.14159</span>](<span class="hljs-type">double</span> r) &#123;<br>    <span class="hljs-keyword">return</span> pi * r * r;<br>&#125;;<br>cout &lt;&lt; <span class="hljs-string">&quot;半径为2的圆面积：&quot;</span> &lt;&lt; <span class="hljs-built_in">calc_area</span>(<span class="hljs-number">2</span>) &lt;&lt; endl; <span class="hljs-comment">// 12.56636</span><br><span class="hljs-comment">// 捕获临时表达式</span><br><span class="hljs-keyword">auto</span> complex_calc = [base = <span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, <span class="hljs-number">10</span>)](<span class="hljs-type">int</span> a) &#123;<br>    <span class="hljs-keyword">return</span> base + a; <span class="hljs-comment">// 1024 + a</span><br>&#125;;<br>cout &lt;&lt; <span class="hljs-built_in">complex_calc</span>(<span class="hljs-number">10</span>) &lt;&lt; endl; <span class="hljs-comment">// 1034</span><br></code></pre></td></tr></table></figure>
+<p><strong>Lambda 间传递状态</strong></p>
+<p>初始化捕获可在 Lambda 中封装状态，实现 “带状态的 Lambda”</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 带计数器的Lambda（初始化捕获计数器）</span><br><span class="hljs-keyword">auto</span> counter = [count = <span class="hljs-number">0</span>]() <span class="hljs-keyword">mutable</span> &#123;<br>    <span class="hljs-comment">// mutable：允许修改捕获变量（默认捕获变量为const）</span><br>    <span class="hljs-keyword">return</span> ++count;<br>&#125;;<br>cout &lt;&lt; <span class="hljs-built_in">counter</span>() &lt;&lt; endl; <span class="hljs-comment">// 1</span><br>cout &lt;&lt; <span class="hljs-built_in">counter</span>() &lt;&lt; endl; <span class="hljs-comment">// 2</span><br>cout &lt;&lt; <span class="hljs-built_in">counter</span>() &lt;&lt; endl; <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
+<p><strong>注意</strong>：默认情况下，Lambda 的捕获变量是<code>const</code>的，需加<code>mutable</code>关键字才能修改。</p>
+<p><strong>简化 STL 算法中的捕获逻辑</strong></p>
+<p>在 STL 算法中使用初始化捕获，避免提前定义临时变量</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++">vector&lt;<span class="hljs-type">int</span>&gt; vec = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>&#125;;<br><span class="hljs-type">int</span> target = <span class="hljs-number">3</span>;<br><span class="hljs-comment">// 初始化捕获：目标值+偏移量，简化查找逻辑</span><br><span class="hljs-keyword">auto</span> it = <span class="hljs-built_in">find_if</span>(vec.<span class="hljs-built_in">begin</span>(), vec.<span class="hljs-built_in">end</span>(), <br>    [t = target, offset = <span class="hljs-number">1</span>](<span class="hljs-type">int</span> val) &#123;<br>        <span class="hljs-keyword">return</span> val == t + offset; <span class="hljs-comment">// 查找3+1=4</span><br>    &#125;<br>);<br><span class="hljs-keyword">if</span> (it != vec.<span class="hljs-built_in">end</span>()) &#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;找到值：&quot;</span> &lt;&lt; *it &lt;&lt; endl; <span class="hljs-comment">// 4</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="核心规则与注意事项-2">核心规则与注意事项</h3>
+<p><strong>初始化捕获的本质</strong></p>
+<p>编译器将初始化捕获的变量转换为 Lambda 匿名类的<strong>成员变量</strong>，初始化逻辑在 Lambda 构造时执行</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 初始化捕获Lambda</span><br><span class="hljs-keyword">auto</span> lambda = [x = <span class="hljs-number">100</span>, y = <span class="hljs-built_in">move</span>(ptr)]() &#123; <span class="hljs-comment">/* 逻辑 */</span> &#125;;<br><br><span class="hljs-comment">// 编译器等价转换为：</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">AnonymousLambda</span> &#123;<br>    <span class="hljs-type">int</span> x;<br>    unique_ptr&lt;<span class="hljs-type">int</span>&gt; y;<br><br>    <span class="hljs-comment">// 构造函数：执行初始化</span><br>    <span class="hljs-built_in">AnonymousLambda</span>(<span class="hljs-type">int</span> x_val, unique_ptr&lt;<span class="hljs-type">int</span>&gt; y_val) <br>        : <span class="hljs-built_in">x</span>(x_val), <span class="hljs-built_in">y</span>(<span class="hljs-built_in">move</span>(y_val)) &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; <span class="hljs-comment">/* 逻辑 */</span> &#125;<br>&#125;;<br><span class="hljs-comment">// 构造时传入初始化值</span><br><span class="hljs-function">AnonymousLambda <span class="hljs-title">lambda</span><span class="hljs-params">(<span class="hljs-number">100</span>, move(ptr))</span></span>;<br></code></pre></td></tr></table></figure>
+<p><strong><code>mutable</code>关键字的使用</strong></p>
+<p>若需修改初始化捕获的变量，必须在 Lambda 参数列表后加<code>mutable</code>（解除 const 限制）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 错误：捕获变量count默认是const，无法修改</span><br><span class="hljs-keyword">auto</span> counter = [count = <span class="hljs-number">0</span>]() &#123; <span class="hljs-keyword">return</span> ++count; &#125;;<br><span class="hljs-comment">// 正确：加mutable允许修改</span><br><span class="hljs-keyword">auto</span> counter = [count = <span class="hljs-number">0</span>]() <span class="hljs-keyword">mutable</span> &#123;<br>    <span class="hljs-keyword">return</span> ++count;<br>&#125;;<br>cout &lt;&lt; <span class="hljs-built_in">counter</span>() &lt;&lt; endl; <span class="hljs-comment">// 1</span><br>cout &lt;&lt; <span class="hljs-built_in">counter</span>() &lt;&lt; endl; <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+<p><strong>生命周期与作用域</strong></p>
+<ul>
+<li>初始化捕获的变量<strong>生命周期与 Lambda 对象一致</strong>，Lambda 销毁时，捕获变量也会销毁；</li>
+<li>移动捕获的对象，原对象的生命周期不受影响，但内容已被转移；</li>
+<li>引用捕获的变量，需确保外部变量生命周期长于 Lambda，避免悬空引用。</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

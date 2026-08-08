@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机系统的层次结构 [toc] 计算机系统的组成   硬件系统和软件系统共同构成了一个完整的计算机系统。   硬件：指有形的物理设备，是计算机系统中实际物理装置的总称。   软件：指在硬件上运行的程序和相关的数据及文档。     计算机系统性能的好坏，很大程度上由软件的效率和作用来表征，而软件性能的发挥离不开硬件的支持。  对某一功能来说，若其既可用软件实现，又可用硬件实现，则称为软&#x2F;硬件在逻辑">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/1-2%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="计算机系统的层次结构 [toc] 计算机系统的组成   硬件系统和软件系统共同构成了一个完整的计算机系统。   硬件：指有形的物理设备，是计算机系统中实际物理装置的总称。   软件：指在硬件上运行的程序和相关的数据及文档。     计算机系统性能的好坏，很大程度上由软件的效率和作用来表征，而软件性能的发挥离不开硬件的支持。  对某一功能来说，若其既可用软件实现，又可用硬件实现，则称为软&#x2F;硬件在逻辑">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250923170004372.png">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250219222954667.png">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250219223042365.png">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250219223312325.png">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250219223547954.png">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250219223708753.png">
+<meta property="article:published_time" content="2026-08-08T09:30:45.820Z">
+<meta property="article:modified_time" content="2025-10-25T03:17:32.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250923170004372.png">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="计算机系统的层次结构">计算机系统的层次结构</h1>
+<p>[toc]</p>
+<h2 id="计算机系统的组成">计算机系统的组成</h2>
+<ul>
+<li>
+<p>硬件系统和软件系统共同构成了一个完整的计算机系统。</p>
+<ul>
+<li>
+<p><strong>硬件</strong>：指有形的物理设备，是计算机系统中实际物理装置的总称。</p>
+</li>
+<li>
+<p><strong>软件</strong>：指在硬件上运行的程序和相关的数据及文档。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>计算机系统性能的好坏，很大程度上由软件的效率和作用来表征，而软件性能的发挥离不开硬件的支持。</p>
+<ul>
+<li>对某一功能来说，若其既可用软件实现，又可用硬件实现，则称为软/硬件在逻辑功能上是等价的。</li>
+<li>在设计计算机系统时，要进行软/硬件的功能分配。</li>
+<li>一个功能若使用频繁且硬件实现成本理想，用硬件解决可提高效率。</li>
+</ul>
+</li>
+</ul>
+<h2 id="计算机硬件">计算机硬件</h2>
+<h3 id="冯·诺依曼机基本思想">冯·诺依曼机基本思想</h3>
+<img src="./assets/image-20250923170004372.png" srcset="/img/loading.gif" lazyload alt="image-20250923170004372" style="zoom:67%;" />
+<p>冯·诺依曼在研究EDVAC机时提出了&quot;存储程序&quot;的概念，“存储程序”的思想奠定了现代计算机的基本结构，以此概念为基础的各类计算机统称冯·诺依曼机，其特点如下：</p>
+<ol>
+<li>采用**“存储程序”的工作方式**。</li>
+<li>计算机硬件系统由<strong>运算器、存储器、控制器、输入设备和输出设备</strong>5大部件组成。</li>
+<li><strong>指令和数据以同等地位存储在存储器中，可按地址寻访</strong>，形式上没有区别，但计算机应能区分它们。</li>
+<li>指令和数据均用<strong>二进制代码表示</strong>。</li>
+<li>指令由<strong>操作码和地址码</strong>组成，操作码指出操作的类型，地址码指出操作数的地址。</li>
+<li><strong>以运算器为中心</strong>，输入输出设备与存储器间的数据传送通过运算器完成。</li>
+</ol>
+<p>“存储程序”的基本思想是：将事先编制好的程序和原始数据送入主存储器后才能执行，一旦程序被启动执行，就无须操作人员的干预，计算机会自动逐条执行指令，直至程序执行结束。</p>
+<h3 id="计算机的功能部件">计算机的功能部件</h3>
+<p><img src="./assets/image-20250219222954667.png" srcset="/img/loading.gif" lazyload alt="image-20250219222954667"></p>
+<h4 id="输入设备">输入设备</h4>
+<p>输入设备的主要功能是将程序和数据以机器所能识别和接受的信息形式输入计算机。</p>
+<h4 id="输出设备">输出设备</h4>
+<p>输出设备的任务是将计算机处理的结果以人们所能接受的形式或其他系统所要求的信息形式输出。输入/输出设备(简称I/O设备)是计算机与外界联系的桥梁，是计算机中不可缺少的重要组成部分。</p>
+<h4 id="存储器">存储器</h4>
+<ul>
+<li>
+<p>存储器分为<strong>主存储器(也称内存储器或主存)和辅助存储器(也称外存储器或外存)</strong>。</p>
+<ul>
+<li>CPU能够直接访问的存储器是主存储器。</li>
+<li>辅助存储器用于帮助主存储器记忆更多的信息，辅助存储器中的信息必须调入主存储器后，才能为CPU所访问。</li>
+<li>主存储器的工作方式是按存储单元的地址进行存取，这种存取方式称为按地址存取方式。</li>
+</ul>
+</li>
+<li>
+<p><strong>主存储器的最基本组成</strong>：</p>
+<ul>
+<li><strong>存储体</strong>存放二进制信息。
+<ul>
+<li>存储体由许多存储单元组成，每个存储单元包含若干存储元件，每个存储元件存储一位二进制代码“0”或“1”。因此存储单元可存储一串二进制代码，称这串代码为存储字，称这串代码的位数为存储字长，存储字长可以是1B(8bit)或是字节的偶数倍。</li>
+</ul>
+</li>
+<li>**存储器地址寄存器(MAR)**存放访存地址，经过地址译码后找到所选的存储单元。
+<ul>
+<li>MAR用于寻址，其位数反映最多可寻址的存储单元的个数，如MAR为10位，则最多有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>10</mn></msup><mo>=</mo><mn>1024</mn></mrow><annotation encoding="application/x-tex">2^{10}=1024</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">1024</span></span></span></span>个存储单元，记为1K。MAR的长度与PC的长度相等。</li>
+</ul>
+</li>
+<li>**存储器数据寄存器(MDR)**用于暂存要从存储器中读或写的信息，时序控制逻辑用于产生存储器操作所需的各种时序信号。
+<ul>
+<li>MDR的位数通常等于存储字长，一般为字节的2次幂的整数倍。</li>
+</ul>
+</li>
+<li>注意：MAR与MDR虽然是存储器的一部分，但在现代计算机中却是存在于CPU中的；另外，后文提到的高速缓存(Cache)也存在于CPU中。</li>
+</ul>
+</li>
+</ul>
+<h4 id="运算器">运算器</h4>
+<ul>
+<li>
+<p>运算器是计算机的执行部件，用于进行<strong>算术运算和逻辑运算</strong>。算术运算是按算术运算规则进行的运算，如加、减、乘、除；逻辑运算包括与、或、非、异或、比较、移位等运算。</p>
+</li>
+<li>
+<p>运算器的核心是<strong>算术逻辑单元(Arithmetic and Logic Unit, ALU)</strong>。运算器包含若干通用寄存器，用于暂存操作数和中间结果，如累加器(ACC)、乘商寄存器(MQ)、操作数寄存器(X)、变址寄存器(IX)、基址寄存器(BR)等，其中前三个寄存器是必须具备的。</p>
+</li>
+<li>
+<p>运算器内有<strong>程序状态寄存器(PSW)，也称标志寄存器</strong>，用于存放ALU运算得到的一些标志信息或处理机的状态信息，如结果是否溢出、有无产生进位或借位、结果是否为负等。</p>
+</li>
+</ul>
+<h4 id="控制器">控制器</h4>
+<ul>
+<li>
+<p>控制器是计算机的指挥中心，指挥各部件自动协调地进行工作。控制器由**程序计数器(PC)、指令寄存器(IR)和控制单元(CU)**组成。</p>
+</li>
+<li>
+<p>**程序计数器(PC)**用来存放当前欲执行指令的地址，具有自动加1的功能(这里的“1”指一条指令的长度)，即可自动形成下一条指令的地址，它与主存储器的MAR之间有一条直接通路。</p>
+</li>
+<li>
+<p>**指令寄存器(IR)**用来存放当前的指令，其内容来自主存储器的MDR。</p>
+<ul>
+<li>指令中的操作码OP(IR)送至<strong>控制单元(CU)</strong>，用以分析指令并发出各种微操作命令序列；</li>
+<li>而地址码Ad(IR)送往MAR，用以取操作数。</li>
+</ul>
+</li>
+<li>
+<p>一般将运算器和控制器集成到同一个芯片上，称为<strong>中央处理器(CPU)</strong>。<strong>CPU和主存储器共同构成主机</strong>，而除主机外的其他硬件装置(外存、I/O设备等)统称外部设备，简称外设。</p>
+</li>
+<li>
+<p>图12所示为冯·诺依曼结构的模型机。</p>
+<ul>
+<li>CPU包含ALU、通用寄存器组GPRS、标志寄存器、控制器、指令寄存器IR、程序计数器PC、存储器地址寄存器MAR和存储器数据寄存器MDR。</li>
+<li>图中从控制器送出的虚线就是控制信号，可以控制如何修改PC以得到下一条指令的地址，可以控制ALU执行运算，可以控制主存储器是进行读操作、写操作(读/写控制信号)。</li>
+<li>CPU和主存储器之间通过一组<strong>总线</strong>相连，总线中有地址、控制和数据3组信号线。
+<ul>
+<li>MAR中的地址信息会直接送到地址线上，用于指向读/写操作的主存储器存储单元；</li>
+<li>控制线中有读/写信号线，指出数据是从CPU写入主存储器还是从主存储器读出到CPU，根据是读操作还是写操作来控制将MDR中的数据是直接送到数据线上或是将数据线上的数据接收到MDR中。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="./assets/image-20250219223042365.png" srcset="/img/loading.gif" lazyload alt="image-20250219223042365"></p>
+<h2 id="计算机软件">计算机软件</h2>
+<h3 id="系统软件和应用软件">系统软件和应用软件</h3>
+<p>软件按其功能分类，可分为<strong>系统软件和应用软件</strong>。</p>
+<ul>
+<li><strong>系统软件</strong>：是一组保证计算机系统高效、正确运行的基础软件，通常作为系统资源提供给用户使用。主要有操作系统(OS)、数据库管理系统(DBMS)、语言处理程序、分布式软件系统、网络软件系统、标准库程序、服务性程序等。</li>
+<li><strong>应用软件</strong>：指用户为解决某个应用领域中的各类问题而编制的程序，如各种科学计算类程序、工程设计类程序、数据统计与处理程序等。</li>
+</ul>
+<p>在本学科范畴内，编写诸如操作系统、编译程序等各种系统软件的人员称为系统程序员；利用计算机及所支持的系统软件来编写解决具体应用问题的人员称为应用程序员。</p>
+<h3 id="三个级别的语言">三个级别的语言</h3>
+<ol>
+<li><strong>机器语言</strong>：也称二进制代码语言，需要编程人员记忆每条指令的二进制编码。是计算机唯一可以直接识别和执行的语言。</li>
+<li><strong>汇编语言</strong>：用英文单词或其缩写代替二进制的指令代码，更容易为人们记忆和理解。使用汇编语言编辑的程序，必须经过一个称为汇编程序的系统软件的翻译，将其转换为机器语言程序后，才能在计算机的硬件系统上执行。</li>
+<li><strong>高级语言</strong>：（如C、C++、Java等）为方便程序设计人员写出解决问题的处理方案和解题过程的程序。通常高级语言需要经过编译程序编译成汇编语言程序，然后经过汇编操作得到机器语言程序，或直接由高级语言程序翻译成机器语言程序。</li>
+</ol>
+<p>因此计算机无法直接理解和执行高级语言程序，所以需要将高级语言程序转换为机器语言程序，通常把进行这种转换的软件系统称翻译程序。翻译程序有以下三类：</p>
+<ol>
+<li><strong>汇编程序(汇编器)</strong>：将汇编语言程序翻译成机器语言程序。</li>
+<li><strong>解释程序(解释器)</strong>：将源程序中的语句按执行顺序逐条翻译成机器指令并立即执行。</li>
+<li><strong>编译程序(编译器)</strong>：将高级语言程序翻译成汇编语言或机器语言程序。</li>
+</ol>
+<h3 id="软件和硬件的逻辑功能等价性">软件和硬件的逻辑功能等价性</h3>
+<ul>
+<li>硬件实现的往往是最基本的算术和逻辑运算功能，而其他功能大多通过软件的扩充得以实现。
+<ul>
+<li><strong>软/硬件逻辑功能的等价性</strong>：对某一功能来说，既可以由硬件实现，又可以由软件实现，从用户的角度来看，它们在功能上是等价的。</li>
+<li>例如，浮点数运算既可以用专门的浮点运算器硬件实现，又可以通过一段子程序实现，这两种方法在功能上完全等效，不同的只是执行时间的长短而已，显然硬件实现的性能要优于软件实现的性能。</li>
+</ul>
+</li>
+<li>软件和硬件逻辑功能的等价性是计算机系统设计的重要依据，软件和硬件的功能分配及其界面的确定是计算机系统结构研究的重要内容。
+<ul>
+<li>当研制一台计算机时，设计者必须明确分配每一级的任务，确定哪些功能使用硬件实现，哪些功能使用软件实现。</li>
+<li>软件和硬件功能界面的划分是由设计目标、性能价格比、技术水平等综合因素决定的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="计算机系统的层次结构">计算机系统的层次结构</h2>
+<p>计算机是一个硬软件组成的综合体。因为面对的应用范围越来越广，所以必须有复杂的系统软件和硬件的支持。由于软/硬件的设计者和使用者从不同的角度、用不同的语言来对待同一个计算机系统，因此他们看到的计算机系统的属性对计算机系统提出的要求也就各不相同。</p>
+<p>计算机系统的多级层次结构的作用，就是针对上述情况，根据从各种角度所看到的机器之间的有机联系，来分清彼此之间的界面，明确各自的功能，以便构成合理、高效的计算机系统。</p>
+<p><img src="./assets/image-20250219223312325.png" srcset="/img/loading.gif" lazyload alt="image-20250219223312325"></p>
+<ol>
+<li><strong>第1级是微程序机器层</strong>：这是一个实在的硬件层，它由机器硬件直接执行微指令。</li>
+<li><strong>第2级是传统机器语言层</strong>：它也是一个实际的机器层，由微程序字解释机器指令系统。</li>
+<li><strong>第3级是操作系统层</strong>：它由操作系统程序实现。操作系统程序是由机器指令和广义指令组成的，这些广义指令是为了扩展机器功能而设置的，是由操作系统定义和解释的软件指令，所以这一层也称混合层。</li>
+<li><strong>第4级是汇编语言层</strong>：这一层由汇编程序支持和执行，借此可编写汇编语言源程序。</li>
+<li><strong>第5级是高级语言层</strong>：它是面向用户的，是为方便用户编写应用程序而设置的。该层由各种高级语言编译程序支持和执行。在高级语言层之上，还可以有应用程序层，它由解决实际问题的处理程序组成，如文字处理软件、多媒体处理软件和办公自动化软件等。</li>
+</ol>
+<p>没有配备软件的纯硬件系统称<strong>裸机</strong>。第3层~第5层称为<strong>虚拟机</strong>，简单来说就是软件实现的机器。虚拟机器只对该层的观察者存在，这里的分层和计算机网络的分层类似，对于某层的观察者来说，只能通过该层的语言来了解和使用计算机，而不必关心下层是如何工作的。</p>
+<p>层次之间的关系紧密，<strong>下层是上层的基础，上层是下层的扩展</strong>。</p>
+<p>软件和硬件之间的界面就是<strong>指令集体系结构(ISA)</strong>，ISA定义了一台计算机可以执行的所有指令的集合，每条指令规定了计算机执行什么操作，以及所处理的操作数存放的地址空间和操作数类型。可以看出，ISA是指软件能感知到的部分，也称软件可见部分。</p>
+<h2 id="计算机系统的工作原理">计算机系统的工作原理</h2>
+<h3 id="存储程序-工作方式">&quot;存储程序&quot;工作方式</h3>
+<p><img src="./assets/image-20250219223547954.png" srcset="/img/loading.gif" lazyload alt="image-20250219223547954"></p>
+<p><strong>“存储程序”工作方式</strong>规定，程序执行前，需要将程序所含的指令和数据送入主存储器，一旦程序被启动执行，就无须操作人员的干预，自动逐条完成指令的取出和执行任务。</p>
+<p>如图1.4所示，一个程序的执行就是周而复始地执行一条一条指令的过程。每条指令的执行过程包括：从主存储器中取指令、对指令进行译码、计算下条指令地址、取操作数并执行、将结果送回存储器。</p>
+<ol>
+<li>程序执行前，先将程序第一条指令的地址存放到PC中，取指令时，将PC的内容作为地址访问主存储器。</li>
+<li>在每条指令执行过程中，都需要计算下条将执行指令的地址，并送至PC。</li>
+<li>若当前指令为顺序型指令，则下条指令地址为PC的内容加上当前指令的长度；</li>
+<li>若当前指令为跳转型指令，则下条指令地址为指令中指定的目标地址。</li>
+<li>当前指令执行完后，根据PC的内容到主存储器中取出的是下一条将要执行的指令，因而计算机能周而复始地自动取出并执行一条一条的指令。</li>
+</ol>
+<h3 id="从源程序到可执行文件">从源程序到可执行文件</h3>
+<p><img src="./assets/image-20250219223708753.png" srcset="/img/loading.gif" lazyload alt="image-20250219223708753"></p>
+<p>在计算机中编写的C语言程序，都必须被转换为一系列的低级机器指令，这些指令按照一种称为可执行目标文件的格式打好包，并以二进制磁盘文件的形式存放起来。</p>
+<p>以UNIX系统中的GCC编译器程序为例，读取源程序文件<code>hello.c</code>，并把它翻译成一个可执行目标文件hello，整个翻译过程可分为四个阶段完成：</p>
+<ol>
+<li><strong>预处理阶段</strong>：
+<ul>
+<li>预处理器(<code>cpp</code>)对源程序中以字符#开头的命令进行处理</li>
+<li>例如将<code>#include</code>命令后面的<code>.h</code>文件内容插入程序文件。输出结果是一个以.i为扩展名的源文件<code>hello.i</code>。</li>
+</ul>
+</li>
+<li><strong>编译阶段</strong>：
+<ul>
+<li>编译器(<code>ccl</code>)对预处理后的源程序进行编译，生成一个汇编语言源程序<code>hello.s</code>。</li>
+<li>汇编语言源程序中的每条语句都以一种文本格式描述了一条低级机器语言指令。</li>
+</ul>
+</li>
+<li><strong>汇编阶段</strong>：
+<ul>
+<li>汇编器(<code>as</code>)将<code>hello.s</code>翻译成机器语言指令，把这些指令打包成一个称为可重定位目标文件<code>hello.o</code></li>
+<li>它是一种二进制文件，因此用文本编辑器打开会显示乱码。</li>
+</ul>
+</li>
+<li><strong>链接阶段</strong>：
+<ul>
+<li>链接器(<code>ld</code>)将多个可重定位目标文件和标准库函数合并为一个可执行目标文件，简称可执行文件。</li>
+<li>本例中，链接器将<code>hello.o</code>和标准库函数<code>printf</code>所在的可重定位目标模块<code>printf.o</code>合并，生成可执行文件<code>hello</code>。最终生成的可执行文件被保存在磁盘上。</li>
+</ul>
+</li>
+</ol>
+<h3 id="指令执行过程的描述">指令执行过程的描述</h3>
+<p>可执行文件代码段是由一条一条机器指令构成的，指令是用0和1表示的一串0/1序列，用来指示CPU完成一个特定的原子操作。</p>
+<p>例如，取数指令从存储单元中取出一个数据送到CPU的寄存器中，存数指令将CPU寄存器的内容写入一个存储单元，ALU指令将两个寄存器的内容进行某种算术或逻辑运算后送到一个CPU寄存器中，等等。</p>
+<p>下面以取数指令(送至运算器的ACC中)为例来说明，其信息流程如下：</p>
+<ol>
+<li><strong>取指令</strong>：<code>(PC)→MAR→MDR→IR</code>根据PC取指令到IR。
+<ul>
+<li>将PC的内容送MAR，MAR中的内容直接送地址线，同时控制器将读信号送读/写信号线，主存储器根据地址线上的地址和读信号，从指定存储单元读出指令，送到数据线上，MDR从数据线接收指令信息，并传送到IR中。</li>
+</ul>
+</li>
+<li><strong>分析指令</strong>：<code>OP(IR)→CU</code>指令译码并送出控制信号。
+<ul>
+<li>控制器根据IR中指令的操作码，生成相应的控制信号，送到不同的执行部件。</li>
+<li>在本例中，IR中是取数指令，因此读控制信号被送到总线的控制线上。</li>
+</ul>
+</li>
+<li><strong>执行指令</strong>：<code>Ad(IR)→MAR→MDR→MDR→ACC</code>取数操作。
+<ul>
+<li>将IR中指令的地址码送MAR，MAR中的内容送地址线，同时控制器将读信号送读/写信号线，从主存储器中读出操作数，并通过数据线送至MDR，再传送到ACC中。</li>
+</ul>
+</li>
+<li>每取完一条指令，还须为取下条指令做准备，计算下条指令的地址，即<code>(PC)+1→PC</code>。</li>
+</ol>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

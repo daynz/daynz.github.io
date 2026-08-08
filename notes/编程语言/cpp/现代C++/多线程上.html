@@ -1,0 +1,1552 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="[toc] 线程基础 C++11 首次在标准库中引入了 &lt;thread&gt; 头文件，提供了跨平台的线程操作接口，结束了 C++ 依赖操作系统 API（如 Windows 的CreateThread、Linux 的pthread）实现多线程的历史。核心特性包括线程创建、线程管理、线程标识等，是现代 C++ 并发编程的基础。 背景 C++11 前实现多线程的问题：  平台依赖：Windows">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/cpp/%E7%8E%B0%E4%BB%A3C++/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8A.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="[toc] 线程基础 C++11 首次在标准库中引入了 &lt;thread&gt; 头文件，提供了跨平台的线程操作接口，结束了 C++ 依赖操作系统 API（如 Windows 的CreateThread、Linux 的pthread）实现多线程的历史。核心特性包括线程创建、线程管理、线程标识等，是现代 C++ 并发编程的基础。 背景 C++11 前实现多线程的问题：  平台依赖：Windows">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.549Z">
+<meta property="article:modified_time" content="2026-04-21T09:48:42.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <p>[toc]</p>
+<h1 id="线程基础">线程基础</h1>
+<p>C++11 首次在标准库中引入了 <code>&lt;thread&gt;</code> 头文件，提供了跨平台的线程操作接口，结束了 C++ 依赖操作系统 API（如 Windows 的<code>CreateThread</code>、Linux 的<code>pthread</code>）实现多线程的历史。核心特性包括<strong>线程创建</strong>、<strong>线程管理</strong>、<strong>线程标识</strong>等，是现代 C++ 并发编程的基础。</p>
+<h2 id="背景">背景</h2>
+<p>C++11 前实现多线程的问题：</p>
+<ol>
+<li><strong>平台依赖</strong>：Windows 用<code>Win32 API</code>，Linux 用<code>pthread</code>，代码无法跨平台；</li>
+<li><strong>语法繁琐</strong>：需手动管理线程句柄、错误码，代码冗余；</li>
+<li><strong>类型不安全</strong>：函数指针传递易出错，缺乏类型检查。</li>
+</ol>
+<h2 id="核心概念与基础语法">核心概念与基础语法</h2>
+<h3 id="线程创建">线程创建</h3>
+<p><code>std::thread</code> 是 C++11 表示线程的核心类，创建时传入<strong>可调用对象</strong>（函数、Lambda、函数对象、<code>std::function</code>）即可启动线程。</p>
+<p><strong>关键规则</strong></p>
+<ul>
+<li><strong>线程启动</strong>：<code>std::thread</code> 对象创建时，子线程立即启动执行可调用对象；</li>
+<li><strong>线程等待</strong>：必须调用 <code>join()</code>（等待子线程结束）或 <code>detach()</code>（分离线程），否则主线程结束时会调用<code>std::terminate</code>终止程序；</li>
+<li><strong>参数传递</strong>：默认按值传递，若需传引用，需用<code>std::ref</code>/<code>std::cref</code>包装；</li>
+<li><strong>不可拷贝</strong>：<code>std::thread</code> 不支持拷贝（拷贝构造 / 赋值被删除），仅支持移动（<code>std::move</code>）。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 普通函数：线程执行体</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">thread_func</span><span class="hljs-params">(<span class="hljs-type">int</span> num, <span class="hljs-type">const</span> string&amp; msg)</span> </span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;子线程：num=&quot;</span> &lt;&lt; num &lt;&lt; <span class="hljs-string">&quot;, msg=&quot;</span> &lt;&lt; msg &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 1. 创建线程：传入可调用对象+参数</span><br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">(thread_func, <span class="hljs-number">10</span>, <span class="hljs-string">&quot;hello thread&quot;</span>)</span></span>;<br><span class="hljs-comment">// 2. 等待线程结束（必须！否则主线程退出会终止子线程）</span><br>t.<span class="hljs-built_in">join</span>();<br></code></pre></td></tr></table></figure>
+<p><strong>核心成员函数</strong></p>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>join()</code></td>
+<td>阻塞当前线程，等待子线程执行完毕（主线程等子线程）</td>
+</tr>
+<tr>
+<td><code>detach()</code></td>
+<td>分离线程：子线程后台运行，与主线程无关联，由系统回收资源（无法再 join）</td>
+</tr>
+<tr>
+<td><code>joinable()</code></td>
+<td>判断线程是否可 join/detach（未 join、未 detach、未移动则返回 true）</td>
+</tr>
+<tr>
+<td><code>get_id()</code></td>
+<td>返回线程 ID（类型<code>std::thread::id</code>），用于标识线程</td>
+</tr>
+<tr>
+<td><code>swap()</code></td>
+<td>交换两个<code>std::thread</code>对象的线程资源</td>
+</tr>
+<tr>
+<td><code>native_handle()</code></td>
+<td>返回当前线程对象对应的<strong>底层系统原生线程句柄</strong>，类型由平台决定</td>
+</tr>
+<tr>
+<td><code>std::this_thread::get_id()</code></td>
+<td>获取当前线程的 ID</td>
+</tr>
+<tr>
+<td><code>std::this_thread::sleep_for()</code></td>
+<td>当前线程休眠指定时长（如<code>sleep_for(1s)</code>）</td>
+</tr>
+<tr>
+<td><code>std::this_thread::yield()</code></td>
+<td>当前线程主动让出 CPU，让其他线程执行</td>
+</tr>
+<tr>
+<td><code>std::this_thread::sleep_until()</code></td>
+<td>让当前线程休眠，直到指定的绝对时间点到达为止</td>
+</tr>
+</tbody>
+</table>
+<h3 id="线程参数传递">线程参数传递</h3>
+<p><code>std::thread</code> 构造时：</p>
+<ol>
+<li><strong>默认会对所有参数进行【拷贝 / 移动】</strong>，不会直接传递引用！</li>
+<li>线程内部拿到的是<strong>副本</strong>，不是原变量！</li>
+<li>想传<strong>引用</strong>必须用 <code>std::ref</code> / <code>std::cref</code> 包装！</li>
+<li>传指针、动态内存要注意<strong>生命周期</strong>（主线程别提前销毁）</li>
+</ol>
+<p><strong>值传递（最安全、最常用）</strong></p>
+<p>直接传普通变量，线程内部是<strong>拷贝</strong>，互不影响。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<br>    x = <span class="hljs-number">100</span>;  <span class="hljs-comment">// 修改的是副本</span><br>&#125;<br><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">(func, a)</span></span>;  <span class="hljs-comment">// 值传递 → 拷贝</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>优点</strong>：安全，无生命周期问题</li>
+<li><strong>缺点</strong>：无法修改原变量，大对象拷贝有开销</li>
+</ul>
+<p><strong>引用传递（<code>std::ref</code>）</strong></p>
+<p>不加 ref 会编译失败 / 出错，<code>thread</code> 默认不允许隐式引用传递。直接传&amp;是<strong>传递指针值</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-type">int</span> &amp;x)</span> </span>&#123;<br>    x = <span class="hljs-number">100</span>;  <span class="hljs-comment">// 修改原变量</span><br>&#125;<br><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">(func, ref(a))</span></span>; <span class="hljs-comment">// 必须用 std::ref 包装！</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>用途</strong>：线程修改外部变量、减少拷贝开销</li>
+<li><strong>危险</strong>：必须保证变量在线程运行期间<strong>不被销毁</strong></li>
+</ul>
+<p><strong>const 引用传递（<code>std::cref</code>）</strong></p>
+<p>只读场景使用，防止意外修改：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span> &amp;x)</span> </span>&#123;&#125;<br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">(func, cref(a))</span></span>;<br></code></pre></td></tr></table></figure>
+<p><strong>指针传递</strong></p>
+<p>直接传地址，<strong>效率最高，但最危险</strong>。如果主线程先退出 / 变量先销毁，子线程访问野指针，则<strong>程序崩溃</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-type">int</span> *p)</span> </span>&#123;<br>    *p = <span class="hljs-number">100</span>;<br>&#125;<br><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">(func, &amp;a)</span></span>;<br></code></pre></td></tr></table></figure>
+<p><strong>类成员函数做线程函数</strong></p>
+<p><strong>必须传递 <code>this</code> 指针</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">int</span> num = <span class="hljs-number">10</span>;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<br>        num = x;<br>    &#125;<br>&#125;;<br>Test obj;<br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">(&amp;Test::func, &amp;obj, <span class="hljs-number">100</span>)</span></span>;<span class="hljs-comment">// 语法：线程对象，成员函数地址，对象地址，参数</span><br></code></pre></td></tr></table></figure>
+<p><strong>Lambda 表达式传参</strong></p>
+<p>Lambda 可以直接<strong>值捕获、引用捕获</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">([&amp;]() &#123;</span></span><br><span class="hljs-params"><span class="hljs-function">    a = <span class="hljs-number">100</span>;</span></span><br><span class="hljs-params"><span class="hljs-function">&#125;)</span></span>;<br></code></pre></td></tr></table></figure>
+<h2 id="线程同步基础">线程同步基础</h2>
+<p><code>&lt;thread&gt;</code> 仅提供线程创建 / 管理，多线程共享数据需同步。</p>
+<table>
+<thead>
+<tr>
+<th>头文件</th>
+<th>核心工具</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;mutex&gt;</code></td>
+<td><code>std::mutex</code></td>
+<td>基础独占互斥锁，阻塞 / 非阻塞加锁，保护临界区</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::recursive_mutex</code></td>
+<td>递归互斥锁，同一线程可多次加锁</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::timed_mutex</code></td>
+<td>带超时的独占互斥锁，支持限时等待</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::recursive_timed_mutex</code></td>
+<td>递归 + 超时互斥锁，支持重入与超时</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::shared_mutex</code> (C++17)</td>
+<td>读写共享锁，支持共享读、独占写</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::shared_timed_mutex</code> (C++17)</td>
+<td>带超时的读写共享锁</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::lock_guard</code></td>
+<td>RAII 自动锁，构造加锁、析构解锁，不可手动控制</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::unique_lock</code></td>
+<td>灵活独占锁，支持延迟加锁、手动解锁、超时、转移所有权</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::shared_lock</code> (C++17)</td>
+<td>RAII 共享读锁，专用于 shared_mutex 并发读取</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::scoped_lock</code> (C++17)</td>
+<td>多锁自动管理，同时锁定多个互斥体，避免死锁</td>
+</tr>
+<tr>
+<td><code>&lt;condition_variable&gt;</code></td>
+<td><code>std::condition_variable</code></td>
+<td>条件变量，配合 unique_lock 实现线程等待 / 唤醒</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::condition_variable_any</code></td>
+<td>通用条件变量，可配合任意锁类型（如 mutex/recursive_mutex）</td>
+</tr>
+<tr>
+<td><code>&lt;atomic&gt;</code></td>
+<td><code>std::atomic&lt;T&gt;</code></td>
+<td>原子类型，无锁线程同步，保证操作原子性</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::atomic_flag</code></td>
+<td>最简单的原子布尔类型，无等待、无拷贝</td>
+</tr>
+<tr>
+<td><code>&lt;future&gt;</code></td>
+<td><code>std::future</code></td>
+<td>异步结果获取，用于获取线程 / 异步任务的返回值</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::promise</code></td>
+<td>异步结果提供，用于向 future 传递数据 / 异常</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::packaged_task</code></td>
+<td>封装异步任务，自动关联 promise 和 future</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::async</code></td>
+<td>启动异步任务，返回 future 获取结果</td>
+</tr>
+<tr>
+<td><code>&lt;semaphore&gt;</code> (C++20)</td>
+<td><code>std::counting_semaphore</code></td>
+<td>计数信号量，用于控制并发访问数量（资源限流）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>std::binary_semaphore</code></td>
+<td>二元信号量，等效简化版互斥锁</td>
+</tr>
+<tr>
+<td><code>&lt;barrier&gt;</code> (C++20)</td>
+<td><code>std::barrier</code></td>
+<td>线程屏障，使一组线程等待至全部到达后统一执行</td>
+</tr>
+<tr>
+<td><code>&lt;latch&gt;</code> (C++20)</td>
+<td><code>std::latch</code></td>
+<td>一次性线程屏障，单次等待、不可重置</td>
+</tr>
+</tbody>
+</table>
+<h1 id="互斥与锁">互斥与锁</h1>
+<p><code>&lt;mutex&gt;</code> 头文件中提供了标准化的<strong>互斥锁（Mutex）</strong> 和<strong>锁管理工具</strong>，核心用于解决多线程共享数据的<strong>数据竞争（Data Race）</strong> 问题，保证临界区（Critical Section）代码的原子性执行。这结束了 C++ 依赖平台特定锁 API（如 Linux 的<code>pthread_mutex</code>、Windows 的<code>CRITICAL_SECTION</code>）的历史，实现了跨平台的线程同步。</p>
+<h2 id="背景-2">背景</h2>
+<p>数据竞争：多线程同时读写共享数据时，会因 CPU 调度的随机性导致数据状态错乱（数据竞争）</p>
+<p>互斥锁的核心作用是<strong>互斥访问</strong>：同一时间仅允许一个线程进入临界区，保证共享数据操作的原子性。</p>
+<h2 id="基础通用特性">基础通用特性</h2>
+<ol>
+<li><strong>独占性</strong>：互斥锁保证同一时间仅有一个线程可获取独占所有权；</li>
+<li><strong>线程所有权</strong>：仅持有锁的线程可执行解锁操作，否则触发未定义行为；</li>
+<li><strong>不可拷贝 / 移动</strong>：所有标准互斥锁均不支持拷贝构造、拷贝赋值，仅可移动；</li>
+<li><strong>RAII 安全</strong>：推荐搭配锁管理工具使用，避免手动加锁 / 解锁导致的死锁、资源泄漏。</li>
+</ol>
+<h2 id="核心互斥锁类型">核心互斥锁类型</h2>
+<table>
+<thead>
+<tr>
+<th>互斥锁类型</th>
+<th>互斥锁名称</th>
+<th>核心特性</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>std::mutex</code></td>
+<td>基础互斥锁</td>
+<td>非递归、不可超时</td>
+<td>绝大多数普通同步场景</td>
+</tr>
+<tr>
+<td><code>std::recursive_mutex</code></td>
+<td>递归互斥锁</td>
+<td>允许同一线程多次加锁（需对应次数解锁）</td>
+<td>递归函数中的同步、同一线程多次加锁</td>
+</tr>
+<tr>
+<td><code>std::timed_mutex</code></td>
+<td>带超时的互斥锁</td>
+<td>超时返回失败</td>
+<td>需避免死锁、支持超时等待的场景</td>
+</tr>
+<tr>
+<td><code>std::recursive_timed_mutex</code></td>
+<td>带超时的递归互斥锁</td>
+<td>允许同一线程多次加锁，超时返回失败</td>
+<td>递归函数 + 超时等待的场景</td>
+</tr>
+<tr>
+<td><code>std::shared_mutex</code></td>
+<td>读写共享互斥锁</td>
+<td>支持<strong>共享读 / 独占写</strong>，C++17</td>
+<td>读多写少、高并发读取场景</td>
+</tr>
+<tr>
+<td><code>std::shared_timed_mutex</code></td>
+<td>带超时的读写共享互斥锁</td>
+<td>支持共享 / 独占 + 超时，C++14</td>
+<td>读写分离 + 超时等待的高级场景</td>
+</tr>
+</tbody>
+</table>
+<h3 id="基础互斥锁：std-mutex">基础互斥锁：<code>std::mutex</code></h3>
+<p><strong>定义</strong>：C++11 标准提供的基础独占互斥锁，是线程同步的核心基础组件。</p>
+<p><strong>核心特性</strong></p>
+<ul>
+<li>非递归：同一线程不可重复加锁，重复加锁会导致死锁；</li>
+<li>无超时机制：<code>lock()</code> 会无限阻塞直至获取锁；</li>
+<li>独占访问：同一时间仅一个线程持有锁。</li>
+</ul>
+<p><strong>适用场景</strong>：无嵌套调用、无超时需求的<strong>通用临界区保护</strong>，是最常用的基础互斥锁。</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lock()</code></td>
+<td>加锁：若锁已被占用，当前线程阻塞，直到获取锁</td>
+</tr>
+<tr>
+<td><code>unlock()</code></td>
+<td>解锁：释放锁，需确保当前线程持有锁（否则未定义行为）</td>
+</tr>
+<tr>
+<td><code>try_lock()</code></td>
+<td>尝试加锁：成功返回<code>true</code>，失败返回<code>false</code>（不阻塞）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>风险</strong>：手动<code>unlock()</code>易遗漏（如临界区抛异常），导致死锁，实际开发中优先用<strong>锁管理工具</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> num = <span class="hljs-number">0</span>;<br>mutex mtx;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func_mutex</span><span class="hljs-params">()</span> </span>&#123;<br>    mtx.<span class="hljs-built_in">lock</span>();       <span class="hljs-comment">// 手动加锁</span><br>    num++;<br>    cout &lt;&lt; <span class="hljs-string">&quot;mutex: num = &quot;</span> &lt;&lt; num &lt;&lt; endl;<br>    mtx.<span class="hljs-built_in">unlock</span>();     <span class="hljs-comment">// 手动解锁</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="递归互斥锁：std-recursive-mutex">递归互斥锁：<code>std::recursive_mutex</code></h3>
+<p><strong>定义</strong>：C++11 标准提供的<strong>递归可重入</strong>互斥锁。</p>
+<p><strong>核心特性</strong></p>
+<ul>
+<li>同一线程可多次加锁，内部维护锁计数；</li>
+<li>解锁次数必须与加锁次数一致，锁才会真正释放；</li>
+<li>非超时、独占访问。</li>
+</ul>
+<p><strong>适用场景</strong>：递归函数、类成员函数嵌套调用且需要重复加锁的场景。</p>
+<p><strong>注意</strong>：<code>std::mutex</code> 在此场景下会死锁（同一线程重复加锁），<code>recursive_mutex</code> 有轻微性能开销，非必要不使用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs C++">recursive_mutex rec_mtx;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func_recursive</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;<br><br>    rec_mtx.<span class="hljs-built_in">lock</span>();   <span class="hljs-comment">// 第一次加锁</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;recursive_mutex: level &quot;</span> &lt;&lt; n &lt;&lt; endl;<br><br>    <span class="hljs-built_in">func_recursive</span>(n - <span class="hljs-number">1</span>); <span class="hljs-comment">// 递归，再次加锁</span><br><br>    rec_mtx.<span class="hljs-built_in">unlock</span>(); <span class="hljs-comment">// 必须对应次数解锁</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="带超时的互斥锁：std-timed-mutex">带超时的互斥锁：<code>std::timed_mutex</code></h3>
+<p><strong>定义</strong>：C++11 标准提供的<strong>带超时机制</strong>的非递归互斥锁。</p>
+<p><strong>核心特性</strong></p>
+<ul>
+<li>非递归可重入；</li>
+<li>支持限时等待，避免线程无限阻塞；</li>
+<li>独占访问。</li>
+</ul>
+<p><strong>适用场景</strong>：需要控制等待时间、避免死锁、高实时性要求的同步场景。</p>
+<p>支持超时等待锁，避免线程永久阻塞，核心函数：</p>
+<ul>
+<li><code>try_lock_for(时长)</code>：等待指定时长，获取锁返回<code>true</code>，超时返回<code>false</code>；</li>
+<li><code>try_lock_until(时间点)</code>：等待到指定时间点，获取锁返回<code>true</code>，超时返回<code>false</code>。</li>
+<li><strong>优势</strong>：即使临界区抛异常，<code>lock_guard</code> 析构时仍会解锁，保证锁释放。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>try_lock_for()</code></td>
+<td>在指定时长内尝试加锁，超时未获取则返回 <code>false</code></td>
+</tr>
+<tr>
+<td><code>try_lock_until()</code></td>
+<td>阻塞至指定时间点尝试加锁，超时未获取则返回 <code>false</code></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++">timed_mutex t_mtx;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func_timed</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 尝试锁 100ms，超时返回 false</span><br>    <span class="hljs-keyword">if</span> (t_mtx.<span class="hljs-built_in">try_lock_for</span>(<span class="hljs-number">100</span>ms)) &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;timed_mutex: 加锁成功&quot;</span> &lt;&lt; endl;<br>        this_thread::<span class="hljs-built_in">sleep_for</span>(<span class="hljs-number">50</span>ms);<br>        t_mtx.<span class="hljs-built_in">unlock</span>();<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;timed_mutex: 超时失败&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="带超时的可递归互斥锁：std-recursive-timed-mutex">带超时的可递归互斥锁：<code>std::recursive_timed_mutex</code></h3>
+<p><strong>定义</strong>：C++11 标准提供的<strong>递归可重入 + 超时</strong>互斥锁。</p>
+<p><strong>核心特性</strong></p>
+<ul>
+<li>支持同一线程重复加锁；</li>
+<li>支持限时获取锁；</li>
+<li>加锁 / 解锁次数必须匹配。</li>
+</ul>
+<p><strong>适用场景</strong>：递归调用逻辑中，需要超时控制的特殊复杂场景。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++">recursive_timed_mutex rec_t_mtx;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func_rec_timed</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-keyword">if</span> (rec_t_mtx.<span class="hljs-built_in">try_lock_for</span>(<span class="hljs-number">50</span>ms)) &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;recursive_timed_mutex: level &quot;</span> &lt;&lt; n &lt;&lt; endl;<br>        <span class="hljs-built_in">func_rec_timed</span>(n - <span class="hljs-number">1</span>);<br>        rec_t_mtx.<span class="hljs-built_in">unlock</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="读写共享互斥锁：std-shared-mutex">读写共享互斥锁：<code>std::shared_mutex</code></h3>
+<p><strong>定义</strong>：C++17 标准引入的<strong>读写共享互斥锁</strong>，实现<strong>共享读、独占写</strong>模型。</p>
+<p><strong>核心特性</strong></p>
+<ul>
+<li><strong>共享模式</strong>：多线程可同时获取共享锁（读锁），并发读取；</li>
+<li><strong>独占模式</strong>：仅一个线程可获取独占锁（写锁），保证写安全；</li>
+<li>写锁优先：持有写锁时，无法获取读锁，避免读线程饥饿；</li>
+<li>无超时机制。</li>
+</ul>
+<p><strong>适用场景</strong>：读操作远多于写操作的高并发场景（如配置读取、缓存查询）。</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lock_shared()</code></td>
+<td>阻塞获取<strong>共享读锁</strong>，多个线程可同时持有</td>
+</tr>
+<tr>
+<td><code>unlock_shared()</code></td>
+<td>释放共享读锁</td>
+</tr>
+<tr>
+<td><code>try_lock_shared()</code></td>
+<td>非阻塞尝试获取共享读锁，成功返回 <code>true</code>，失败返回 <code>false</code></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++">shared_mutex share_mtx;<br><span class="hljs-type">int</span> data = <span class="hljs-number">100</span>;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">read_share</span><span class="hljs-params">()</span> </span>&#123;<br>    share_mtx.<span class="hljs-built_in">lock_shared</span>();  <span class="hljs-comment">// 读锁（共享）</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;shared_mutex 读: data = &quot;</span> &lt;&lt; data &lt;&lt; endl;<br>    share_mtx.<span class="hljs-built_in">unlock_shared</span>();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">write_share</span><span class="hljs-params">(<span class="hljs-type">int</span> val)</span> </span>&#123;<br>    share_mtx.<span class="hljs-built_in">lock</span>();         <span class="hljs-comment">// 写锁（独占）</span><br>    data = val;<br>    cout &lt;&lt; <span class="hljs-string">&quot;shared_mutex 写: data = &quot;</span> &lt;&lt; data &lt;&lt; endl;<br>    share_mtx.<span class="hljs-built_in">unlock</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="带超时机制的读写共享互斥锁std-shared-timed-mutex">带超时机制的读写共享互斥锁<code>std::shared_timed_mutex</code></h3>
+<p><strong>定义</strong>：C++17 标准提供的<strong>带超时机制的读写共享互斥锁</strong>。</p>
+<p><strong>核心特性</strong></p>
+<ul>
+<li>支持共享读、独占写；</li>
+<li>支持独占锁 / 共享锁的超时获取；</li>
+<li>兼容 <code>shared_mutex</code> 全部特性。</li>
+</ul>
+<p><strong>适用场景</strong>：读写分离场景中，需要超时控制的高并发、高可用系统。</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lock_shared()</code></td>
+<td>阻塞获取共享读锁</td>
+</tr>
+<tr>
+<td><code>unlock_shared()</code></td>
+<td>释放共享读锁</td>
+</tr>
+<tr>
+<td><code>try_lock_shared()</code></td>
+<td>非阻塞尝试获取共享读锁</td>
+</tr>
+<tr>
+<td><code>try_lock_shared_for()</code></td>
+<td>限时获取共享读锁，超时返回 <code>false</code></td>
+</tr>
+<tr>
+<td><code>try_lock_shared_until()</code></td>
+<td>定时获取共享读锁，超时返回 <code>false</code></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++">shared_timed_mutex st_mtx;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">read_st</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (st_mtx.<span class="hljs-built_in">try_lock_shared_for</span>(<span class="hljs-number">100</span>ms)) &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;shared_timed_mutex 读成功&quot;</span> &lt;&lt; endl;<br>        st_mtx.<span class="hljs-built_in">unlock_shared</span>();<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">write_st</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (st_mtx.<span class="hljs-built_in">try_lock_for</span>(<span class="hljs-number">100</span>ms)) &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;shared_timed_mutex 写成功&quot;</span> &lt;&lt; endl;<br>        st_mtx.<span class="hljs-built_in">unlock</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="智能锁管理工具">智能锁管理工具</h2>
+<p>C++ 智能锁管理工具是 <code>&lt;mutex&gt;</code> 头文件中基于 RAII 原则的锁封装类，核心价值在于<strong>构造加锁、析构解锁</strong>，确保异常安全与死锁预防，避免手动 <code>lock()</code>/<code>unlock()</code> 导致的锁泄漏。</p>
+<table>
+<thead>
+<tr>
+<th>工具类</th>
+<th>标准</th>
+<th>核心定位</th>
+<th>关键特性</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>std::lock_guard</code></td>
+<td>C++11</td>
+<td>基础作用域锁</td>
+<td>构造立即加锁、析构解锁；不可手动控制、不可拷贝移动；轻量高效</td>
+<td>简单作用域内独占锁定</td>
+</tr>
+<tr>
+<td><code>std::unique_lock</code></td>
+<td>C++11</td>
+<td>灵活独占锁</td>
+<td>支持延迟 / 尝试 / 超时加锁、手动解锁、所有权转移；适配条件变量</td>
+<td>复杂同步（条件变量、超时）</td>
+</tr>
+<tr>
+<td><code>std::shared_lock</code></td>
+<td>C++17</td>
+<td>共享读锁</td>
+<td>RAII 封装 <code>std::shared_mutex</code> 的共享读权限；支持移动、不可拷贝</td>
+<td>多线程并发读取、读写分离</td>
+</tr>
+<tr>
+<td><code>std::scoped_lock</code></td>
+<td>C++17</td>
+<td>多锁安全管理器</td>
+<td>一次性锁定多个互斥体；死锁避免算法；析构统一解锁</td>
+<td>多锁临界区、需避免死锁</td>
+</tr>
+</tbody>
+</table>
+<h3 id="std-lock-guard：基础作用域锁"><code>std::lock_guard</code>：基础作用域锁</h3>
+<ul>
+<li><strong>核心特性</strong>：构造时加锁，析构时解锁，不可手动解锁，不可拷贝 / 移动；</li>
+<li><strong>适用场景</strong>：简单临界区，生命周期与作用域绑定（推荐首选）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造函数</td>
+<td><code>explicit lock_guard(Mutex&amp; m)</code>：立即锁定 <code>m</code>；<code>lock_guard(Mutex&amp; m, std::adopt_lock_t)</code>：接管已锁定的 <code>m</code></td>
+</tr>
+<tr>
+<td>析构函数</td>
+<td>自动调用 <code>m.unlock()</code>，释放锁</td>
+</tr>
+<tr>
+<td>禁用操作</td>
+<td>无 <code>lock()</code>/<code>unlock()</code>；不可拷贝、不可移动</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++">mutex mtx1;<br><span class="hljs-type">int</span> val = <span class="hljs-number">0</span>;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func_lock_guard</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">lock_guard&lt;mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(mtx1)</span></span>;  <span class="hljs-comment">// 构造即加锁，离开作用域自动解锁</span><br>    val++;<br>    cout &lt;&lt; <span class="hljs-string">&quot;lock_guard: val = &quot;</span> &lt;&lt; val &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="std-unique-lock：灵活独占锁"><code>std::unique_lock</code>：灵活独占锁</h3>
+<ul>
+<li><strong>核心特性</strong>：比<code>lock_guard</code>更灵活，支持手动加解锁、超时等待、转移锁所有权；</li>
+<li><strong>适用场景</strong>：条件变量同步，需超时等待或手动控制锁的场景，锁所有权转移（如函数返回锁）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造函数</td>
+<td>支持 <code>std::defer_lock</code>（延迟加锁）、<code>std::try_to_lock</code>（尝试加锁）、<code>std::adopt_lock</code>（接管锁）</td>
+</tr>
+<tr>
+<td><code>lock()</code></td>
+<td>阻塞加锁，仅在 <code>std::defer_lock</code> 构造时可用</td>
+</tr>
+<tr>
+<td><code>try_lock()</code></td>
+<td>非阻塞尝试加锁，成功返回 <code>true</code>，失败返回 <code>false</code></td>
+</tr>
+<tr>
+<td><code>unlock()</code></td>
+<td>手动解锁，释放锁所有权</td>
+</tr>
+<tr>
+<td><code>owns_lock()</code></td>
+<td>返回是否持有锁</td>
+</tr>
+<tr>
+<td><code>release()</code></td>
+<td>释放锁所有权，返回指向互斥体的指针，后续需手动解锁</td>
+</tr>
+<tr>
+<td>移动语义</td>
+<td>支持移动构造 / 赋值，转移锁所有权</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++">mutex mtx2;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func_unique_lock</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">unique_lock&lt;mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(mtx2)</span></span>; <span class="hljs-comment">// 灵活锁：支持延迟、尝试、解锁、转移</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;unique_lock: 已加锁&quot;</span> &lt;&lt; endl;<br><br>    lock.<span class="hljs-built_in">unlock</span>();                <span class="hljs-comment">// 可手动提前解锁</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;unique_lock: 已手动解锁&quot;</span> &lt;&lt; endl;<br><br>    lock.<span class="hljs-built_in">lock</span>();                  <span class="hljs-comment">// 可再次加锁</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;unique_lock: 再次加锁成功&quot;</span> &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="std-shared-lock：共享读锁"><code>std::shared_lock</code>：共享读锁</h3>
+<p><strong>核心原理</strong>：RAII 封装 <code>std::shared_mutex</code> 的共享读权限，支持多线程并发读取、独占写入。</p>
+<p><strong>适用场景</strong>：多读少写场景，提升并发性能（如缓存、配置读取），配合 <code>std::shared_mutex</code>/<code>std::shared_timed_mutex</code> 使用。</p>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造函数</td>
+<td>支持 <code>std::defer_lock</code>/<code>std::try_to_lock</code>/<code>std::adopt_lock</code>；共享模式锁定</td>
+</tr>
+<tr>
+<td><code>lock_shared()</code></td>
+<td>阻塞获取共享读锁</td>
+</tr>
+<tr>
+<td><code>try_lock_shared()</code></td>
+<td>非阻塞尝试获取共享读锁</td>
+</tr>
+<tr>
+<td><code>unlock_shared()</code></td>
+<td>释放共享读锁</td>
+</tr>
+<tr>
+<td>移动语义</td>
+<td>支持移动构造 / 赋值，转移共享锁所有权</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++">shared_mutex s_mtx;<br><span class="hljs-type">int</span> data = <span class="hljs-number">100</span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">read_shared_lock</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">shared_lock&lt;shared_mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(s_mtx)</span></span>; <span class="hljs-comment">// 共享读：多线程可同时持有</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;shared_lock 读取: data = &quot;</span> &lt;&lt; data &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">write_unique_lock</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">unique_lock&lt;shared_mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(s_mtx)</span></span>; <span class="hljs-comment">// 写必须独占</span><br>    data = <span class="hljs-number">200</span>;<br>    cout &lt;&lt; <span class="hljs-string">&quot;unique_lock 写入: data = &quot;</span> &lt;&lt; data &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="std-scoped-lock：多锁安全管理器"><code>std::scoped_lock</code>：多锁安全管理器</h3>
+<p><strong>核心原理</strong>：一次性锁定多个互斥体，使用死锁避免算法（同 <code>std::lock</code>），析构时统一解锁，杜绝多锁死锁。</p>
+<p><strong>适用场景</strong>：多锁临界区，需确保加锁顺序安全，替代 <code>std::lock</code> + <code>std::adopt_lock</code>，代码更简洁安全。</p>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造函数</td>
+<td><code>template &lt;class... Mutexes&gt; explicit scoped_lock(Mutexes&amp;... mutexes)</code>：锁定所有 <code>mutexes</code>；支持 <code>std::adopt_lock</code> 接管已锁互斥体</td>
+</tr>
+<tr>
+<td>析构函数</td>
+<td>对所有互斥体调用 <code>unlock()</code>，释放锁</td>
+</tr>
+<tr>
+<td>禁用操作</td>
+<td>无 <code>lock()</code>/<code>unlock()</code>；不可拷贝、不可移动</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++">mutex mtxA, mtxB;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func_scoped_lock</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">scoped_lock <span class="hljs-title">lock</span><span class="hljs-params">(mtxA, mtxB)</span></span>; <span class="hljs-comment">// 一次性锁多个，内部自动避免死锁</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;scoped_lock: 同时锁住 mtxA 和 mtxB&quot;</span> &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="全局锁工具">全局锁工具</h2>
+<h3 id="std-lock（多锁同时加锁）"><code>std::lock</code>（多锁同时加锁）</h3>
+<p><strong>核心特性</strong>：</p>
+<ol>
+<li><strong>死锁安全</strong>：内部采用<strong>未指定顺序的阻塞加锁算法</strong>，确保多个线程按不同顺序请求多把锁时<strong>不会产生死锁</strong>。</li>
+<li><strong>批量加锁</strong>：可同时锁定 2 个及以上互斥锁。</li>
+<li><strong>原子性</strong>：要么<strong>全部加锁成功</strong>，要么一个都不加锁，不会出现部分加锁状态。</li>
+<li><strong>阻塞特性</strong>：若无法获取全部锁，线程会阻塞，直到所有锁可用。</li>
+<li><strong>不拥有锁所有权</strong>：仅负责加锁，解锁需手动 / 智能锁完成。</li>
+</ol>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>同时访问<strong>多个共享资源</strong>，需要多锁同步。</li>
+<li>C++17 之前，<code>std::scoped_lock</code> 未普及的环境。</li>
+<li>必须同时获取多锁且<strong>避免死锁</strong>的场景。</li>
+</ul>
+<h3 id="一次初始化-std-call-once">一次初始化 <code>std::call_once</code></h3>
+<p><strong>配套组件</strong>：<code>std::once_flag</code>：用于标记函数是否已执行，<strong>全局 / 静态变量</strong>，不可拷贝、不可移动。</p>
+<p><strong>核心特性</strong>：</p>
+<ol>
+<li><strong>全局唯一执行</strong>：无论多少线程并发调用，目标函数<strong>只执行一次</strong>。</li>
+<li><strong>线程安全</strong>：内部无竞争，无需手动加锁。</li>
+<li><strong>高效轻量</strong>：执行完成后几乎无开销，仅读取标志位。</li>
+<li><strong>异常安全</strong>：若函数抛出异常，不算执行成功，其他线程可继续尝试执行，直到成功完成一次。</li>
+<li><strong>同步语义</strong>：函数执行完成前，所有调用线程都会阻塞。</li>
+</ol>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li><strong>单例模式</strong>（线程安全懒汉单例）。</li>
+<li><strong>初始化操作</strong>：配置加载、资源创建、SDK 初始化。</li>
+<li>任何<strong>全局唯一、仅执行一次</strong>的逻辑。</li>
+</ul>
+<p>在某些场景下（如单例模式、全局配置加载），我们需要确保某段初始化代码在整个程序生命周期中<strong>只被执行一次</strong>，即使有多个线程同时尝试执行。C++11 提供了 <code>std::call_once</code> 和 <code>std::once_flag</code> 来优雅地解决此问题，无需手动加锁。</p>
+<h3 id="std-try-lock（依次尝试锁定多个互斥锁）"><code>std::try_lock</code>（依次尝试锁定多个互斥锁）</h3>
+<p><strong>功能</strong>：非阻塞地<strong>依次尝试锁定</strong>多个互斥锁。</p>
+<ul>
+<li>若全部加锁成功：返回 <code>-1</code></li>
+<li>若某一把加锁失败：<strong>立即解锁已成功锁住的所有锁</strong>，并返回该锁的下标（从 0 开始）</li>
+<li>不会阻塞线程</li>
+</ul>
+<p><strong>典型场景</strong>：需要同时获取多把锁，但不想阻塞，失败则执行其他逻辑。</p>
+<h1 id="原子操作">原子操作</h1>
+<p>在 <code>&lt;atomic&gt;</code> 头文件中引入了<strong>原子操作（Atomic Operation）</strong> 机制，核心用于实现无锁的线程同步 —— 保证对共享数据的操作 “不可中断”，从硬件层面避免数据竞争，性能远高于互斥锁（无需上下文切换）。原子操作是轻量级同步的首选方案，适用于简单的共享数据修改（如计数器、标志位）。</p>
+<p>原子操作的核心价值：<strong>单个操作的原子性</strong>—— 对原子类型的读写 / 修改操作，CPU 会保证其在执行过程中不被其他线程打断，无需加锁即可实现同步。</p>
+<h2 id="背景-3">背景</h2>
+<p><strong>互斥锁的局限性</strong>：互斥锁虽能解决数据竞争，但存在明显缺陷：</p>
+<ol>
+<li><strong>性能开销</strong>：加锁 / 解锁涉及线程上下文切换，高频调用时性能损耗大；</li>
+<li><strong>粒度问题</strong>：锁只能保护一段代码（临界区），无法精准保护单个变量操作；</li>
+<li><strong>死锁风险</strong>：多锁场景易引发死锁。</li>
+</ol>
+<h2 id="核心概念与基础语法-2">核心概念与基础语法</h2>
+<p><strong>原子类型（std::atomic）</strong></p>
+<p><code>std::atomic</code> 是模板类，封装了基础类型（如<code>int</code>、<code>bool</code>、指针），使其支持原子操作。预定义了常用原子类型别名。</p>
+<table>
+<thead>
+<tr>
+<th>原子类型别名</th>
+<th>对应模板类型</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>std::atomic_bool</code></td>
+<td><code>std::atomic&lt;bool&gt;</code></td>
+<td>布尔标志位（如 ready）</td>
+</tr>
+<tr>
+<td><code>std::atomic_int</code></td>
+<td><code>std::atomic&lt;int&gt;</code></td>
+<td>整数计数器</td>
+</tr>
+<tr>
+<td><code>std::atomic_long</code></td>
+<td><code>std::atomic&lt;long&gt;</code></td>
+<td>长整数计数器</td>
+</tr>
+<tr>
+<td><code>std::atomic&lt;T*&gt;</code></td>
+<td><code>std::atomic&lt;指针类型&gt;</code></td>
+<td>原子指针操作</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心原子操作</strong></p>
+<p>原子类型支持两类操作：</p>
+<ul>
+<li><strong>基础操作</strong>：加载（<code>load()</code>）、存储（<code>store()</code>）、交换（<code>exchange()</code>）；</li>
+<li><strong>复合操作</strong>：比较并交换（<code>compare_exchange_weak</code>/<code>strong</code>）、加减（<code>fetch_add</code>/<code>fetch_sub</code>）等。</li>
+</ul>
+<p>所有操作均为原子性，且可指定<strong>内存序（Memory Order）</strong>（控制 CPU 缓存 / 指令重排，默认<code>memory_order_seq_cst</code>，即顺序一致性，最严格也最常用）。</p>
+<p><strong>示例（原子计数器）</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 原子计数器</span><br><span class="hljs-function">atomic_int <span class="hljs-title">count</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">increment</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000000</span>; ++i) &#123;<br>        <span class="hljs-comment">// 被重载为原子操作，无需加锁，性能比mutex + int高一个数量级。</span><br>        count++; <span class="hljs-comment">// 等价于count.fetch_add(1)，原子自增</span><br>    &#125;<br>&#125;<br><span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(increment)</span></span>;<br><span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(increment)</span></span>;<br>t<span class="hljs-number">1.</span><span class="hljs-built_in">join</span>();<br>t<span class="hljs-number">2.</span><span class="hljs-built_in">join</span>();<br>cout &lt;&lt; <span class="hljs-string">&quot;最终计数：&quot;</span> &lt;&lt; count &lt;&lt; endl; <span class="hljs-comment">// 输出2000000，无数据竞争</span><br></code></pre></td></tr></table></figure>
+<h2 id="核心原子操作">核心原子操作</h2>
+<h3 id="基础读写操作">基础读写操作</h3>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>load(mo)</code></td>
+<td>原子加载值（读取），默认<code>memory_order_seq_cst</code></td>
+</tr>
+<tr>
+<td><code>store(v, mo)</code></td>
+<td>原子存储值（写入），将值<code>v</code>存入原子变量</td>
+</tr>
+<tr>
+<td><code>exchange(v)</code></td>
+<td>原子交换：存入<code>v</code>，返回旧值</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">atomic_bool <span class="hljs-title">flag</span><span class="hljs-params">(<span class="hljs-literal">false</span>)</span></span>;<br><span class="hljs-comment">// 线程1：存储值</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">set_flag</span><span class="hljs-params">()</span> </span>&#123;<br>    flag.<span class="hljs-built_in">store</span>(<span class="hljs-literal">true</span>); <span class="hljs-comment">// 原子写入true</span><br>&#125;<br><span class="hljs-comment">// 线程2：加载值</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">check_flag</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">while</span> (!flag.<span class="hljs-built_in">load</span>()) &#123; <span class="hljs-comment">// 原子读取值</span><br>        this_thread::<span class="hljs-built_in">yield</span>(); <span class="hljs-comment">// 主动让出CPU，减少空转</span><br>    &#125;<br>    cout &lt;&lt; <span class="hljs-string">&quot;标志位已置为true&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(set_flag)</span></span>;<br><span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(check_flag)</span></span>;<br>t<span class="hljs-number">1.</span><span class="hljs-built_in">join</span>();<br>t<span class="hljs-number">2.</span><span class="hljs-built_in">join</span>();<br></code></pre></td></tr></table></figure>
+<h3 id="复合算术操作">复合算术操作</h3>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fetch_add(n)</code></td>
+<td>原子加<code>n</code>，返回操作前的旧值（等价于<code>n += x</code>，但返回旧值）</td>
+</tr>
+<tr>
+<td><code>fetch_sub(n)</code></td>
+<td>原子减<code>n</code>，返回操作前的旧值</td>
+</tr>
+<tr>
+<td><code>fetch_and(n)</code></td>
+<td>原子按位与<code>n</code>，返回旧值</td>
+</tr>
+<tr>
+<td><code>fetch_or(n)</code></td>
+<td>原子按位或<code>n</code>，返回旧值</td>
+</tr>
+<tr>
+<td><code>fetch_xor(n)</code></td>
+<td>原子按位异或<code>n</code>，返回旧值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>语法糖</strong>：C++ 重载了运算符（如<code>++</code>、<code>+=</code>），等价于对应的复合操作：</p>
+<ul>
+<li><code>count++</code> → <code>count.fetch_add(1)</code>（返回旧值）；</li>
+<li><code>++count</code> → <code>count.fetch_add(1) + 1</code>（返回新值）；</li>
+<li><code>count += 5</code> → <code>count.fetch_add(5)</code>。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">atomic_int <span class="hljs-title">num</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br><span class="hljs-type">int</span> old_val = num.<span class="hljs-built_in">fetch_add</span>(<span class="hljs-number">5</span>); <span class="hljs-comment">// old_val=10，num=15</span><br>num += <span class="hljs-number">3</span>; <span class="hljs-comment">// num=18</span><br><span class="hljs-type">int</span> new_val = ++num; <span class="hljs-comment">// new_val=19，num=19</span><br></code></pre></td></tr></table></figure>
+<h3 id="比较并交换（CAS，Compare-And-Swap）">比较并交换（CAS，Compare-And-Swap）</h3>
+<p>CAS 是原子操作的核心，也是无锁编程的基础。</p>
+<p>**核心逻辑：**若原子变量的当前值等于 “预期值”，则将其更新为 “新值”；否则不修改，返回 false。</p>
+<p><strong>CAS 的价值</strong>：实现复杂的原子逻辑（如条件更新），无需加锁。</p>
+<p><strong>核心函数</strong></p>
+<ul>
+<li>
+<p><code>compare_exchange_weak(expected, desired, mo)</code>：</p>
+<ul>
+<li>弱版本：可能因 CPU 伪唤醒失败（即使值相等），需配合循环使用；</li>
+<li>返回值：是否交换成功；</li>
+<li>若失败，<code>expected</code>会被更新为原子变量的当前值。</li>
+</ul>
+</li>
+<li>
+<p><code>compare_exchange_strong(expected, desired, mo)</code> ：</p>
+<ul>
+<li>强版本：仅当值不相等时失败，无需循环（性能略低）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>CAS 实现自定义原子操作</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">atomic_int <span class="hljs-title">val</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span></span>;<br><span class="hljs-comment">// 用CAS实现“仅当val=0时，将其设为100”</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cas_operation</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> expected = <span class="hljs-number">0</span>; <span class="hljs-comment">// 预期值</span><br>    <span class="hljs-type">int</span> desired = <span class="hljs-number">100</span>; <span class="hljs-comment">// 目标值</span><br>    <span class="hljs-comment">// 弱CAS需循环（处理伪唤醒）</span><br>    <span class="hljs-keyword">while</span> (!val.<span class="hljs-built_in">compare_exchange_weak</span>(expected, desired)) &#123;<br>        <span class="hljs-comment">// 失败时，expected已被更新为当前值，重置为0继续尝试</span><br>        expected = <span class="hljs-number">0</span>;<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-string">&quot;CAS成功，val=&quot;</span> &lt;&lt; val &lt;&lt; endl; <span class="hljs-comment">// 输出100</span><br>&#125;<br><span class="hljs-function">thread <span class="hljs-title">t</span><span class="hljs-params">(cas_operation)</span></span>;<br>t.<span class="hljs-built_in">join</span>();<br></code></pre></td></tr></table></figure>
+<h3 id="无锁原子标志-std-atomic-flag">无锁原子标志 (std::atomic_flag)</h3>
+<p><code>std::atomic&lt;bool&gt;</code> 虽然常用，但标准<strong>不保证</strong>其在所有平台上都是无锁 (lock-free) 实现的（某些架构可能需要内部锁）。<br>
+C++11 中，<strong>唯一保证无锁</strong>的原子类型是 <code>std::atomic_flag</code>。它的功能非常精简，常用于实现底层的自旋锁 (Spinlock)。</p>
+<ul>
+<li>
+<p><strong>特性</strong>：</p>
+<ul>
+<li>必须是平凡可构造的，通常使用宏 <code>ATOMIC_FLAG_INIT</code> 初始化。</li>
+<li>不支持 <code>load()</code> 或 <code>store()</code> 操作。</li>
+<li>仅支持两个操作：
+<ol>
+<li><code>test_and_set()</code>: 原子地读取当前值并设置为 <code>true</code>，返回旧值。</li>
+<li><code>clear()</code>: 原子地设置为 <code>false</code>。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>代码示例：实现一个简单的自旋锁</strong></p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;atomic&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;thread&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SpinLock</span> &#123;<br>    std::atomic_flag flag = ATOMIC_FLAG_INIT; <span class="hljs-comment">// 初始化为 false (未锁定)</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">lock</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 忙等待：如果 flag 已经是 true (被占用)，则循环测试</span><br>        <span class="hljs-keyword">while</span> (flag.<span class="hljs-built_in">test_and_set</span>(std::memory_order_acquire)) &#123;<br>            <span class="hljs-comment">// 可以在这里加入 cpu_relax() 或 yield() 减少功耗</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span> </span>&#123;<br>        flag.<span class="hljs-built_in">clear</span>(std::memory_order_release);<br>    &#125;<br>&#125;;<br>SpinLock mutex;<br><span class="hljs-type">int</span> shared_data = <span class="hljs-number">0</span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">worker</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000</span>; ++i) &#123;<br>        mutex.<span class="hljs-built_in">lock</span>();<br>        ++shared_data;<br>        mutex.<span class="hljs-built_in">unlock</span>();<br>    &#125;<br>&#125;<br>std::vector&lt;std::thread&gt; threads;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; ++i) threads.<span class="hljs-built_in">emplace_back</span>(worker);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; t : threads) t.<span class="hljs-built_in">join</span>();<br>std::cout &lt;&lt; <span class="hljs-string">&quot;Result: &quot;</span> &lt;&lt; shared_data &lt;&lt; std::endl; <span class="hljs-comment">// 预期 10000</span><br></code></pre></td></tr></table></figure>
+<p><strong>注意</strong>：自旋锁适合临界区代码执行时间极短的场景。如果持锁时间长，忙等待会浪费大量 CPU 资源，此时应优先使用 <code>std::mutex</code>。</p>
+<h2 id="原子操作-vs-互斥锁">原子操作 vs 互斥锁</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>原子操作</th>
+<th>互斥锁（std::mutex）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现层面</td>
+<td>硬件指令（如 x86 的 LOCK 前缀）</td>
+<td>操作系统内核调度</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>极高（无上下文切换）</td>
+<td>较低（上下文切换开销）</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>简单操作（计数器、标志位、CAS）</td>
+<td>复杂临界区（多步操作、多个变量）</td>
+</tr>
+<tr>
+<td>死锁风险</td>
+<td>无</td>
+<td>有（多锁场景）</td>
+</tr>
+<tr>
+<td>使用复杂度</td>
+<td>低（简单操作）/ 高（CAS / 内存序）</td>
+<td>低（RAII 工具）</td>
+</tr>
+<tr>
+<td>功能覆盖</td>
+<td>仅支持单个变量的原子操作</td>
+<td>支持任意临界区保护</td>
+</tr>
+</tbody>
+</table>
+<p><strong>选型建议</strong></p>
+<ul>
+<li><strong>优先用原子操作</strong>：共享数据仅需单个原子操作（如<code>count++</code>、<code>flag=true</code>）；</li>
+<li><strong>用互斥锁</strong>：共享数据需多步操作（如先读再改再写）、或需保护多个变量。</li>
+</ul>
+<h1 id="内存序">内存序</h1>
+<p>内存序是原子操作（<code>&lt;atomic&gt;</code>）的核心高级特性，用于<strong>控制 CPU 指令重排和多线程间的内存可见性</strong>。在多核 CPU 架构下，每个核心有独立缓存，线程对内存的读写可能因缓存同步、指令重排导致 “看到” 的内存状态不一致；内存序通过标准化的规则，约束原子操作的执行顺序和缓存可见性，是无锁编程的关键基础。</p>
+<p>内存序的核心价值：<strong>通过显式规则约束操作顺序和缓存同步，保证多线程间的内存可见性</strong>。</p>
+<h2 id="背景-4">背景</h2>
+<p>现代 CPU 为提升性能会做两项优化，这在多线程下会破坏原子操作的 “直观顺序”：</p>
+<ol>
+<li><strong>指令重排</strong>：CPU / 编译器会调整指令执行顺序（保证单线程语义不变），但多线程下会导致操作顺序错乱；</li>
+<li><strong>缓存不一致</strong>：多核 CPU 的缓存未及时同步，线程 A 修改的内存值，线程 B 可能无法立即看到。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 无内存序的问题</span><br><span class="hljs-function">atomic&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">flag</span><span class="hljs-params">(<span class="hljs-literal">false</span>)</span></span>;<br><span class="hljs-type">int</span> data = <span class="hljs-number">0</span>;<br><span class="hljs-comment">// 线程1：先写data，再置flag</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">thread1</span><span class="hljs-params">()</span> </span>&#123;<br>    data = <span class="hljs-number">100</span>;          <span class="hljs-comment">// 普通写操作</span><br>    flag.<span class="hljs-built_in">store</span>(<span class="hljs-literal">true</span>);    <span class="hljs-comment">// 原子存储（默认内存序）</span><br>&#125;<br><span class="hljs-comment">// 线程2：先查flag，再读data</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">thread2</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">while</span> (!flag.<span class="hljs-built_in">load</span>()) &#123;&#125; <span class="hljs-comment">// 原子加载</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;data = &quot;</span> &lt;&lt; data &lt;&lt; endl; <span class="hljs-comment">// 预期100，实际可能是0！</span><br>&#125;<br><span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(thread1)</span></span>;<br><span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(thread2)</span></span>;<br>t<span class="hljs-number">1.</span><span class="hljs-built_in">join</span>();<br>t<span class="hljs-number">2.</span><span class="hljs-built_in">join</span>();<br></code></pre></td></tr></table></figure>
+<p><strong>问题根源</strong>：</p>
+<ul>
+<li>编译器 / CPU 可能将<code>thread1</code>的<code>data=100</code>和<code>flag.store(true)</code>重排；</li>
+<li>即使未重排，<code>data=100</code>的修改可能仅存在于线程 1 的缓存，线程 2 无法立即看到。</li>
+</ul>
+<h2 id="核心概念与核心语义">核心概念与核心语义</h2>
+<table>
+<thead>
+<tr>
+<th>内存序</th>
+<th style="text-align:left">内存序</th>
+<th>核心语义</th>
+<th>同步保证</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>memory_order_relaxed</code></td>
+<td style="text-align:left">松散序</td>
+<td>仅保证原子性，无重排与同步约束</td>
+<td>无 Synchronizes-with，仅自身原子性</td>
+<td>独立计数器</td>
+</tr>
+<tr>
+<td><code>memory_order_release</code></td>
+<td style="text-align:left">释放序</td>
+<td>前置读写不重排到存储后</td>
+<td>释放前所有写对获取同一原子的线程可见</td>
+<td>生产者</td>
+</tr>
+<tr>
+<td><code>memory_order_acquire</code></td>
+<td style="text-align:left">获取序</td>
+<td>后续读写不重排到加载前</td>
+<td>看到释放同一原子的所有写</td>
+<td>消费者</td>
+</tr>
+<tr>
+<td><code>memory_order_consume</code></td>
+<td style="text-align:left">消费序</td>
+<td>仅对数据依赖操作生效，依赖操作不重排到加载前（不推荐使用）</td>
+<td>释放线程中依赖该原子的写，对消费线程中依赖该原子加载结果的操作可见</td>
+<td>指针发布-订阅</td>
+</tr>
+<tr>
+<td><code>memory_order_acq_rel</code></td>
+<td style="text-align:left">获取-释放序</td>
+<td>兼具 acquire 和 release 语义（不常用）</td>
+<td>加载侧 acquire，存储侧 release</td>
+<td>读-改-写同步</td>
+</tr>
+<tr>
+<td><code>memory_order_seq_cst</code></td>
+<td style="text-align:left">顺序一致序</td>
+<td>最严格，全局总顺序，所有线程观测一致（默认内存序）</td>
+<td>acquire + release + 全局总序</td>
+<td>需强一致性的核心同步点</td>
+</tr>
+</tbody>
+</table>
+<h3 id="memory-order-relaxed（松散内存序）"><code>memory_order_relaxed</code>（松散内存序）</h3>
+<p><strong>核心定义</strong></p>
+<ul>
+<li><strong>只保证原子性</strong></li>
+<li><strong>不提供任何线程间同步 / happens-before 关系</strong></li>
+<li><strong>不禁止任何指令重排</strong></li>
+</ul>
+<p><strong>重排规则</strong></p>
+<ul>
+<li>前后普通读写 <strong>可以随意重排</strong> 到原子操作前后</li>
+<li>多个 relaxed 原子操作之间 <strong>也可能重排</strong>（除非是对<strong>同一个原子变量</strong>的操作）</li>
+</ul>
+<p><strong>可见性保证</strong>：<strong>无全局可见性保证</strong><br>
+一个线程的 relaxed 写入，另一个线程可能<strong>很久后才看到</strong>，理论上甚至可以一直不可见（实际由缓存一致性决定，但标准不保证）。</p>
+<p><strong>适用场景</strong></p>
+<ul>
+<li>无同步需求的<strong>纯计数器</strong></li>
+<li>统计、采样、无锁只读指标</li>
+<li>不需要依赖其他变量状态、只关心最终结果</li>
+</ul>
+<p><strong>性能</strong>：<strong>最快</strong>，无 CPU 内存屏障开销。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test_relaxed</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000</span>; ++i) &#123;<br>        cnt.<span class="hljs-built_in">fetch_add</span>(<span class="hljs-number">1</span>, memory_order_relaxed);<br>    &#125;<br>&#125;<br><span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(test_relaxed)</span>, <span class="hljs-title">t2</span><span class="hljs-params">(test_relaxed)</span></span>;<br>t<span class="hljs-number">1.</span><span class="hljs-built_in">join</span>(); t<span class="hljs-number">2.</span><span class="hljs-built_in">join</span>();<br>cout &lt;&lt; <span class="hljs-string">&quot;relaxed 计数器最终值: &quot;</span> &lt;&lt; cnt &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+<h3 id="memory-order-release（释放内存序）"><code>memory_order_release</code>（释放内存序）</h3>
+<p><strong>核心定义</strong></p>
+<ul>
+<li><strong>写语义</strong>，只能用于<strong>存储操作 store / exchange / fetch_* 等写型原子操作</strong></li>
+<li>自带<strong>单向内存屏障</strong>：<br>
+<strong>在本线程中，所有 release 之前的读写操作，不允许重排到 release 之后</strong></li>
+<li>建立 <strong>释放语义</strong>：一旦该原子写完成，<strong>此线程之前的所有内存修改</strong>，对成功<strong>acquire 同一原子变量</strong>的线程可见。</li>
+</ul>
+<p><strong>重排规则</strong></p>
+<ul>
+<li>禁止：前面的读写 → 重排到 release 之后</li>
+<li>允许：后面的读写 → 重排到 release 之前</li>
+</ul>
+<p><strong>可见性保证</strong></p>
+<ul>
+<li>不保证对所有线程全局可见</li>
+<li>只保证：<strong>被对应 acquire 读到时</strong>，之前的修改一定可见</li>
+</ul>
+<p><strong>适用场景</strong></p>
+<ul>
+<li>生产者通知消费者：写完数据后，设置标志位</li>
+<li>与 acquire <strong>成对使用</strong>，构成获取-释放模型</li>
+</ul>
+<h3 id="memory-order-acquire（获取内存序）"><code>memory_order_acquire</code>（获取内存序）</h3>
+<p><strong>核心定义</strong></p>
+<ul>
+<li><strong>读语义</strong>，只能用于<strong>加载操作 load / CAS 等读型原子操作</strong></li>
+<li>自带<strong>单向内存屏障</strong>：<br>
+<strong>本线程中，所有 acquire 之后的读写，不允许重排到 acquire 之前</strong></li>
+<li>一旦读到由 release 写入的值，就会<strong>同步</strong>该线程 release 前的所有修改。</li>
+</ul>
+<p><strong>重排规则</strong></p>
+<ul>
+<li>禁止：后面的读写 → 重排到 acquire 之前</li>
+<li>允许：前面的读写 → 重排到 acquire 之后</li>
+</ul>
+<p><strong>可见性保证</strong></p>
+<ul>
+<li>只有当 acquire 读到<strong>由 release 写入的值</strong>时，才能看到对方线程之前的所有修改</li>
+<li>若没读到对应值，则无任何同步保证</li>
+</ul>
+<p><strong>适用场景</strong></p>
+<ul>
+<li>消费者等待生产者标志位</li>
+<li>自旋等待、无锁队列读取端</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test_release</span><span class="hljs-params">()</span> </span>&#123;<br>    x.<span class="hljs-built_in">store</span>(<span class="hljs-number">111</span>, memory_order_relaxed);       <span class="hljs-comment">// 前面的写</span><br>    y.<span class="hljs-built_in">store</span>(<span class="hljs-number">222</span>, memory_order_relaxed);<br>    <span class="hljs-comment">// release：之前所有写，不会重排到这条之后</span><br>    x.<span class="hljs-built_in">store</span>(<span class="hljs-number">999</span>, memory_order_release);<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test_acquire</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 等待看到 release 写入的值</span><br>    <span class="hljs-keyword">while</span> (x.<span class="hljs-built_in">load</span>(memory_order_acquire) != <span class="hljs-number">999</span>);<br>    <span class="hljs-comment">// 此时一定能看到 y=222</span><br>    <span class="hljs-built_in">assert</span>(y.<span class="hljs-built_in">load</span>(memory_order_relaxed) == <span class="hljs-number">222</span>);<br>&#125;<br><span class="hljs-function">thread <span class="hljs-title">t3</span><span class="hljs-params">(test_release)</span>, <span class="hljs-title">t4</span><span class="hljs-params">(test_acquire)</span></span>;<br>t<span class="hljs-number">3.</span><span class="hljs-built_in">join</span>(); t<span class="hljs-number">4.</span><span class="hljs-built_in">join</span>();<br></code></pre></td></tr></table></figure>
+<h3 id="memory-order-consume（消费内存序）"><code>memory_order_consume</code>（消费内存序）</h3>
+<p><strong>核心定义</strong></p>
+<ul>
+<li>比 acquire <strong>更轻量</strong>的读内存序</li>
+<li>只对<strong>数据依赖</strong>的操作提供同步（指针、索引链）</li>
+<li>不阻止无关指令重排，理论上性能优于 acquire</li>
+</ul>
+<p><strong>现状</strong></p>
+<ul>
+<li>C++11 设计，但<strong>编译器实现极难</strong></li>
+<li>GCC/Clang 实际都<strong>将 consume 当成 acquire 处理</strong></li>
+<li>C++20 已明确标记为<strong>不推荐使用，基本废弃</strong></li>
+<li>实际开发中<strong>永远不要用</strong>，直接用 acquire 替代</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test_consume</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> val = <span class="hljs-number">1234</span>;<br>    ptr.<span class="hljs-built_in">store</span>(&amp;val, memory_order_release);<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">run_consume</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span>* p; <span class="hljs-comment">// consume 只同步与指针有数据依赖的操作</span><br>    <span class="hljs-keyword">while</span> (!(p = ptr.<span class="hljs-built_in">load</span>(memory_order_consume)));<br>    <span class="hljs-built_in">assert</span>(*p == <span class="hljs-number">1234</span>);<span class="hljs-comment">// 依赖 p，所以能看到 *p = 1234</span><br>&#125;<br><span class="hljs-function">thread <span class="hljs-title">t5</span><span class="hljs-params">(test_consume)</span>, <span class="hljs-title">t6</span><span class="hljs-params">(run_consume)</span></span>;<br>t<span class="hljs-number">5.</span><span class="hljs-built_in">join</span>(); t<span class="hljs-number">6.</span><span class="hljs-built_in">join</span>();<br></code></pre></td></tr></table></figure>
+<h3 id="memory-order-acq-rel（获取-释放内存序）"><code>memory_order_acq_rel</code>（获取-释放内存序）</h3>
+<p><strong>核心定义</strong></p>
+<ul>
+<li><strong>同时具备 acquire + release 语义</strong></li>
+<li>只能用于**“读-改-写”原子操作**：fetch_add、exchange、compare_exchange_strong/weak</li>
+<li>操作前：相当于 acquire（禁止后续重排到前面）</li>
+<li>操作后：相当于 release（禁止前面重排到后面）</li>
+</ul>
+<p><strong>重排规则</strong></p>
+<ul>
+<li>禁止前后代码“穿过”该原子操作</li>
+<li>但<strong>不建立全局总序</strong></li>
+</ul>
+<p><strong>适用场景</strong></p>
+<ul>
+<li>无锁数据结构中的 CAS 循环、节点出入队</li>
+<li>既需要读同步，又需要写同步的<strong>单次原子操作</strong></li>
+<li>实际工程中<strong>极少手写</strong>，一般用 <code>seq_cst</code> 或分开 acquire/release 替代</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test_acq_rel</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 一次操作同时带 acquire(前) + release(后)</span><br>    <span class="hljs-type">int</span> old = cnt.<span class="hljs-built_in">fetch_add</span>(<span class="hljs-number">1</span>, memory_order_acq_rel);<br>    (<span class="hljs-type">void</span>)old;<br>&#125;<br>cnt = <span class="hljs-number">0</span>;<br><span class="hljs-function">thread <span class="hljs-title">t7</span><span class="hljs-params">(test_acq_rel)</span>, <span class="hljs-title">t8</span><span class="hljs-params">(test_acq_rel)</span></span>;<br>t<span class="hljs-number">7.</span><span class="hljs-built_in">join</span>(); t<span class="hljs-number">8.</span><span class="hljs-built_in">join</span>();<br>cout &lt;&lt; <span class="hljs-string">&quot;acq_rel fetch_add 结果: &quot;</span> &lt;&lt; cnt &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+<h3 id="memory-order-seq-cst（顺序一致性）"><code>memory_order_seq_cst</code>（顺序一致性）</h3>
+<p><code>memory_order_seq_cst</code>（原子操作<strong>默认内存序</strong>）</p>
+<p><strong>核心语义</strong></p>
+<ol>
+<li>所有线程看到的原子操作顺序，与程序“源码顺序”完全一致</li>
+<li>所有原子操作构成<strong>全局单一总序</strong></li>
+<li>自带完整内存屏障，强制缓存一致性同步</li>
+</ol>
+<p><strong>类比</strong>：所有线程按同一“全局时钟”执行原子操作，顺序绝对一致。</p>
+<p><strong>优势</strong>：最直观、最安全，完全符合直觉</p>
+<p><strong>劣势</strong>：性能最差（全屏障、禁止重排、强制全局同步）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++">atomic&lt;<span class="hljs-type">int</span>&gt; a&#123;<span class="hljs-number">0</span>&#125;, b&#123;<span class="hljs-number">0</span>&#125;;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">thread_seq1</span><span class="hljs-params">()</span> </span>&#123;<br>    a.<span class="hljs-built_in">store</span>(<span class="hljs-number">1</span>, memory_order_seq_cst);<br>    b.<span class="hljs-built_in">store</span>(<span class="hljs-number">1</span>, memory_order_seq_cst);<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">thread_seq2</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">while</span> (b.<span class="hljs-built_in">load</span>(memory_order_seq_cst) == <span class="hljs-number">0</span>);<span class="hljs-comment">// 如果看到 b=1，则一定看到 a=1</span><br>    <span class="hljs-built_in">assert</span>(a.<span class="hljs-built_in">load</span>(memory_order_seq_cst) == <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-function">thread <span class="hljs-title">t9</span><span class="hljs-params">(thread_seq1)</span>, <span class="hljs-title">t10</span><span class="hljs-params">(thread_seq2)</span></span>;<br>t<span class="hljs-number">9.</span><span class="hljs-built_in">join</span>(); t<span class="hljs-number">10.</span><span class="hljs-built_in">join</span>();<br></code></pre></td></tr></table></figure>
+<h2 id="核心使用规则">核心使用规则</h2>
+<p><strong>操作类型与内存序的匹配</strong></p>
+<table>
+<thead>
+<tr>
+<th>原子操作类型</th>
+<th>支持的内存序</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加载（load）</td>
+<td><code>seq_cst / acquire / consume / relaxed</code></td>
+<td>Acquire 读、松散读</td>
+</tr>
+<tr>
+<td>存储（store）</td>
+<td><code>seq_cst / release / relaxed</code></td>
+<td>Release 写、松散写</td>
+</tr>
+<tr>
+<td>读写（CAS/exchange）</td>
+<td><code>seq_cst / acq_rel / relaxed</code></td>
+<td>原子交换、条件更新</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键原则：“先释放，后获取”</strong>：获取 - 释放语义的核心是 “Release 操作在前，Acquire 操作在后”，且二者必须操作<strong>同一个原子变量</strong>，否则约束失效。</p>
+<p><strong>错误示例（不配对）</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">atomic&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">flag1</span><span class="hljs-params">(<span class="hljs-literal">false</span>)</span>, <span class="hljs-title">flag2</span><span class="hljs-params">(<span class="hljs-literal">false</span>)</span></span>;<br><span class="hljs-type">int</span> data = <span class="hljs-number">0</span>;<br><span class="hljs-comment">// 线程1：Release flag1</span><br>data = <span class="hljs-number">100</span>;<br>flag<span class="hljs-number">1.</span><span class="hljs-built_in">store</span>(<span class="hljs-literal">true</span>, memory_order_release);<br><span class="hljs-comment">// 线程2：Acquire flag2（与flag1无关）</span><br><span class="hljs-keyword">while</span> (!flag<span class="hljs-number">2.l</span>oad(memory_order_acquire)) &#123;&#125;<br>cout &lt;&lt; data &lt;&lt; endl; <span class="hljs-comment">// 可能看到0！</span><br></code></pre></td></tr></table></figure>
+<p><strong>避免 “数据竞争” 的核心</strong></p>
+<p>内存序仅约束<strong>原子操作</strong>的顺序 / 可见性，普通变量的读写仍需满足：</p>
+<ul>
+<li>若一个线程写普通变量，另一个线程读 / 写该变量，必须通过 “Release-Acquire 对” 或顺序一致性保证可见性；</li>
+<li>否则会触发 “数据竞争”（未定义行为）。</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

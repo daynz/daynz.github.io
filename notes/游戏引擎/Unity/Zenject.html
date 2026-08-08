@@ -1,0 +1,1069 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Extenject (Zenject) 完整API文档 Extenject（原Zenject）是Unity中轻量级且功能强大的依赖注入框架，以下是其核心API接口、类型及使用说明，聚焦于框架核心能力而非入门基础。 一、核心容器（Container）相关 1. DiContainer 核心类 DiContainer 是依赖注入的核心容器，负责实例化、解析、管理依赖关系，所有注入逻辑均围绕此类展开。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/Unity/Zenject.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="Extenject (Zenject) 完整API文档 Extenject（原Zenject）是Unity中轻量级且功能强大的依赖注入框架，以下是其核心API接口、类型及使用说明，聚焦于框架核心能力而非入门基础。 一、核心容器（Container）相关 1. DiContainer 核心类 DiContainer 是依赖注入的核心容器，负责实例化、解析、管理依赖关系，所有注入逻辑均围绕此类展开。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.353Z">
+<meta property="article:modified_time" content="2026-03-06T10:53:30.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="extenject-(zenject)-完整api文档">Extenject (Zenject) 完整API文档</h1>
+<p>Extenject（原Zenject）是Unity中轻量级且功能强大的依赖注入框架，以下是其核心API接口、类型及使用说明，聚焦于框架核心能力而非入门基础。</p>
+<h2 id="一、核心容器（Container）相关">一、核心容器（Container）相关</h2>
+<h3 id="1-DiContainer-核心类">1. DiContainer 核心类</h3>
+<p><code>DiContainer</code> 是依赖注入的核心容器，负责实例化、解析、管理依赖关系，所有注入逻辑均围绕此类展开。</p>
+<h4 id="1-1-注册（Binding）相关API">1.1 注册（Binding）相关API</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法签名</th>
+<th style="text-align:left">功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;TFrom&gt;().To&lt;TTo&gt;().AsSingle()</code></td>
+<td style="text-align:left">将 <code>TFrom</code> 绑定到 <code>TTo</code>，注册为单例（全局唯一实例）</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;TFrom&gt;().To&lt;TTo&gt;().AsTransient()</code></td>
+<td style="text-align:left">每次解析生成新实例</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;TFrom&gt;().ToSelf().AsSingle()</code></td>
+<td style="text-align:left">绑定类型到自身（<code>TFrom</code> = <code>TTo</code>）</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;T&gt;().FromInstance(T instance)</code></td>
+<td style="text-align:left">绑定已有实例到容器</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;T&gt;().FromMethod(Func&lt;DiContainer, T&gt; method)</code></td>
+<td style="text-align:left">通过自定义方法创建实例并绑定</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;T&gt;().FromComponentInNewPrefab(GameObject prefab)</code></td>
+<td style="text-align:left">从预制体实例化并绑定其内部指定组件</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;T&gt;().FromComponentInHierarchy()</code></td>
+<td style="text-align:left">从场景层级中查找指定组件并绑定</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;T&gt;().FromComponentSibling()</code></td>
+<td style="text-align:left">从当前注入对象的同级节点查找组件</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void BindInterfacesTo&lt;T&gt;().AsSingle()</code></td>
+<td style="text-align:left">将T的所有接口绑定到T自身（单例）</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;T&gt;().WithId(object identifier)</code></td>
+<td style="text-align:left">带标识绑定（区分同类型不同实例）</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Bind&lt;T&gt;().NonLazy()</code></td>
+<td style="text-align:left">立即实例化（默认延迟解析时实例化）</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Unbind&lt;T&gt;()</code></td>
+<td style="text-align:left">解绑指定类型的所有绑定</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void UnbindId&lt;T&gt;(object identifier)</code></td>
+<td style="text-align:left">解绑指定标识的绑定</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>void Rebind&lt;TFrom&gt;().To&lt;TTo&gt;().AsSingle()</code></td>
+<td style="text-align:left">重新绑定（先解绑再绑定）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1-2-解析（Resolution）相关API">1.2 解析（Resolution）相关API</h4>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>T Resolve&lt;T&gt;()</code></td>
+<td>解析指定类型的实例</td>
+<td><code>var service = Container.Resolve&lt;IService&gt;();</code></td>
+</tr>
+<tr>
+<td><code>T ResolveId&lt;T&gt;(object identifier)</code></td>
+<td>解析带指定标识的实例</td>
+<td><code>var weapon = Container.ResolveId&lt;IWeapon&gt;(&quot;Melee&quot;);</code></td>
+</tr>
+<tr>
+<td><code>bool TryResolve&lt;T&gt;(out T instance)</code></td>
+<td>尝试解析，失败时返回false（无异常）</td>
+<td><code>if (Container.TryResolve&lt;IService&gt;(out var service)) { /* 使用service */ }</code></td>
+</tr>
+<tr>
+<td><code>bool TryResolveId&lt;T&gt;(object identifier, out T instance)</code></td>
+<td>尝试解析带标识的实例</td>
+<td><code>if (Container.TryResolveId&lt;IWeapon&gt;(&quot;Ranged&quot;, out var weapon)) { /* 使用weapon */ }</code></td>
+</tr>
+<tr>
+<td><code>IEnumerable&lt;T&gt; ResolveAll&lt;T&gt;()</code></td>
+<td>解析指定类型的所有绑定实例</td>
+<td><code>var allWeapons = Container.ResolveAll&lt;IWeapon&gt;();</code></td>
+</tr>
+<tr>
+<td><code>object Resolve(Type type)</code></td>
+<td>动态解析指定Type的实例（非泛型）</td>
+<td><code>var serviceType = typeof(IService); var service = Container.Resolve(serviceType);</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="1-3-作用域（Scope）相关API">1.3 作用域（Scope）相关API</h4>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DiContainer CreateSubContainer()</code></td>
+<td>创建子容器（继承父容器绑定，独立管理实例）</td>
+<td><code>var subContainer = Container.CreateSubContainer();</code></td>
+</tr>
+<tr>
+<td><code>void InjectGameObject(GameObject gameObject)</code></td>
+<td>为GameObject及其子节点的MonoBehaviour注入依赖</td>
+<td><code>Container.InjectGameObject(PlayerObject);</code></td>
+</tr>
+<tr>
+<td><code>void Inject(object instance)</code></td>
+<td>手动为已有实例注入依赖（字段/属性/方法）</td>
+<td><code>var manager = new GameManager(); Container.Inject(manager);</code></td>
+</tr>
+<tr>
+<td><code>void InjectComponent&lt;T&gt;(T component) where T : MonoBehaviour</code></td>
+<td>手动为单个MonoBehaviour组件注入依赖</td>
+<td><code>var controller = GetComponent&lt;PlayerController&gt;(); Container.InjectComponent(controller);</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="二、注入标记（Attributes）">二、注入标记（Attributes）</h2>
+<p>Extenject通过特性标记实现自动注入，所有特性均位于 <code>Zenject</code> 命名空间下。</p>
+<h3 id="2-1-字段-属性注入">2.1 字段/属性注入</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[Inject]</code></td>
+<td>标记需要注入的字段/属性（可加标识）</td>
+<td><code>[Inject] private IService _service;</code><br><code>[Inject(Id = &quot;Melee&quot;)] private IWeapon _meleeWeapon;</code></td>
+</tr>
+<tr>
+<td><code>[InjectOptional]</code></td>
+<td>标记可选注入（无绑定也不抛异常）</td>
+<td><code>[InjectOptional] private ILogger _logger;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-2-构造函数注入">2.2 构造函数注入</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[Inject]</code></td>
+<td>标记非默认构造函数（容器优先使用此构造函数实例化）</td>
+<td><code>public class GameService { [Inject] public GameService(ISettings settings) { /* 逻辑 */ } }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-3-方法注入">2.3 方法注入</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[Inject]</code></td>
+<td>标记需要注入的方法（参数从容器解析）</td>
+<td><code>[Inject] private void Initialize(IService service) { _service = service; }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-4-标识相关">2.4 标识相关</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[Id(object identifier)]</code></td>
+<td>配合<code>[Inject]</code>使用，指定注入实例的标识</td>
+<td><code>[Inject, Id(&quot;Ranged&quot;)] private IWeapon _rangedWeapon;</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="三、安装器（Installers）">三、安装器（Installers）</h2>
+<p>安装器是Extenject中组织绑定逻辑的核心方式，所有安装器需继承 <code>MonoInstaller</code> 或 <code>Installer</code>。</p>
+<h3 id="3-1-核心安装器基类">3.1 核心安装器基类</h3>
+<table>
+<thead>
+<tr>
+<th>类名</th>
+<th>适用场景</th>
+<th>核心方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Installer&lt;TInstaller&gt;</code></td>
+<td>非MonoBehaviour安装器（纯代码绑定）</td>
+<td><code>public override void InstallBindings() { /* 绑定逻辑 */ }</code></td>
+</tr>
+<tr>
+<td><code>MonoInstaller&lt;TInstaller&gt;</code></td>
+<td>挂载到GameObject的安装器（可关联场景/预制体）</td>
+<td><code>public override void InstallBindings() { /* 绑定逻辑 */ }</code></td>
+</tr>
+<tr>
+<td><code>ScriptableObjectInstaller&lt;TInstaller&gt;</code></td>
+<td>基于ScriptableObject的安装器（可序列化配置）</td>
+<td><code>public override void InstallBindings() { /* 绑定逻辑 */ }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-2-安装器相关API">3.2 安装器相关API</h3>
+<table>
+<thead>
+<tr>
+<th>方法/属性</th>
+<th>所属类</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DiContainer Container</code></td>
+<td>所有Installer子类</td>
+<td>获取当前安装器关联的容器</td>
+<td><code>Container.Bind&lt;IService&gt;().To&lt;GameService&gt;().AsSingle();</code></td>
+</tr>
+<tr>
+<td><code>void InstallBindings()</code></td>
+<td>所有Installer子类</td>
+<td>抽象方法，必须重写以编写绑定逻辑</td>
+<td>见下文示例</td>
+</tr>
+<tr>
+<td><code>static void Install(DiContainer container)</code></td>
+<td><code>Installer&lt;T&gt;</code></td>
+<td>静态方法，手动安装指定安装器</td>
+<td><code>GameInstaller.Install(Container);</code></td>
+</tr>
+<tr>
+<td><code>void InstallFromResource&lt;T&gt;(string resourcePath)</code></td>
+<td><code>DiContainer</code></td>
+<td>从Resources加载ScriptableObjectInstaller并安装</td>
+<td><code>Container.InstallFromResource&lt;SettingsInstaller&gt;(&quot;Installers/SettingsInstaller&quot;);</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="示例：自定义安装器">示例：自定义安装器</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> Zenject;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">GameInstaller</span> : <span class="hljs-title">MonoInstaller</span>&lt;<span class="hljs-title">GameInstaller</span>&gt;<br>&#123;<br>    [<span class="hljs-meta">SerializeField</span>] <span class="hljs-keyword">private</span> GameObject _playerPrefab;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">InstallBindings</span>()</span><br>    &#123;<br>        <span class="hljs-comment">// 绑定服务</span><br>        Container.Bind&lt;IService&gt;().To&lt;GameService&gt;().AsSingle();<br>        <span class="hljs-comment">// 绑定预制体组件</span><br>        Container.Bind&lt;PlayerController&gt;().FromComponentInNewPrefab(_playerPrefab).AsSingle();<br>        <span class="hljs-comment">// 绑定接口到多个实现</span><br>        Container.Bind&lt;IWeapon&gt;().To&lt;Sword&gt;().WithId(<span class="hljs-string">&quot;Melee&quot;</span>).AsSingle();<br>        Container.Bind&lt;IWeapon&gt;().To&lt;Bow&gt;().WithId(<span class="hljs-string">&quot;Ranged&quot;</span>).AsSingle();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="四、工厂（Factories）">四、工厂（Factories）</h2>
+<p>Extenject提供工厂模式封装，简化动态实例化逻辑，核心工厂类型如下：</p>
+<h3 id="4-1-基础工厂接口">4.1 基础工厂接口</h3>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>功能说明</th>
+<th>生成方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IFactory&lt;TResult&gt;</code></td>
+<td>无参工厂</td>
+<td><code>Container.BindFactory&lt;PlayerController, PlayerController.Factory&gt;();</code></td>
+</tr>
+<tr>
+<td><code>IFactory&lt;T1, TResult&gt;</code></td>
+<td>单参数工厂</td>
+<td><code>Container.BindFactory&lt;WeaponType, IWeapon, IWeapon.Factory&gt;();</code></td>
+</tr>
+<tr>
+<td><code>IFactory&lt;T1, T2, TResult&gt;</code></td>
+<td>双参数工厂</td>
+<td><code>Container.BindFactory&lt;Vector3, Quaternion, Enemy, Enemy.Factory&gt;();</code></td>
+</tr>
+<tr>
+<td><code>IValidatableFactory&lt;TResult&gt;</code></td>
+<td>可验证的无参工厂</td>
+<td>继承后实现<code>Validate()</code>方法校验参数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-2-工厂绑定API">4.2 工厂绑定API</h3>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void BindFactory&lt;TParam, TResult, TFactory&gt;()</code></td>
+<td>绑定参数化工厂</td>
+<td><code>Container.BindFactory&lt;string, UIView, UIView.Factory&gt;().FromComponentInNewPrefab(UIViewPrefab);</code></td>
+</tr>
+<tr>
+<td><code>void BindFactory&lt;TResult, TFactory&gt;().FromPool&lt;TPool&gt;()</code></td>
+<td>工厂关联对象池</td>
+<td><code>Container.BindFactory&lt;Bullet, Bullet.Factory&gt;().FromPool&lt;BulletPool&gt;();</code></td>
+</tr>
+<tr>
+<td><code>void BindFactory&lt;TResult, TFactory&gt;().FromMethod(Func&lt;DiContainer, TResult&gt; method)</code></td>
+<td>工厂通过自定义方法创建实例</td>
+<td><code>Container.BindFactory&lt;IService, IService.Factory&gt;().FromMethod(container =&gt; new TestService());</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="示例：自定义工厂">示例：自定义工厂</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> Zenject;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Enemy</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Factory</span> : <span class="hljs-title">PlaceholderFactory</span>&lt;<span class="hljs-title">EnemyType</span>, <span class="hljs-title">Enemy</span>&gt; &#123; &#125;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> EnemyType _type;<br>    <br>    [<span class="hljs-meta">Inject</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Enemy</span>(<span class="hljs-params">EnemyType type, IEnemyAI ai</span>)</span><br>    &#123;<br>        _type = type;<br>        <span class="hljs-comment">// 逻辑</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 安装器中绑定</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EnemyInstaller</span> : <span class="hljs-title">MonoInstaller</span>&lt;<span class="hljs-title">EnemyInstaller</span>&gt;<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">InstallBindings</span>()</span><br>    &#123;<br>        Container.BindFactory&lt;EnemyType, Enemy, Enemy.Factory&gt;()<br>            .FromMethod((container, type) =&gt; <br>            &#123;<br>                <span class="hljs-keyword">var</span> ai = container.ResolveId&lt;IEnemyAI&gt;(type.ToString());<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Enemy(type, ai);<br>            &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="五、对象池（Pools）">五、对象池（Pools）</h2>
+<p>Extenject内置对象池实现，简化重复实例化对象的管理，核心类型为 <code>MemoryPool</code>。</p>
+<h3 id="5-1-核心池类">5.1 核心池类</h3>
+<table>
+<thead>
+<tr>
+<th>类名</th>
+<th>功能说明</th>
+<th>核心方法/重写点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MemoryPool&lt;TResult&gt;</code></td>
+<td>基础无参对象池</td>
+<td><code>protected override TResult Create() { /* 创建实例 */ }</code><br><code>protected override void Reinitialize(TResult item) { /* 重置实例 */ }</code><br><code>protected override void OnDespawned(TResult item) { /* 回收时逻辑 */ }</code></td>
+</tr>
+<tr>
+<td><code>MemoryPool&lt;TParam, TResult&gt;</code></td>
+<td>单参数对象池</td>
+<td><code>protected override TResult Create(TParam param) { /* 带参数创建 */ }</code></td>
+</tr>
+<tr>
+<td><code>MonoPoolableMemoryPool&lt;TResult&gt;</code></td>
+<td>针对MonoBehaviour的对象池</td>
+<td>自动处理GameObject激活/失活</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-2-池绑定API">5.2 池绑定API</h3>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void BindMemoryPool&lt;TResult, TPool&gt;()</code></td>
+<td>绑定对象池</td>
+<td><code>Container.BindMemoryPool&lt;Bullet, BulletPool&gt;().WithInitialSize(10).FromComponentInNewPrefab(BulletPrefab);</code></td>
+</tr>
+<tr>
+<td><code>void WithInitialSize(int size)</code></td>
+<td>设置池初始容量</td>
+<td>见上例</td>
+</tr>
+<tr>
+<td><code>void ExpandByOneAtATime()</code></td>
+<td>池耗尽时每次扩容1个</td>
+<td><code>Container.BindMemoryPool&lt;Enemy, EnemyPool&gt;().ExpandByOneAtATime();</code></td>
+</tr>
+<tr>
+<td><code>void WithMaxSize(int maxSize)</code></td>
+<td>设置池最大容量（超出后抛异常）</td>
+<td><code>Container.BindMemoryPool&lt;Bullet, BulletPool&gt;().WithMaxSize(50);</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="示例：自定义对象池">示例：自定义对象池</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> Zenject;<br><span class="hljs-keyword">using</span> UnityEngine;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Bullet</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Pool</span> : <span class="hljs-title">MonoPoolableMemoryPool</span>&lt;<span class="hljs-title">Bullet</span>&gt;<br>    &#123;<br>        <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnSpawned</span>(<span class="hljs-params">Bullet item</span>)</span><br>        &#123;<br>            item.gameObject.SetActive(<span class="hljs-literal">true</span>);<br>            item.ResetPosition();<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnDespawned</span>(<span class="hljs-params">Bullet item</span>)</span><br>        &#123;<br>            item.gameObject.SetActive(<span class="hljs-literal">false</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ResetPosition</span>()</span><br>    &#123;<br>        transform.position = Vector3.zero;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 安装器中绑定</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BulletInstaller</span> : <span class="hljs-title">MonoInstaller</span>&lt;<span class="hljs-title">BulletInstaller</span>&gt;<br>&#123;<br>    [<span class="hljs-meta">SerializeField</span>] <span class="hljs-keyword">private</span> GameObject _bulletPrefab;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">InstallBindings</span>()</span><br>    &#123;<br>        Container.BindMemoryPool&lt;Bullet, Bullet.Pool&gt;()<br>            .WithInitialSize(<span class="hljs-number">10</span>)<br>            .WithMaxSize(<span class="hljs-number">30</span>)<br>            .FromComponentInNewPrefab(_bulletPrefab)<br>            .UnderTransformGroup(<span class="hljs-string">&quot;Bullets&quot;</span>); <span class="hljs-comment">// 实例化后归到指定父节点</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="六、信号与信号器（Signals）">六、信号与信号器（Signals）</h2>
+<p>Extenject的信号系统实现发布-订阅模式，与容器集成实现依赖注入。</p>
+<h3 id="6-1-核心信号类型">6.1 核心信号类型</h3>
+<table>
+<thead>
+<tr>
+<th>类/接口</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Signal</code></td>
+<td>基础无参信号</td>
+<td>继承后定义信号</td>
+</tr>
+<tr>
+<td><code>Signal&lt;T&gt;</code></td>
+<td>单参数信号</td>
+<td><code>public class EnemyDiedSignal : Signal&lt;Enemy&gt; { }</code></td>
+</tr>
+<tr>
+<td><code>Signal&lt;T1, T2&gt;</code></td>
+<td>双参数信号</td>
+<td><code>public class PlayerDamagedSignal : Signal&lt;Player, int&gt; { }</code></td>
+</tr>
+<tr>
+<td><code>ISignalBus</code></td>
+<td>信号总线（管理信号的发布/订阅）</td>
+<td>容器自动绑定，可注入使用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-2-信号绑定与使用API">6.2 信号绑定与使用API</h3>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void BindSignal&lt;TSignal&gt;()</code></td>
+<td>绑定信号到容器</td>
+<td><code>Container.BindSignal&lt;EnemyDiedSignal&gt;();</code></td>
+</tr>
+<tr>
+<td><code>void BindSignal&lt;TSignal&gt;().ToMethod&lt;TTarget&gt;(TTarget target, Action method)</code></td>
+<td>信号订阅指定方法</td>
+<td><code>Container.BindSignal&lt;EnemyDiedSignal&gt;().ToMethod&lt;GameManager&gt;(_gameManager, gm =&gt; gm.OnEnemyDied);</code></td>
+</tr>
+<tr>
+<td><code>void BindSignal&lt;TSignal&gt;().ToMethod(Action method)</code></td>
+<td>信号订阅无目标方法</td>
+<td><code>Container.BindSignal&lt;GameOverSignal&gt;().ToMethod(OnGameOver);</code></td>
+</tr>
+<tr>
+<td><code>void UnbindSignal&lt;TSignal&gt;()</code></td>
+<td>解绑信号所有订阅</td>
+<td><code>Container.UnbindSignal&lt;EnemyDiedSignal&gt;();</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="示例：信号使用">示例：信号使用</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> Zenject;<br><br><span class="hljs-comment">// 定义信号</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PlayerScoreChangedSignal</span> : <span class="hljs-title">Signal</span>&lt;<span class="hljs-title">int</span>&gt; &#123; &#125;<br><br><span class="hljs-comment">// 订阅者</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UIScoreDisplay</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> SignalBus _signalBus;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Start</span>()</span><br>    &#123;<br>        _signalBus.Subscribe&lt;PlayerScoreChangedSignal&gt;(OnScoreChanged);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnScoreChanged</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> newScore</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// 更新UI显示</span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnDestroy</span>()</span><br>    &#123;<br>        _signalBus.Unsubscribe&lt;PlayerScoreChangedSignal&gt;(OnScoreChanged);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 发布者</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PlayerController</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> SignalBus _signalBus;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AddScore</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> points</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// 发布信号</span><br>        _signalBus.Fire(<span class="hljs-keyword">new</span> PlayerScoreChangedSignal(points));<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 安装器绑定</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SignalInstaller</span> : <span class="hljs-title">MonoInstaller</span>&lt;<span class="hljs-title">SignalInstaller</span>&gt;<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">InstallBindings</span>()</span><br>    &#123;<br>        Container.BindSignal&lt;PlayerScoreChangedSignal&gt;();<br>        Container.Bind&lt;SignalBus&gt;().AsSingle();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="七、验证与调试（Validation-Debugging）">七、验证与调试（Validation &amp; Debugging）</h2>
+<h3 id="7-1-验证API">7.1 验证API</h3>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void Validate()</code></td>
+<td>验证容器所有绑定是否可解析（提前暴露依赖缺失问题）</td>
+<td><code>Container.Validate();</code></td>
+</tr>
+<tr>
+<td><code>void ValidateResolve&lt;T&gt;()</code></td>
+<td>验证指定类型是否可解析</td>
+<td><code>Container.ValidateResolve&lt;IService&gt;();</code></td>
+</tr>
+<tr>
+<td><code>void ValidateResolveId&lt;T&gt;(object identifier)</code></td>
+<td>验证带标识的类型是否可解析</td>
+<td><code>Container.ValidateResolveId&lt;IWeapon&gt;(&quot;Melee&quot;);</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-2-调试属性-方法">7.2 调试属性/方法</h3>
+<table>
+<thead>
+<tr>
+<th>成员</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bool EnableDiagrams</code></td>
+<td>启用依赖关系图生成（需在Unity编辑器设置）</td>
+</tr>
+<tr>
+<td><code>void DumpBindings()</code></td>
+<td>打印所有绑定信息到控制台</td>
+</tr>
+<tr>
+<td><code>DiContainerDebugWindow</code></td>
+<td>Unity编辑器窗口，可视化容器绑定和实例</td>
+</tr>
+</tbody>
+</table>
+<h2 id="八、高级特性API">八、高级特性API</h2>
+<h3 id="8-1-条件绑定">8.1 条件绑定</h3>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void Bind&lt;T&gt;().When(Func&lt;InjectContext, bool&gt; condition)</code></td>
+<td>仅当条件满足时生效绑定</td>
+<td><code>Container.Bind&lt;IService&gt;().To&lt;MobileService&gt;().When(ctx =&gt; Application.platform == RuntimePlatform.Android);</code></td>
+</tr>
+<tr>
+<td><code>void Bind&lt;T&gt;().WhenInjectedInto&lt;TTarget&gt;()</code></td>
+<td>仅当注入到指定类型时生效</td>
+<td><code>Container.Bind&lt;IInput&gt;().To&lt;MobileInput&gt;().WhenInjectedInto&lt;MobilePlayerController&gt;();</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-2-装饰器（Decorators）">8.2 装饰器（Decorators）</h3>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void Bind&lt;TFrom&gt;().To&lt;TTo&gt;().WithDecoration&lt;TDecorator&gt;()</code></td>
+<td>为绑定类型添加装饰器（包装原实例）</td>
+<td><code>Container.Bind&lt;IService&gt;().To&lt;GameService&gt;().WithDecoration&lt;LoggingServiceDecorator&gt;();</code></td>
+</tr>
+<tr>
+<td><code>void Bind&lt;TFrom&gt;().To&lt;TTo&gt;().WithDecorator(Func&lt;TFrom, TFrom&gt; decorator)</code></td>
+<td>自定义装饰器逻辑</td>
+<td><code>Container.Bind&lt;IService&gt;().To&lt;GameService&gt;().WithDecorator(original =&gt; new CachedService(original));</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-3-延迟注入">8.3 延迟注入</h3>
+<table>
+<thead>
+<tr>
+<th>特性/方法</th>
+<th>功能说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[InjectLazy]</code></td>
+<td>延迟注入（首次访问时才解析）</td>
+<td><code>[InjectLazy] private Lazy&lt;IService&gt; _lazyService;</code></td>
+</tr>
+<tr>
+<td><code>Lazy&lt;T&gt; ResolveLazy&lt;T&gt;()</code></td>
+<td>解析延迟加载的实例</td>
+<td><code>var lazyService = Container.ResolveLazy&lt;IService&gt;();</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="九、命名空间说明">九、命名空间说明</h2>
+<p>Extenject核心API均位于以下命名空间，使用时需引入：</p>
+<ul>
+<li><code>Zenject</code>：核心容器、特性、安装器、工厂、池、信号等</li>
+<li><code>Zenject.Signals</code>：信号相关扩展</li>
+<li><code>Zenject.Poolable</code>：对象池相关扩展</li>
+<li><code>Zenject.SpaceFiller</code>：辅助工具（较少使用）</li>
+</ul>
+<h2 id="注意事项">注意事项</h2>
+<ol>
+<li>所有绑定逻辑建议在<code>InstallBindings</code>方法中完成，避免运行时动态绑定导致的不可预测性；</li>
+<li>MonoBehaviour的注入需确保<code>InjectGameObject</code>或<code>InjectComponent</code>被调用，或通过<code>SceneContext</code>/<code>GameObjectContext</code>自动注入；</li>
+<li>子容器的实例不会被父容器管理，需手动处理生命周期；</li>
+<li>验证功能仅在开发阶段使用，发布时建议关闭以提升性能。</li>
+</ol>
+<p>此文档覆盖Extenject核心API，如需更细节的场景化用法，可参考官方仓库的示例项目（<a target="_blank" rel="noopener" href="https://github.com/Mathijs-Bakker/Extenject/tree/master/UnityProject/Assets/Extenject/Examples%EF%BC%89%E3%80%82">https://github.com/Mathijs-Bakker/Extenject/tree/master/UnityProject/Assets/Extenject/Examples）。</a></p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

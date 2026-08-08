@@ -1,0 +1,601 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="算法小技巧 力扣重点题 二叉树 94. 二叉树的中序遍历 ：中序遍历（迭代） 104. 二叉树的最大深度 ：DFS（迭代） 226. 翻转二叉树 ：先序遍历（递归） 101. 对称二叉树 ：双指针遍历 543. 二叉树的直径 ：DFS（递归） 102. 二叉树的层序遍历 ：BFS 108. 将有序数组转换为二叉搜索树 ：先序遍历（递归） 98. 验证二叉搜索树 ：先序遍历（递归） 中序遍历（迭代）">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="算法小技巧 力扣重点题 二叉树 94. 二叉树的中序遍历 ：中序遍历（迭代） 104. 二叉树的最大深度 ：DFS（迭代） 226. 翻转二叉树 ：先序遍历（递归） 101. 对称二叉树 ：双指针遍历 543. 二叉树的直径 ：DFS（递归） 102. 二叉树的层序遍历 ：BFS 108. 将有序数组转换为二叉搜索树 ：先序遍历（递归） 98. 验证二叉搜索树 ：先序遍历（递归） 中序遍历（迭代）">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.796Z">
+<meta property="article:modified_time" content="2026-03-20T03:35:16.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="算法小技巧">算法小技巧</h1>
+<h2 id="力扣重点题">力扣重点题</h2>
+<h3 id="二叉树">二叉树</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-inorder-traversal/">94. 二叉树的中序遍历</a> ：中序遍历（迭代）</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-depth-of-binary-tree/">104. 二叉树的最大深度</a> ：DFS（迭代）</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/invert-binary-tree/">226. 翻转二叉树</a> ：先序遍历（递归）</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/symmetric-tree/">101. 对称二叉树</a> ：双指针遍历</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/diameter-of-binary-tree/">543. 二叉树的直径</a> ：DFS（递归）</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-level-order-traversal/">102. 二叉树的层序遍历</a> ：BFS</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/">108. 将有序数组转换为二叉搜索树</a> ：先序遍历（递归）</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/validate-binary-search-tree/">98. 验证二叉搜索树</a> ：先序遍历（递归） 中序遍历（迭代）</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/kth-smallest-element-in-a-bst/">230. 二叉搜索树中第 K 小的元素</a> ：中序遍历（迭代）（递归）</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-right-side-view/">199. 二叉树的右视图</a> ：层序遍历</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">105. 从前序与中序遍历序列构造二叉树</a> todo：迭代</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/path-sum-iii/">437. 路径总和 III</a> 两次先序遍历 todo：前缀和</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/">236. 二叉树的最近公共祖先</a> LCA DFS</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-maximum-path-sum/">124. 二叉树中的最大路径和</a> DFS 贡献值</p>
+<h2 id="变量类型选择">变量类型选择</h2>
+<table>
+<thead>
+<tr>
+<th>应用场景</th>
+<th>推荐类型</th>
+<th>备选类型</th>
+<th>绝对避免</th>
+<th>核心避坑要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数组/容器下标、循环计数（n≤1e6）</td>
+<td>int</td>
+<td>size_t</td>
+<td>long long、unsigned int</td>
+<td>1. int足够覆盖1e6量级；2. 用size_t需避免负数循环（如i–到0时溢出）</td>
+</tr>
+<tr>
+<td>小数值运算（仅加减，≤2e9）</td>
+<td>int</td>
+<td>long long</td>
+<td>unsigned int</td>
+<td>仅适用于无乘法/累加溢出风险的场景（如纯计数）</td>
+</tr>
+<tr>
+<td>中等/大数值运算（&gt;2e9或含乘法）</td>
+<td>long long</td>
+<td>-</td>
+<td>int、unsigned long long</td>
+<td>1. 乘法（如n²）、累加必用；2. 即使结果≤2e9，中间步骤也需用（避免溢出）</td>
+</tr>
+<tr>
+<td>取模运算（如1e9+7）</td>
+<td>long long</td>
+<td>-</td>
+<td>int</td>
+<td>模前计算过程易溢出，全程用long long</td>
+</tr>
+<tr>
+<td>浮点数计算（几何、小数）</td>
+<td>double</td>
+<td>long double</td>
+<td>float</td>
+<td>1. 比较用<code>fabs(a-b) &lt; 1e-8</code>；2. float精度仅6~7位，易丢精度</td>
+</tr>
+<tr>
+<td>单个字符处理（ASCII操作）</td>
+<td>char</td>
+<td>-</td>
+<td>int（语义不清晰）</td>
+<td>范围判断用<code>&gt;= 'a' &amp;&amp; &lt;= 'z'</code>，避免直接用数值对比</td>
+</tr>
+<tr>
+<td>字符串存储（任意长度、含空格）</td>
+<td>string</td>
+<td>char[]</td>
+<td>-</td>
+<td>1. 优先用string（自动管理内存）；2. 读带空格字符串用getline</td>
+</tr>
+<tr>
+<td>布尔判断/状态标记（是/否）</td>
+<td>bool</td>
+<td>int（0/1）</td>
+<td>-</td>
+<td>比int更易读，仅占1字节，适合标记数组（如visited[]）</td>
+</tr>
+<tr>
+<td>长度/尺寸类变量（非负）</td>
+<td>size_t（可选）</td>
+<td>int/long long</td>
+<td>unsigned int</td>
+<td>1. 仅无负数场景用size_t；2. 新手可直接用int，避免无符号溢出</td>
+</tr>
+<tr>
+<td>位运算/状态压缩（≤32位）</td>
+<td>int</td>
+<td>long long</td>
+<td>bool、size_t</td>
+<td>32位int可覆盖大部分状态压缩场景，64位用long long</td>
+</tr>
+<tr>
+<td>位运算/状态压缩（&gt;32位）</td>
+<td>long long</td>
+<td>-</td>
+<td>int、size_t</td>
+<td>64位long long可处理更多状态位</td>
+</tr>
+<tr>
+<td>高精度运算（&gt;1e18）</td>
+<td>字符串模拟</td>
+<td>-</td>
+<td>long long、unsigned</td>
+<td>内置类型无法覆盖，需手动实现大数加减乘除</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><strong>优先级原则</strong>：数值运算优先选 <code>long long</code>，下标/计数优先选 <code>int</code>，小数优先选 <code>double</code>，正确性 &gt; 语义规范性；</li>
+<li><strong>无符号类型慎用</strong>：<code>unsigned int</code>/<code>unsigned long long</code> 仅在极特殊场景（如底层内存操作）使用，算法题中几乎用不到，易触发负数溢出坑；</li>
+<li><strong>类型匹配</strong>：容器/数组的数值存储类型需和运算类型一致（如 <code>vector&lt;long long&gt;</code> 而非 <code>vector&lt;int&gt;</code> 存大数）。</li>
+</ol>
+<h2 id="输入输出">输入输出</h2>
+<p>在算法考试的 ACM 模式中，<strong>输入处理</strong>是最容易出错的环节之一（比如你之前遇到的空格/换行问题），掌握输入技巧能大幅减少调试时间。以下是针对 C++ 语言的核心输入技巧，覆盖绝大多数考试场景：</p>
+<h3 id="基础输入：数字-无空格字符串（cin-直接读）">基础输入：数字/无空格字符串（cin 直接读）</h3>
+<p>适用于：输入为纯数字、无空格的字符串（如单词、密码）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 场景1：单个数字/字符串</span><br><span class="hljs-type">int</span> n;<br>string s;<br>cin &gt;&gt; n &gt;&gt; s; <span class="hljs-comment">// 自动跳过空格、换行、制表符等空白字符</span><br><br><span class="hljs-comment">// 场景2：多行/多个数字（如第一行n，第二行n个整数）</span><br><span class="hljs-type">int</span> n;<br>cin &gt;&gt; n;<br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nums</span><span class="hljs-params">(n)</span></span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>    cin &gt;&gt; nums[i]; <span class="hljs-comment">// 无需关心换行，cin 自动跳过空白</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>关键特性</strong>：<code>cin &gt;&gt;</code> 会自动忽略<strong>所有空白字符</strong>（空格、换行、制表符），直到读取到有效字符。</p>
+<h3 id="带空格的整行字符串（getline）">带空格的整行字符串（<code>getline</code>）</h3>
+<p>适用于：输入包含空格的字符串、整行文本。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 场景：先读数字n，再读长度为n的带空格字符串</span><br><span class="hljs-type">int</span> n;<br>cin &gt;&gt; n;<br><span class="hljs-comment">// 必须先忽略cin &gt;&gt; n后残留的换行符！否则getline会读空行</span><br>cin.<span class="hljs-built_in">ignore</span>(numeric_limits&lt;streamsize&gt;::<span class="hljs-built_in">max</span>(), <span class="hljs-string">&#x27;\n&#x27;</span>); <br>string s;<br><span class="hljs-built_in">getline</span>(cin, s); <span class="hljs-comment">// 读取整行（包含空格），直到换行符结束（换行符不纳入字符串）</span><br></code></pre></td></tr></table></figure>
+<p><strong>核心坑点</strong>：</p>
+<ul>
+<li><strong>如果先用 <code>cin &gt;&gt;</code> 读数据，再用 <code>getline</code>，必须用 <code>cin.ignore()</code> 清空缓冲区的换行符；</strong></li>
+<li><code>cin.ignore(MAX, '\n')</code> 表示：忽略最多 MAX 个字符，直到遇到换行符（并忽略换行符）；</li>
+<li><code>numeric_limits&lt;streamsize&gt;::max()</code> 需要包含头文件 <code>&lt;limits&gt;</code>，表示“忽略尽可能多的字符”。</li>
+</ul>
+<h3 id="多行输入-不定行数输入">多行输入/不定行数输入</h3>
+<p>适用于：输入行数不固定（如“输入多行字符串，直到输入结束”）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 场景1：读取多行字符串，直到EOF（考试中通常是输入结束）</span><br>string line;<br><span class="hljs-keyword">while</span> (<span class="hljs-built_in">getline</span>(cin, line)) &#123; <span class="hljs-comment">// 当有输入时循环，Ctrl+D（Linux）/Ctrl+Z（Windows）结束</span><br>    <span class="hljs-comment">// 处理每行数据</span><br>    cout &lt;&lt; line &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-comment">// 场景2：读取n行字符串（每行可能带空格）</span><br><span class="hljs-type">int</span> n;<br>cin &gt;&gt; n;<br>cin.<span class="hljs-built_in">ignore</span>(); <span class="hljs-comment">// 忽略换行符</span><br><span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">lines</span><span class="hljs-params">(n)</span></span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>    <span class="hljs-built_in">getline</span>(cin, lines[i]);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="混合输入：数字-带空格字符串">混合输入：数字+带空格字符串</h3>
+<p>适用于：一行中既有数字又有带空格的字符串（如“1 Hello World”）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 场景：一行输入格式为「数字 带空格字符串」</span><br>string line;<br><span class="hljs-built_in">getline</span>(cin, line); <span class="hljs-comment">// 先读整行</span><br><span class="hljs-function">istringstream <span class="hljs-title">iss</span><span class="hljs-params">(line)</span></span>; <span class="hljs-comment">// 把字符串转为输入流（需包含&lt;sstream&gt;）</span><br><span class="hljs-type">int</span> n;<br>string s, temp;<br>iss &gt;&gt; n; <span class="hljs-comment">// 先读数字</span><br><span class="hljs-comment">// 读取剩余的所有字符（即带空格的字符串）</span><br><span class="hljs-built_in">getline</span>(iss &gt;&gt; ws, s); <span class="hljs-comment">// &gt;&gt; ws 忽略数字后的空白字符</span><br><br><span class="hljs-comment">// 示例输入：3 Hello World</span><br><span class="hljs-comment">// 输出：n=3, s=&quot;Hello World&quot;</span><br></code></pre></td></tr></table></figure>
+<p><strong>关键</strong>：<code>istringstream</code> 可以把字符串“拆成”<code>cin</code> 一样的输入流，方便混合解析；<code>&gt;&gt; ws</code> 用于忽略数字后的空白。</p>
+<h3 id="特殊字符分隔的输入">特殊字符分隔的输入</h3>
+<p>适用于：输入用逗号、分号等非空格字符分隔（如“1,2,3,4”）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 场景：输入以逗号分隔的数字（如1,2,3,4）</span><br>string line;<br><span class="hljs-built_in">getline</span>(cin, line);<br><span class="hljs-built_in">replace</span>(line.<span class="hljs-built_in">begin</span>(), line.<span class="hljs-built_in">end</span>(), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span>); <span class="hljs-comment">// 把逗号替换为空格（需包含&lt;algorithm&gt;）</span><br><span class="hljs-function">istringstream <span class="hljs-title">iss</span><span class="hljs-params">(line)</span></span>;<br><span class="hljs-type">int</span> num;<br><span class="hljs-keyword">while</span> (iss &gt;&gt; num) &#123;<br>    cout &lt;&lt; num &lt;&lt; <span class="hljs-string">&quot; &quot;</span>; <span class="hljs-comment">// 输出：1 2 3 4</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>技巧</strong>：先将分隔符替换为空格，再用 <code>cin</code> 风格读取，简单高效。</p>
+<h2 id="匹配子序列">匹配子序列</h2>
+<p>给定字符串 <strong>s</strong> 和 <strong>t</strong> ，判断 <strong>s</strong> 是否为 <strong>t</strong> 的子序列。双指针</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isSubsequence</span><span class="hljs-params">(string s, string t)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span>(s.<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    <span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; t.<span class="hljs-built_in">size</span>(); ++i) &#123;<br>        <span class="hljs-keyword">if</span>(t[i] == s[j])<br>        &#123;<br>            j++;<br>            <span class="hljs-keyword">if</span>(j == s.<span class="hljs-built_in">size</span>())<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

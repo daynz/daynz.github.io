@@ -1,0 +1,772 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="程序的机器级代码表 [toc] 常用汇编指令介绍 相关寄存器 x86处理器中有8个32位的通用寄存器。为了向后兼容，EAX、EBX、ECX和EDX的高两位字节和低两位字节可以独立使用，E表示Extended，表示32位的寄存器。例如，EAX的低两位字节称为AX，而AX的高低字节又可分别作为两个8位寄存器，分别称为AH和AL。  除EBP和ESP外，其他几个寄存器的用法比较灵活。 汇编指令格式 使用">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/4-3%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E4%BB%A3%E7%A0%81%E8%A1%A8.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="程序的机器级代码表 [toc] 常用汇编指令介绍 相关寄存器 x86处理器中有8个32位的通用寄存器。为了向后兼容，EAX、EBX、ECX和EDX的高两位字节和低两位字节可以独立使用，E表示Extended，表示32位的寄存器。例如，EAX的低两位字节称为AX，而AX的高低字节又可分别作为两个8位寄存器，分别称为AH和AL。  除EBP和ESP外，其他几个寄存器的用法比较灵活。 汇编指令格式 使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250224145900418.png">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250224150043403.png">
+<meta property="og:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250224152400831.png">
+<meta property="article:published_time" content="2026-08-08T09:30:45.831Z">
+<meta property="article:modified_time" content="2025-09-25T09:15:43.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://daynz.github.io/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/assets/image-20250224145900418.png">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="程序的机器级代码表">程序的机器级代码表</h1>
+<p>[toc]</p>
+<h2 id="常用汇编指令介绍">常用汇编指令介绍</h2>
+<h3 id="相关寄存器">相关寄存器</h3>
+<p>x86处理器中有8个32位的通用寄存器。为了向后兼容，<strong>EAX、EBX、ECX和EDX的高两位字节和低两位字节可以独立使用</strong>，E表示Extended，表示32位的寄存器。例如，EAX的低两位字节称为AX，而AX的高低字节又可分别作为两个8位寄存器，分别称为AH和AL。</p>
+<p><img src="./assets/image-20250224145900418.png" srcset="/img/loading.gif" lazyload alt="image-20250224145900418"></p>
+<p>除EBP和ESP外，其他几个寄存器的用法比较灵活。</p>
+<h3 id="汇编指令格式">汇编指令格式</h3>
+<p>使用不同的编程工具开发程序时，用到的汇编程序也不同，一般有两种不同的汇编格式：AT&amp;T格式和Intel格式（统考要求掌握的是<strong>Intel格式</strong>）。它们的区别主要体现如下：</p>
+<ul>
+<li><strong>字母大小写</strong>：AT&amp;T格式的指令只能用小写字母，而Intel格式的指令对大小写不敏感。</li>
+<li><strong>操作数顺序</strong>：在AT&amp;T格式中，第一个为源操作数，第二个为目的操作数，方向从左到右；在Intel格式中，第一个为目的操作数，第二个为源操作数，方向从右向左。</li>
+<li><strong>前缀使用</strong>：在AT&amp;T格式中，寄存器需要加前缀“%”，立即数需要加前缀“$”；在Intel格式中，寄存器和立即数都不需要加前缀。</li>
+<li><strong>内存寻址符号</strong>：在内存寻址方面，AT&amp;T格式使用“(”和“)”，而Intel格式使用“[”和“]”。</li>
+<li><strong>复杂寻址方式</strong>：在处理复杂寻址方式时，例如AT&amp;T格式的内存操作数<code>disp(base,index,scale)</code>分别表示偏移量、基址寄存器、变址寄存器和比例因子，如<code>8(%edx,%eax,2)</code>表示操作数为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo stretchy="false">[</mo><mi>R</mi><mo stretchy="false">[</mo><mi>e</mi><mi>d</mi><mi>x</mi><mo stretchy="false">]</mo><mo>+</mo><mi>R</mi><mo stretchy="false">[</mo><mi>e</mi><mi>a</mi><mi>x</mi><mo stretchy="false">]</mo><mo>∗</mo><mn>2</mn><mo>+</mo><mn>8</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">M[R[edx]+R[eax]*2+8]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">M</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="mopen">[</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord mathnormal">x</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="mopen">[</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal">x</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">8</span><span class="mclose">]</span></span></span></span>，其对应的Intel格式的操作数为<code>[edx+eax*2+8]</code>。</li>
+<li><strong>指定数据长度</strong>：在指定数据长度方面，AT&amp;T格式指令操作码的后面紧跟一个字符，表明操作数大小，“b”表示byte(字节)、“w”表示word(字)或“l”表示long(双字)。Intel格式也有类似的语法，它在操作码后面显式地注明byte ptr、word ptr或dword ptr。</li>
+</ul>
+<p>由于32或64位体系结构都是由16位扩展而来的，因此用Word(字)表示16位。表4.2展示了两种格式的几条不同指令。其中，<strong>mov指令用于在内存和寄存器之间或者寄存器之间移动数据</strong>；<strong>lea指令用于将一个内存地址(而不是其所指的内容)加载到目的寄存器</strong>。</p>
+<p><img src="./assets/image-20250224150043403.png" srcset="/img/loading.gif" lazyload alt="image-20250224150043403"></p>
+<p>两种汇编格式的相互转换并不复杂，但历年统考真题采用的均是Intel格式。</p>
+<h3 id="常用指令">常用指令</h3>
+<p>汇编指令通常可分为数据传送指令、算术和逻辑运算指令和控制流指令，下面以Intel格式为例，介绍一些常用的指令。以下用于操作数的标记分别表示寄存器、内存和常数：</p>
+<ul>
+<li><code>&lt;reg&gt;</code>：表示任意寄存器，若其后带有数字，则指定其位数，如<code>&lt;reg32&gt;</code>表示32位寄存器（<code>eax, ebx, ecx, edx, esi, edi, esp，ebp</code>）；<code>&lt;reg16&gt;</code>表示16位寄存器（<code>ax, bx, cx，dx</code>）；<code>&lt;reg8&gt;</code>表示8位寄存器（<code>ah, al, bh, bl, ch, cl, dh, dl</code>）。</li>
+<li><code>&lt;mem&gt;</code>：表示内存地址（如<code>[eax]</code>、<code>[var + 4]</code>或<code>dword ptr [eax + ebx]</code>）。</li>
+<li><code>&lt;con&gt;</code>：表示8位、16位或32位常数。<code>&lt;con8&gt;</code>表示8位常数；<code>&lt;con16&gt;</code>表示16位常数；<code>&lt;con32&gt;</code>表示32位常数。</li>
+</ul>
+<p>x86中的指令机器码长度为1字节，对同一指令的不同用途有多种编码方式，比如mov指令就有28种机内编码，用于不同操作数类型或用于特定寄存器，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 机器码为B8H<br>mov ax, &lt;con16&gt;<br># 机器码为B0H<br>mov al, &lt;con8&gt;<br># 机器码为89H<br>mov &lt;reg16&gt;, &lt;reg16&gt;/&lt;mem16&gt;<br># 机器码为8AH<br>mov &lt;reg8&gt;/&lt;mem8&gt;, &lt;reg8&gt;<br># 机器码为8BH<br>mov &lt;reg16&gt;/&lt;mem16&gt;, &lt;reg16&gt;<br></code></pre></td></tr></table></figure>
+<h4 id="数据传送指令">数据传送指令</h4>
+<ol>
+<li><strong>mov指令</strong>：将第二个操作数（寄存器的内容、内存中的内容或常数值）复制到第一个操作数（寄存器或内存）。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov &lt;reg&gt;, &lt;reg&gt;<br>mov &lt;reg&gt;, &lt;mem&gt;<br>mov &lt;mem&gt;, &lt;reg&gt;<br>mov &lt;reg&gt;, &lt;con&gt;<br>mov &lt;mem&gt;, &lt;con&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 将ebx值复制到eax<br>mov eax, ebx<br># 将5保存到var值指示的内存地址的一字节中<br>mov byte ptr [var], 5<br></code></pre></td></tr></table></figure>
+<ul>
+<li>注意：双操作数指令的两个操作数不能都是内存，即mov指令不能用于直接从内存复制到内存，若需在内存之间复制，可先从内存复制到一个寄存器，再从这个寄存器复制到内存。</li>
+</ul>
+<ol start="2">
+<li><strong>push指令</strong>：将操作数压入内存的栈，常用于函数调用。ESP是栈顶，入栈前先将ESP值减4（栈增长方向与内存地址增长方向相反），然后将操作数压入ESP指示的地址。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">push &lt;reg32&gt;<br>push &lt;mem&gt;<br>push &lt;con32&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例（注意，栈中元素固定为32位）：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 将eax值入栈<br>push eax<br># 将var值指示的内存地址的4字节值入栈<br>push [var]<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li><strong>pop指令</strong>：与push指令相反，pop指令执行的是出栈工作，出栈前先将ESP指示的地址中的内容出栈，然后将ESP值加4。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 弹出栈顶元素送到eax<br>pop eax<br># 弹出栈顶元素送到ebx值指示的内存地址的4字节中<br>pop [ebx]<br></code></pre></td></tr></table></figure>
+<h4 id="算术和逻辑运算指令">算术和逻辑运算指令</h4>
+<ol>
+<li><strong><code>add/sub</code>指令</strong>：add指令将两个操作数相加，相加的结果保存到第一个操作数中。sub指令用于两个操作数相减，相减的结果保存到第一个操作数中。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs assembly">add &lt;reg&gt;, &lt;reg&gt;<br>sub &lt;reg&gt;, &lt;reg&gt;<br>add &lt;reg&gt;, &lt;mem&gt;<br>sub &lt;reg&gt;, &lt;mem&gt;<br>add &lt;mem&gt;, &lt;reg&gt;<br>sub &lt;mem&gt;, &lt;reg&gt;<br>add &lt;reg&gt;, &lt;con&gt;<br>sub &lt;reg&gt;, &lt;con&gt;<br>add &lt;mem&gt;, &lt;con&gt;<br>sub &lt;mem&gt;, &lt;con&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># eax = eax - 10<br>sub eax, 10<br># 10与var值指示的内存地址的一字节值相加，并将结果保存在var值指示的内存地址的字节中<br>add byte ptr [var], 10<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li><strong><code>inc/dec</code>指令</strong>：inc、dec指令分别表示将操作数自加1、自减1。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">inc &lt;reg&gt;<br>dec &lt;reg&gt;<br>inc &lt;mem&gt; / dec &lt;mem&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># eax值自减1<br>dec eax<br># var值指示的内存地址的4字节值自加1<br>inc dword ptr [var]<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li><strong><code>imul</code>指令</strong>：有符号整数乘法指令，有两种格式：
+<ul>
+<li>两个操作数，两个操作数相乘，将结果保存在第一个操作数中，第一个操作数必须为寄存器。</li>
+<li>三个操作数，将第二个和第三个操作数相乘，将结果保存在第一个操作数中，第一个操作数必须为寄存器。</li>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly">imul &lt;reg32&gt;, &lt;reg32&gt;<br>imul &lt;reg32&gt;, &lt;mem&gt;<br>imul &lt;reg32&gt;, &lt;reg32&gt;, &lt;con&gt;<br>imul &lt;reg32&gt;, &lt;mem&gt;, &lt;con&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># eax = eax * [var]<br>imul eax, [var]<br># esi = edi * 25<br>imul esi, edi, 25<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">- 注意：乘法操作结果可能溢出，则编译器置溢出标志OF = 1，以使CPU调出溢出异常处理程序。
+</code></pre>
+<ol start="4">
+<li><strong><code>idiv</code>指令</strong>：有符号整数除法指令，它只有一个操作数，即除数，而被除数则为edx:eax中的内容（共64位），操作结果有两部分：商和余数，商送到eax，余数则送到edx。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly">idiv &lt;reg32&gt;<br>idiv &lt;mem&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly">idiv ebx<br>idiv dword ptr [var]<br></code></pre></td></tr></table></figure>
+<ol start="5">
+<li><strong><code>and/or/xor</code>指令</strong>：and、or、xor指令分别是逻辑与、逻辑或、逻辑异或操作指令，用于操作数的位操作，操作结果放在第一个操作数中。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">and &lt;reg&gt;, &lt;reg&gt; / or &lt;reg&gt;, &lt;reg&gt; / xor &lt;reg&gt;, &lt;reg&gt;<br>and &lt;reg&gt;, &lt;mem&gt; / or &lt;reg&gt;, &lt;mem&gt; / xor &lt;reg&gt;, &lt;mem&gt;<br>and &lt;mem&gt;, &lt;reg&gt; / or &lt;mem&gt;, &lt;reg&gt; / xor &lt;mem&gt;, &lt;reg&gt;<br>and &lt;reg&gt;, &lt;con&gt; / or &lt;reg&gt;, &lt;con&gt; / xor &lt;reg&gt;, &lt;con&gt;<br>and &lt;mem&gt;, &lt;con&gt; / or &lt;mem&gt;, &lt;con&gt; / xor &lt;mem&gt;, &lt;con&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 将eax中的前28位全部置为0，最后4位保持不变<br>and eax, 0fH<br># 置edx中的内容为0<br>xor edx, edx<br></code></pre></td></tr></table></figure>
+<ol start="6">
+<li><strong><code>not</code>指令</strong>：位翻转指令，将操作数中的每一位翻转，即0 -&gt; 1、1 -&gt; 0。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly">not &lt;reg&gt;<br>not &lt;mem&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 将var值指示的内存地址的一字节的所有位翻转<br>not byte ptr [var]<br></code></pre></td></tr></table></figure>
+<ol start="7">
+<li><strong><code>neg</code>指令</strong>：取负指令。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly">neg &lt;reg&gt;<br>neg &lt;mem&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># eax = -eax<br>neg eax<br></code></pre></td></tr></table></figure>
+<ol start="8">
+<li><strong><code>shl/shr</code>指令</strong>：逻辑移位指令，shl为逻辑左移，shr为逻辑右移，第一个操作数表示被操作数，第二个操作数指示移位的位数。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs assembly">shl &lt;reg&gt;, &lt;con8&gt;<br>shr &lt;reg&gt;, &lt;con8&gt;<br>shl &lt;mem&gt;, &lt;con8&gt;<br>shr &lt;mem&gt;, &lt;con8&gt;<br>shl &lt;reg&gt;, &lt;cl&gt; / shr &lt;reg&gt;, &lt;cl&gt;<br>shl &lt;mem&gt;, &lt;cl&gt; / shr &lt;mem&gt;, &lt;cl&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 将eax值左移1位<br>shl eax, 1<br># 将ebx值右移n位（n为cl中的值）<br>shr ebx, cl<br></code></pre></td></tr></table></figure>
+<h4 id="控制流指令">控制流指令</h4>
+<p>x86处理器维持着一个指示当前执行指令的指令指针（IP），当一条指令执行后，此指针自动指向下一条指令。IP寄存器不能直接操作，但可以用控制流指令更新。通常用标签（label）指示程序中的指令地址，在x86汇编代码中，可在任何指令前加入标签。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov esi, [ebp + 8]<br>begin: xor ecx, ecx<br>mov eax, [esi]<br></code></pre></td></tr></table></figure>
+<p>这样就用begin指示了第二条指令，控制流指令通过标签就可以实现程序指令的跳转。</p>
+<ol>
+<li><strong><code>jmp</code>指令</strong>：jmp指令控制IP转移到label所指示的地址（从label中取出指令执行）。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs assembly">jmp &lt;label&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 转跳到begin标记的指令执行<br>jmp begin<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li><strong><code>jcondition</code>指令</strong>：条件转移指令，依据CPU状态字中的一系列条件状态转移。CPU状态字中包括指示最后一个算术运算结果是否为0，运算结果是否为负数等。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs assembly">je &lt;label&gt; (jump when equal)<br>jz &lt;label&gt; (jump when last result was zero)<br>jne &lt;label&gt; (jump when not equal)<br>jg &lt;label&gt; (jump when greater than)<br>jge &lt;label&gt; (jump when greater than or equal to)<br>jl &lt;label&gt; (jump when less than)<br>jle &lt;label&gt; (jump when less than or equal to)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">cmp eax, ebx<br># 若eax值 &lt;= ebx值，则跳转到done执行；否则执行下一条指令<br>jle done<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li><strong><code>cmp/test</code>指令</strong>：cmp指令的功能相当于sub指令，用于比较两个操作数的值。test指令的功能相当于and指令，对两个操作数进行逐位与运算。与sub和and指令不同的是，这两类指令都不保存操作结果，仅根据运算结果设置CPU状态字中的条件码。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly">cmp &lt;reg&gt;, &lt;reg&gt; / test &lt;reg&gt;, &lt;reg&gt;<br>cmp &lt;reg&gt;, &lt;mem&gt; / test &lt;reg&gt;, &lt;mem&gt;<br>cmp &lt;mem&gt;, &lt;reg&gt; / test &lt;mem&gt;, &lt;reg&gt;<br>cmp &lt;reg&gt;, &lt;con&gt; / test &lt;reg&gt;, &lt;con&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>举例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 将var指示的主存地址的4字节内容，与10比较<br>cmp dword ptr [var], 10<br># 若相等则继续顺序执行；否则跳转到loop处执行<br>jne loop<br># 测试eax是否为零<br>test eax, eax<br># 为零则置标志ZF为1，转跳到xxxx处执行<br>jz xxxx<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li><strong>call/ret指令</strong>：分别用于实现子程序（过程、函数等）的调用及返回。
+<ul>
+<li>语法：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly">call &lt;label&gt;<br>ret<br></code></pre></td></tr></table></figure>
+<ul>
+<li>call指令首先将当前执行指令地址入栈，然后无条件转移到由标签指示的指令。与其他简单的跳转指令不同，call指令保存调用之前的地址信息（当call指令结束后，返回调用之前的地址）。</li>
+<li>ret指令实现子程序的返回机制，ret指令弹出栈中保存的指令地址，然后无条件转移到保存的指令地址执行。call和ret是程序（函数）调用中最关键的两条指令。</li>
+</ul>
+<p>理解上述指令的语法和用途，可以更好地帮助读者解答相关题型。读者在上机调试C程序代码时，也可以尝试用编译器调试，以便更好地帮助理解机器指令的执行。</p>
+<h2 id="选择语句的机器级表示">选择语句的机器级表示</h2>
+<p>常见的选择结构语句有<code>if-then</code>、<code>if-then-else</code>等。编译器通过<strong>条件码(标志位)设置指令和各类转移指令</strong>来实现程序中的选择结构语句。条件码描述了最近的算术或逻辑运算操作的属性，可以检测这些寄存器来执行条件分支指令，最常用的条件码有**<code>CF</code>、<code>ZF</code>、<code>SF</code>和<code>OF</code>**。</p>
+<p>常见的算术逻辑运算指令（<code>add</code> , <code>sub</code> , <code>imul</code> , <code>or</code> , <code>and</code> , <code>shl</code> , <code>inc</code> , <code>dec</code> , <code>nosal</code> 等）会设置条件码，还有**<code>cmp</code>和<code>test</code>指令只设置条件码而不改变任何其他寄存器**。</p>
+<p>之前介绍的<code>jcondition</code>条件转跳指令，就是根据条件码**<code>ZF</code>和<code>SF</code>**来实现转跳的。</p>
+<p><code>if-else</code>语句的通用形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly">if(test expr)<br>    then statement<br>else<br>    else statement<br></code></pre></td></tr></table></figure>
+<p>这里的testexpr是一个整数表达式，它的取值为0(假)，或为非0(真)。两个分支语句（then statement或else statement）中只会执行一个。</p>
+<p>这种通用形式可以被翻译成如下所示的<code>goto</code>语句形式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs assembly">t = test_expr;<br>if(!t)<br>    goto false;<br>then statement<br>goto done;<br>false:<br>else statement<br>done:<br></code></pre></td></tr></table></figure>
+<p>对于下面的C语言函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">get_cont</span><span class="hljs-params">(<span class="hljs-type">int</span> *p1, <span class="hljs-type">int</span> *p2)</span>&#123;<br>    <span class="hljs-keyword">if</span> (p1 &gt; p2)<br>        <span class="hljs-keyword">return</span> *p2;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> *p1;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>已知p1和p2对应的实参已被压入调用函数的栈帧，它们对应的存储地址上分别为<code>R[ebp]+8</code>、<code>R[ebp]+12</code>（<strong>EBP指向当前栈帧底部</strong>），返回结果存放在<strong>EAX</strong>中。对应的的汇编代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># R[eax] = M[R[ebp]+8],即R[eax]=p1<br>mov eax, dword ptr [ebp+8]<br># R[edx] = M[R[ebp]+12],即R[edx]=p2<br>mov edx, dword ptr [ebp+12]<br># 比较p1和p2,即根据p1-p2的结果置标志<br>cmp eax, edx<br># 若p1&lt;=p2,则转标记L1处执行<br>jbe .L1<br># R[eax] = M[R[edx]],即R[eax]=M[p2]<br>mov eax,dword ptr [edx]<br># 无条件跳转到标记L2执行<br>jmp .L2<br>.L1:<br># R[eax] = M[R[eax]],即R[eax]=M[p1]<br>mov eax, dword ptr [eax]<br>.L2:<br></code></pre></td></tr></table></figure>
+<p>p1和p2是指针型参数，所以在32位机中的长度是<code>dword ptr</code>，比较指令cmp的两个操作数都应来自寄存器，因此应先将p1和p2对应的实参从栈中取到通用寄存器，比较指令执行后得到各个条件码，然后根据各条件码值的组合选择执行不同的指令，因此需要用到条件转移指令。</p>
+<h2 id="循环语句的机器级表示">循环语句的机器级表示</h2>
+<p>常见的循环结构语句有<code>while</code>、<code>for</code>和<code>do-while</code>。汇编中没有相应的指令存在，可以用条件测试和转跳组合起来实现循环的效果，大多数编译器将这三种循环结构都转换为**<code>do-while</code>形式<strong>来产生机器代码。在循环结构中，通常使用</strong>条件转移指令**来判断循环条件的结束。</p>
+<h3 id="do-while循环"><code>do-while</code>循环</h3>
+<p>do-while语句的通用形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">do<br>    body statement<br>while(test expr)<br></code></pre></td></tr></table></figure>
+<p>这种通用形式可以被翻译成如下所示的条件和<code>goto</code>语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">loop:<br>    body statement<br>    t = test_expr<br>    if (t)<br>        goto loop;<br></code></pre></td></tr></table></figure>
+<p>也就是说，每次循环，程序会执行循环体内的语句，<strong>body_statement至少会执行一次</strong>，然后执行测试表达式。若测试为真，则继续执行循环。</p>
+<h3 id="while循环"><code>while</code>循环</h3>
+<p>while语句的通用形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly">while (test_expr)<br>    body statement<br></code></pre></td></tr></table></figure>
+<p>与do-while的不同之处在于，第一次执行body_statement之前，就会测试test_expr的值，循环有可能中止。GCC通常会将其翻译成条件分支加do-while循环的方式。</p>
+<p>用如下模板来表达这种方法，将通用的while循环格式翻译成do-while循环：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs assembly">t = test_expr<br>if(!t)<br>    goto done;<br>do<br>    body statement<br>while (test_expr);<br>done:<br></code></pre></td></tr></table></figure>
+<p>相应地，进一步将它翻译成<code>goto</code>语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs assembly">t = test_expr;<br>if(!t)<br>    goto done;<br>loop:<br>    body statement<br>    t = test_expr<br>    if (t)<br>        goto loop;<br>done:<br></code></pre></td></tr></table></figure>
+<h3 id="for循环"><code>for</code>循环</h3>
+<p>for 循环的通用形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly">for(init expr; test expr; update expr)<br>    body statement<br></code></pre></td></tr></table></figure>
+<p>这个for循环的行为与下面这段while循环代码的行为一样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">init expr;<br>while(test expr)&#123;<br>    body statement<br>    update expr;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>进一步把它翻译成<code>goto</code>语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs assembly">init expr;<br>t = test_expr;<br>if(!t)<br>    goto done;<br>loop:<br>    body statement<br>    update expr;<br>    t = test_expr<br>    if (t)<br>        goto loop;<br>done:<br></code></pre></td></tr></table></figure>
+<p>下面是一个用for循环写的自然数求和的函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">nsum_for</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span>&#123;<br>    <span class="hljs-type">int</span> i;<br>    <span class="hljs-type">int</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>        result +=i;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这段代码中的for循环的不同组成部分如下：</p>
+<ul>
+<li><code>i = 1</code>：init expr</li>
+<li><code>i &lt;= n</code>：test_expr</li>
+<li><code>i++</code>：update_expr</li>
+<li><code>result += i</code>：body statement</li>
+</ul>
+<p>通过替换前面给出的模板中的相应位置，很容易将for循环转换为while或do-while循环。</p>
+<p>将这个函数翻译为<code>goto</code>语句代码后，不难得出其过程体的汇编代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># R[ecx] = M[R[ebp]+8],即R[ecx]=n<br>mov ecx,dword ptr [ebp+8] <br># R[eax] = 0,即result=0<br>mov eax,0 <br># R[edx] = 1,即i=1<br>mov edx,1 <br># Compare R[edx] : R[ecx],即比较 i : n<br>cmp edx, ecx <br># If greater,转跳到L2执行<br>jg .L2 <br>.L1:<br># loop:<br># R[eax] = R[eax] + R[edx],即result +=i<br>add eax,edx <br># R[edx] = R[edx] + 1,即i++<br>add edx, 1 <br># 比较R[edx]和R[ecx],即比较i : n<br>cmp edx,ecx <br># If less or equal,转跳到L1执行<br>jle .L1 <br>.L2:<br></code></pre></td></tr></table></figure>
+<p>已知n对应的实参已被压入调用函数的栈帧，其对应的存储地址为<code>R[ebp]+8</code>，过程nsum_for中的局部变量i和result被分别分配到寄存器<strong>EDX和EAX</strong>中，返回参数在<strong>EAX</strong>中。</p>
+<h2 id="过程调用的机器级表示">过程调用的机器级表示</h2>
+<p>前面提到的<strong>call/ret指令</strong>主要用于过程调用，它们都属于一种无条件转移指令。</p>
+<p>假定过程P(调用者)调用过程Q(被调用者)，过程调用的执行步骤如下：</p>
+<ol>
+<li>P将入口参数(实参)放到Q能访问到的地方。</li>
+<li>P将返回地址存到特定的地方，然后将控制转移到Q。</li>
+<li>Q保存P的现场(通用寄存器的内容)，并为自己的非静态局部变量分配空间。</li>
+<li>执行过程Q。</li>
+<li>Q恢复P的现场，将返回结果放到P能访问到的地方，并释放局部变量所占空间。</li>
+<li>Q取出返回地址，将控制转移到P。</li>
+</ol>
+<p>步骤2由call指令实现，步骤6通过ret指令返回到过程P。在上述步骤中，需要为入口参数、返回地址、过程P的现场、过程Q的局部变量、返回结果找到存放空间。</p>
+<p>用户可见寄存器数量有限，调用者和被调用者需共享寄存器，若直接覆盖对方的寄存器，会导致程序出错。因此有如下规范：</p>
+<ul>
+<li>寄存器<strong>EAX、ECX和EDX是调用者保存寄存器</strong>，当P调用Q时，若Q需用到这些寄存器，则由P将这些寄存器的内容保存到栈中，并在返回后由P恢复它们的值。</li>
+<li>寄存器<strong>EBX、ESI、EDI是被调用者保存寄存器</strong>，当P调用Q时，Q必须先将这些寄存器的内容保存在栈中才能使用它们，并在返回P之前先恢复它们的值。</li>
+</ul>
+<p>每个过程都有自己的栈区，称为<strong>栈帧</strong>，因此，一个栈由若干栈帧组成。寄存器<strong>EBP指示栈帧的起始位置</strong>，寄存器<strong>ESP指示栈顶</strong>，栈从高地址向低地址增长。过程执行时，ESP会随着数据的入栈而动态变化，而EBP固定不变。当前栈帧的范围在EBP和ESP指向的区域之间。</p>
+<p>下面用一个简单的C语言程序来说明过程调用的机器级实现。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span>&#123;<br>    <span class="hljs-keyword">return</span> x + y;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">caller</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">int</span> temp1 = <span class="hljs-number">125</span>;<br>    <span class="hljs-type">int</span> temp2 = <span class="hljs-number">80</span>;<br>    <span class="hljs-type">int</span> sum = add(temp1, temp2);<br>    <span class="hljs-keyword">return</span> sum;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>经GCC编译后，caller过程对应的代码如下（#后面的文字是注释）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs assembly">caller:<br>    push ebp<br>    mov ebp, esp<br>    sub esp, 24<br>    mov [ebp - 12], 125  # M[R[ebp] - 12] = 125,即temp1 = 125<br>    mov [ebp - 8], 80    # M[R[ebp] - 8] = 80,即temp2 = 80<br>    mov eax, dword ptr [ebp - 8]  # R[eax] = M[R[ebp] - 8],即R[eax] = temp2<br>    mov [esp + 4], eax   # M[R[esp] + 4] = R[eax],即temp2入栈<br>    mov eax, dword ptr [ebp - 12] # R[eax] = M[R[ebp] - 12],即R[eax] = temp1<br>    mov [esp], eax       # M[R[esp]] = R[eax],即temp1入栈<br>    call add             # 调用add,将返回值保存在eax中<br>    mov [ebp - 4], eax   # M[R[ebp] - 4] = R[eax],即add返回值送sum<br>    mov eax, dword ptr [ebp - 4] # R[eax] = M[R[ebp] - 4],即sum作为返回值<br>    leave<br>    ret<br></code></pre></td></tr></table></figure>
+<p>图4.12给出了caller栈帧的状态，假定caller被过程P调用。执行第4行的指令后，ESP所指的位置如图中所示，可以看出GCC为caller的参数分配了24字节的空间。从汇编代码中可以看出：</p>
+<ul>
+<li>caller中只使用了调用者保存寄存器EAX，没有使用任何被调用者保存寄存器，因此在caller栈帧中无须保存除EBP外的任何寄存器的值。</li>
+<li>caller有三个局部变量temp1、temp2和sum，皆被分配在栈帧中。</li>
+<li>在用call指令调用add函数之前，caller先将入口参数从右向左依次将temp2和temp1的值(即80和125)保存到栈中。在执行call指令时再把返回地址压入栈中。此外，在最初进入caller时，还将EBP的值压入了栈，因此caller的栈帧中用到的空间占4 + 12 + 8 + 4 = 28字节。但是，caller的栈帧共有4 + 24 + 4 = 32字节，其中浪费了4字节的空间(未使用)。这是因为GCC为保证数据的严格对齐而规定每个函数的栈帧大小必须是16字节的倍数。</li>
+</ul>
+<p>call指令执行后，add函数的返回参数存放在EAX中，因此call指令后面的两条指令中：</p>
+<ul>
+<li>指令<code>mov [ebp - 4], eax</code>将add的结果存入sum变量的存储空间，该变量的地址为R[ebp] - 4。</li>
+<li>指令<code>mov eax, dword ptr [ebp - 4]</code>将sum变量的值作为返回值送到寄存器EAX中。</li>
+</ul>
+<p><img src="./assets/image-20250224152400831.png" srcset="/img/loading.gif" lazyload alt="image-20250224152400831"></p>
+<p>在执行ret指令之前，应将当前栈帧释放，并恢复旧EBP的值，上述第14行leave指令实现了这个功能，leave指令功能相当于以下两条指令的功能：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asm">mov esp, ebp<br>pop ebp<br></code></pre></td></tr></table></figure>
+<p>其中，第一条指令使ESP指向当前EBP的位置，第二条指令执行后，EBP恢复为P中的旧值，并使ESP指向返回地址。</p>
+<p>执行完leave指令后，ret指令就可从ESP所指处取返回地址，以返回P执行。当然，编译器也可通过pop指令和对ESP的内容做加法来进行退栈操作，而不一定要使用leave指令。</p>
+<p>add过程经GCC编译并进行链接后，对应的代码如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs asm">8048469: 55         push ebp<br>804846a: 89 e5      mov ebp, esp<br>804846c: 8b 45 0c   mov eax, dword ptr [ebp + 12]<br>804846f: 8b 55 08   mov edx, dword ptr [ebp + 8]<br>8048472: 8d 04 02   lea eax, [edx + eax]<br>8048475: 5d         pop ebp<br>8048476: c3         ret<br></code></pre></td></tr></table></figure>
+<p>通常，一个过程对应的机器级代码都有三个部分：准备阶段、过程体和结束阶段。</p>
+<ul>
+<li>上述第1、2行的指令构成准备阶段的代码段，这是最简单的准备阶段代码段，它通过将当前栈指针ESP传送到EBP来完成将EBP指向当前栈帧底部的任务，如图4.12所示，EBP指向add栈帧底部，从而可以方便地通过EBP获取入口参数。这里add的入口参数x和y对应的值(125和80)分别在地址为<code>R[ebp] + 8</code>、<code>R[ebp] + 12</code>的存储单元中。</li>
+<li>上述第3、4、5行的指令序列是过程体的代码段，过程体结束时将返回值放在EAX中。这里好像没有加法指令，实际上第5行lea指令执行的是加法运算<code>R[edx] + R[eax] = x + y</code>。</li>
+<li>上述第6、7行的指令序列是结束阶段的代码段，通过将EBP弹出栈帧来恢复EBP在caller过程中的值，并在栈中退出add过程的栈帧，使得执行到ret指令时栈顶中已经是返回地址。这里的返回地址应该是caller代码中第12行的指令<code>mov [ebp - 4], eax</code>的地址。</li>
+</ul>
+<p>add过程中没有用到任何被调用者保存寄存器，没有局部变量，此外，add是一个被调用过程，并且不再调用其他过程，因此也没有入口参数和返回地址上要保存，因此，在add的栈帧中除了需要保存EBP，无须保留其他任何信息。</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

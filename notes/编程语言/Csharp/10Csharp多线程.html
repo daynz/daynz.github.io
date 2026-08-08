@@ -1,0 +1,1143 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="多线程 [toc] 线程基础（Thread） 线程核心概念 核心定义  线程：进程内部独立的执行流程单元，是操作系统调度的最小单位，同一进程内的线程共享内存空间与系统资源 主线程：程序启动时自动创建的执行流，负责主逻辑、事件处理与界面更新；在 Unity 中，只有主线程可以操作 GameObject、Component 等引擎对象 工作线程：由开发者手动创建的后台执行流，用于处理计算、网络、文件读">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Csharp/10Csharp%E5%A4%9A%E7%BA%BF%E7%A8%8B.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="多线程 [toc] 线程基础（Thread） 线程核心概念 核心定义  线程：进程内部独立的执行流程单元，是操作系统调度的最小单位，同一进程内的线程共享内存空间与系统资源 主线程：程序启动时自动创建的执行流，负责主逻辑、事件处理与界面更新；在 Unity 中，只有主线程可以操作 GameObject、Component 等引擎对象 工作线程：由开发者手动创建的后台执行流，用于处理计算、网络、文件读">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.564Z">
+<meta property="article:modified_time" content="2026-04-26T06:48:26.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="多线程">多线程</h1>
+<p>[toc]</p>
+<h2 id="线程基础（Thread）">线程基础（Thread）</h2>
+<h3 id="线程核心概念">线程核心概念</h3>
+<h4 id="核心定义">核心定义</h4>
+<ul>
+<li><strong>线程</strong>：进程内部独立的执行流程单元，是操作系统调度的最小单位，同一进程内的线程共享内存空间与系统资源</li>
+<li><strong>主线程</strong>：程序启动时自动创建的执行流，负责主逻辑、事件处理与界面更新；在 Unity 中，<strong>只有主线程可以操作 GameObject、Component 等引擎对象</strong></li>
+<li><strong>工作线程</strong>：由开发者手动创建的后台执行流，用于处理计算、网络、文件读写等耗时操作，<strong>严禁直接访问或修改 Unity 对象</strong></li>
+<li><strong>多线程</strong>：多个线程在 CPU 时间片调度下并发执行，提升程序响应速度与执行效率</li>
+</ul>
+<h4 id="线程类型">线程类型</h4>
+<ul>
+<li><strong>前台线程</strong>：线程默认类型，进程会等待所有前台线程执行完成后才退出</li>
+<li><strong>后台线程</strong>：通过 <code>IsBackground = true</code> 设置，主进程退出时后台线程会被直接终止，无需等待执行完毕</li>
+</ul>
+<h4 id="核心特性">核心特性</h4>
+<ol>
+<li><strong>资源共享</strong>：同一进程下所有线程共享堆内存、全局变量、静态变量</li>
+<li><strong>独立调度</strong>：每个线程拥有独立的调用栈与寄存器状态，独立执行</li>
+<li><strong>并发执行</strong>：CPU 时间片轮转切换线程，宏观并行、微观交替执行</li>
+<li><strong>安全风险</strong>：多线程同时访问共享资源会导致数据错乱，必须同步处理</li>
+</ol>
+<h3 id="Thread-类使用">Thread 类使用</h3>
+<h4 id="基础说明">基础说明</h4>
+<ul>
+<li>所在命名空间：<code>System.Threading</code></li>
+<li>线程必须绑定执行方法，支持无参、有参、Lambda 表达式、匿名委托</li>
+</ul>
+<h4 id="创建与启动线程">创建与启动线程</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 无参数线程</span><br>Thread thread = <span class="hljs-keyword">new</span> Thread(ThreadRun);<br>thread.Start();<br><br><span class="hljs-comment">// Lambda 简化写法</span><br>Thread thread = <span class="hljs-keyword">new</span> Thread(() =&gt;<br>&#123;<br>    <span class="hljs-comment">// 线程执行逻辑</span><br>&#125;);<br>thread.Start();<br></code></pre></td></tr></table></figure>
+<h4 id="带参数的线程">带参数的线程</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ThreadRun</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> param</span>)</span><br>&#123;<br>    <span class="hljs-built_in">string</span> message = param.ToString();<br>&#125;<br><br>Thread thread = <span class="hljs-keyword">new</span> Thread(ThreadRun);<br>thread.Start(<span class="hljs-string">&quot;传递给线程的参数&quot;</span>);<br></code></pre></td></tr></table></figure>
+<h3 id="常用方法与属性">常用方法与属性</h3>
+<h4 id="后台线程设置">后台线程设置</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">thread.IsBackground = <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure>
+<h4 id="线程等待">线程等待</h4>
+<p>阻塞当前线程，直到目标线程执行完毕</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">thread.Join();<br></code></pre></td></tr></table></figure>
+<h4 id="线程休眠">线程休眠</h4>
+<p>让当前线程暂停指定时间，释放 CPU 资源</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Thread.Sleep(<span class="hljs-number">1000</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="线程优先级">线程优先级</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">thread.Priority = ThreadPriority.Normal;<br></code></pre></td></tr></table></figure>
+<h4 id="中止线程">中止线程</h4>
+<p>不推荐使用，易造成资源泄漏、数据异常</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">thread.Abort();<br></code></pre></td></tr></table></figure>
+<h4 id="线程执行流程">线程执行流程</h4>
+<ol>
+<li>创建 <code>Thread</code> 对象并绑定执行方法</li>
+<li>调用 <code>Start()</code> 进入就绪状态，等待系统调度</li>
+<li>CPU 分配时间片，线程执行方法逻辑</li>
+<li>方法执行完成，线程自动释放资源</li>
+</ol>
+<h3 id="线程同步">线程同步</h3>
+<h4 id="核心问题">核心问题</h4>
+<ul>
+<li><strong>临界区</strong>：多个线程同时访问的共享资源代码区域</li>
+<li><strong>竞态条件</strong>：多线程并发读写共享数据，导致结果不可预期</li>
+<li><strong>线程安全</strong>：多线程环境下代码执行结果保持正确，数据不混乱</li>
+</ul>
+<h4 id="lock-关键字">lock 关键字</h4>
+<ul>
+<li><code>Monitor</code> 的简化语法，保证同一时间只有一个线程进入临界区</li>
+<li>必须使用独立的只读对象作为锁标记，不可使用 <code>this</code>、字符串等</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">object</span> lockObj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">object</span>();<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UpdateData</span>()</span><br>&#123;<br>    <span class="hljs-keyword">lock</span> (lockObj)<br>    &#123;<br>        <span class="hljs-comment">// 临界区代码，操作共享资源</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="Monitor-类">Monitor 类</h4>
+<p>手动控制锁的进入与退出，功能更灵活，必须搭配 <code>try-finally</code></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Monitor.Enter(lockObj);<br><span class="hljs-keyword">try</span><br>&#123;<br>    <span class="hljs-comment">// 临界区逻辑</span><br>&#125;<br><span class="hljs-keyword">finally</span><br>&#123;<br>    Monitor.Exit(lockObj);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="Mutex-互斥体">Mutex 互斥体</h4>
+<p>功能与 <code>lock</code> 类似，<strong>支持跨进程同步</strong>，性能较低，适用于进程间资源互斥</p>
+<h4 id="Semaphore-信号量">Semaphore 信号量</h4>
+<p>计数型信号量，限制同时访问资源的最大线程数，适用于连接池、资源池等场景</p>
+<h4 id="Interlocked-原子操作">Interlocked 原子操作</h4>
+<p>轻量级无锁同步，对数值变量提供原子性操作，性能远高于 <code>lock</code></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Interlocked.Increment(<span class="hljs-keyword">ref</span> count);<br>Interlocked.Exchange(<span class="hljs-keyword">ref</span> <span class="hljs-keyword">value</span>, <span class="hljs-number">100</span>);<br></code></pre></td></tr></table></figure>
+<h3 id="线程池-ThreadPool">线程池 ThreadPool</h3>
+<h4 id="核心定义-2">核心定义</h4>
+<ul>
+<li><strong>线程池</strong>：系统预先创建的可复用线程集合，避免频繁创建/销毁线程带来的性能损耗</li>
+<li>统一管理线程数量、调度与生命周期，自动优化并发性能</li>
+</ul>
+<h4 id="核心作用">核心作用</h4>
+<ol>
+<li>减少线程创建销毁的开销</li>
+<li>控制最大并发线程数，防止资源耗尽</li>
+<li>简化多线程开发，无需手动管理线程</li>
+</ol>
+<h4 id="使用方式">使用方式</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp">ThreadPool.QueueUserWorkItem((state) =&gt;<br>&#123;<br>    <span class="hljs-comment">// 线程池执行逻辑</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<h4 id="适用场景">适用场景</h4>
+<p>大量短时任务、异步计算、网络请求、文件处理、日志写入等非阻塞任务</p>
+<h4 id="使用限制">使用限制</h4>
+<ol>
+<li>无法设置线程名称、优先级</li>
+<li>不适合长时间阻塞的任务</li>
+<li>无法手动暂停、恢复、中止线程</li>
+<li>不保证任务执行顺序</li>
+</ol>
+<h3 id="多线程注意事项">多线程注意事项</h3>
+<ul>
+<li>共享变量必须使用 <code>lock</code> 或 <code>Interlocked</code> 保证线程安全</li>
+<li>工作线程中<strong>不能操作任何 Unity 对象</strong>，只能在主线程访问</li>
+<li>禁止使用 <code>Thread.Abort()</code> 强制终止线程</li>
+<li>大量短时任务优先使用线程池，避免手动创建线程</li>
+<li>线程内部异常不会传递到主线程，必须自行捕获处理</li>
+<li>线程数量并非越多越好，过多会导致 CPU 调度繁忙</li>
+</ul>
+<h3 id="常用使用场景">常用使用场景</h3>
+<ul>
+<li>耗时计算：路径寻找、数据解析、复杂逻辑运算</li>
+<li>IO 操作：文件读写、网络请求、数据库访问</li>
+<li>后台任务：日志写入、数据同步、消息处理</li>
+<li>Unity 适配：后台计算完成后，通过主线程调度操作游戏对象与 UI</li>
+</ul>
+<h2 id="基于任务的异步模式-TAP（Task-核心）">基于任务的异步模式 TAP（<code>Task</code> 核心）</h2>
+<h3 id="Task与Task-T"><code>Task</code>与<code>Task&lt;T&gt;</code></h3>
+<h4 id="核心定义-3">核心定义</h4>
+<ul>
+<li><strong><code>Task</code></strong>：表示一个<strong>无返回值</strong>的异步操作，是TAP异步编程模式的核心类型，基于线程池实现</li>
+<li><strong><code>Task&lt;T&gt;</code></strong>：表示一个<strong>带返回值</strong>的异步操作，继承自Task，用于获取异步执行结果</li>
+<li>本质：对线程池的高级封装，比Thread、ThreadPool更简洁、功能更强</li>
+</ul>
+<h4 id="任务状态">任务状态</h4>
+<ul>
+<li><code>Created</code>：已创建但未安排运行</li>
+<li><code>WaitingToRun</code>：已调度，等待线程池执行</li>
+<li><code>RanToCompletion</code>：成功执行完成</li>
+<li><code>Faulted</code>：执行过程中发生异常</li>
+<li><code>Canceled</code>：任务被取消</li>
+</ul>
+<h4 id="核心成员">核心成员</h4>
+<h5 id="任务等待">任务等待</h5>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 阻塞当前线程，等待任务完成</span><br>task.Wait();<br></code></pre></td></tr></table></figure>
+<h5 id="获取结果（Task-T-）">获取结果（<code>Task&lt;T&gt;</code>）</h5>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 阻塞等待并获取返回值</span><br><span class="hljs-built_in">int</span> result = task.Result;<br></code></pre></td></tr></table></figure>
+<h4 id="异步等待器">异步等待器</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">var</span> awaiter = task.GetAwaiter();<br>awaiter.OnCompleted(() =&gt; &#123; <span class="hljs-comment">/* 完成后执行 */</span> &#125;);<br></code></pre></td></tr></table></figure>
+<h4 id="任务创建与运行">任务创建与运行</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 无返回值任务</span><br>Task task = Task.Run(() =&gt;<br>&#123;<br>    <span class="hljs-comment">// 异步逻辑</span><br>&#125;);<br><br><span class="hljs-comment">// 带返回值任务</span><br>Task&lt;<span class="hljs-built_in">int</span>&gt; task = Task.Run(() =&gt;<br>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">100</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h3 id="Task基础API">Task基础API</h3>
+<h4 id="Task-Run"><code>Task.Run</code></h4>
+<p>将同步方法扔到<strong>线程池</strong>执行，快速创建异步任务</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Task.Run(() =&gt; &#123; &#125;);<br></code></pre></td></tr></table></figure>
+<h4 id="Task-Delay"><code>Task.Delay</code></h4>
+<p><strong>异步延时</strong>，不阻塞线程，替代Thread.Sleep</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">1000</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="Task-WhenAll"><code>Task.WhenAll</code></h4>
+<p>等待<strong>一组任务全部完成</strong>后再继续</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">await</span> Task.WhenAll(task1, task2, task3);<br></code></pre></td></tr></table></figure>
+<h4 id="Task-WhenAny"><code>Task.WhenAny</code></h4>
+<p>等待<strong>任一任务完成</strong>就继续执行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">var</span> finishedTask = <span class="hljs-keyword">await</span> Task.WhenAny(task1, task2);<br></code></pre></td></tr></table></figure>
+<h4 id="快速完成任务">快速完成任务</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 直接返回已完成的任务</span><br>Task completed = Task.CompletedTask;<br><br><span class="hljs-comment">// 直接返回带结果的任务</span><br>Task&lt;<span class="hljs-built_in">int</span>&gt; resultTask = Task.FromResult(<span class="hljs-number">10</span>);<br></code></pre></td></tr></table></figure>
+<h3 id="异常处理">异常处理</h3>
+<h4 id="异常类型">异常类型</h4>
+<ul>
+<li>任务中抛出的异常会被包装为 <strong><code>AggregateException</code></strong>（可包含多个内部异常）</li>
+</ul>
+<h4 id="同步等待捕获异常">同步等待捕获异常</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">try</span><br>&#123;<br>    task.Wait();<br>&#125;<br><span class="hljs-keyword">catch</span> (AggregateException ex)<br>&#123;<br>    <span class="hljs-comment">// 处理任务异常</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="async-await中捕获异常"><code>async</code>/<code>await</code>中捕获异常</h4>
+<p>可<strong>直接使用try-catch</strong>，自动解包异常，无需处理<code>AggregateException</code></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">try</span><br>&#123;<br>    <span class="hljs-keyword">await</span> task;<br>&#125;<br><span class="hljs-keyword">catch</span> (Exception ex)<br>&#123;<br>    <span class="hljs-comment">// 直接捕获原始异常</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="任务异常状态">任务异常状态</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 判断是否执行失败</span><br><span class="hljs-built_in">bool</span> isFaulted = task.IsFaulted;<br><br><span class="hljs-comment">// 获取异常对象</span><br>Exception ex = task.Exception;<br></code></pre></td></tr></table></figure>
+<h4 id="未观察任务异常">未观察任务异常</h4>
+<p>未被捕获/观察的任务异常会触发<code>UnobservedTaskException</code>事件，可能导致程序崩溃</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp">TaskScheduler.UnobservedTaskException += (sender, e) =&gt;<br>&#123;<br>    e.SetObserved(); <span class="hljs-comment">// 标记异常已处理</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="取消机制CancellationToken">取消机制<code>CancellationToken</code></h3>
+<h4 id="核心组件">核心组件</h4>
+<ul>
+<li><strong><code>CancellationTokenSource</code></strong>：创建取消令牌、发起取消请求</li>
+<li><strong><code>CancellationToken</code></strong>：传递给任务，监听取消信号</li>
+</ul>
+<h4 id="基础使用">基础使用</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 创建取消源</span><br>CancellationTokenSource cts = <span class="hljs-keyword">new</span> CancellationTokenSource();<br><br><span class="hljs-comment">// 获取令牌</span><br>CancellationToken token = cts.Token;<br><br><span class="hljs-comment">// 启动任务并传入令牌</span><br>Task.Run(() =&gt;<br>&#123;<br>    <span class="hljs-comment">// 判断是否取消</span><br>    <span class="hljs-keyword">if</span> (token.IsCancellationRequested)<br>        <span class="hljs-keyword">return</span>;<br>&#125;, token);<br></code></pre></td></tr></table></figure>
+<h4 id="主动抛出取消异常">主动抛出取消异常</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 已取消则直接抛出OperationCanceledException</span><br>token.ThrowIfCancellationRequested();<br></code></pre></td></tr></table></figure>
+<h4 id="发起取消">发起取消</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 取消关联的所有任务</span><br>cts.Cancel();<br></code></pre></td></tr></table></figure>
+<h4 id="超时自动取消">超时自动取消</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 5秒后自动取消</span><br>CancellationTokenSource cts = <span class="hljs-keyword">new</span> CancellationTokenSource(<span class="hljs-number">5000</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="任务取消配合">任务取消配合</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Task.Run(<span class="hljs-keyword">async</span> () =&gt;<br>&#123;<br>    <span class="hljs-keyword">while</span> (!token.IsCancellationRequested)<br>    &#123;<br>        <span class="hljs-comment">// 执行循环逻辑</span><br>        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">100</span>);<br>    &#125;<br>&#125;, token);<br></code></pre></td></tr></table></figure>
+<h3 id="异步注意事项">异步注意事项</h3>
+<ul>
+<li>Task默认使用<strong>线程池</strong>，适合短时、高效异步操作</li>
+<li>避免使用<code>Task.Wait()</code>、<code>Task.Result</code>阻塞主线程，易造成死锁</li>
+<li>async/await是最推荐的Task使用方式，代码简洁且非阻塞</li>
+<li>取消机制必须配合<code>CancellationToken</code>使用，禁止手动终止任务</li>
+<li>所有任务异常必须处理，避免未观察异常导致程序崩溃</li>
+</ul>
+<h3 id="常用使用场景-2">常用使用场景</h3>
+<ul>
+<li>异步IO：文件读写、网络请求、数据库操作</li>
+<li>延时操作：技能冷却、动画等待、定时逻辑</li>
+<li>并行任务：批量数据处理、多接口同时请求</li>
+<li>可取消操作：下载、上传、后台计算可中途取消</li>
+<li>Unity适配：异步操作完成后通过主线程调度操作游戏对象</li>
+</ul>
+<h2 id="async-await-核心语法（C-5-0）">async / await 核心语法（C# 5.0）</h2>
+<h3 id="语法规则">语法规则</h3>
+<h4 id="核心定义-4">核心定义</h4>
+<ul>
+<li><strong>async / await</strong>：C# 5.0 提供的语法糖，用于简化 Task 异步编程，让异步代码写法与同步代码一致</li>
+<li><strong>async</strong>：方法修饰符，标记该方法为异步方法，可配合 await 使用</li>
+<li><strong>await</strong>：等待可等待对象完成，<strong>不阻塞当前线程</strong>，等待期间线程可被复用</li>
+</ul>
+<h4 id="方法返回值类型">方法返回值类型</h4>
+<ul>
+<li><code>Task</code>：无返回值的异步方法（推荐）</li>
+<li><code>Task&lt;T&gt;</code>：带返回值的异步方法（推荐）</li>
+<li><code>void</code>：仅用于<strong>UI事件处理</strong>，普通方法禁止使用，异常无法被捕获</li>
+</ul>
+<h4 id="基础语法">基础语法</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 无返回值异步方法</span><br><span class="hljs-function"><span class="hljs-keyword">async</span> Task <span class="hljs-title">MethodAsync</span>()</span><br>&#123;<br>    <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">100</span>);<br>&#125;<br><br><span class="hljs-comment">// 带返回值异步方法</span><br><span class="hljs-function"><span class="hljs-keyword">async</span> Task&lt;<span class="hljs-built_in">int</span>&gt; <span class="hljs-title">CalcAsync</span>()</span><br>&#123;<br>    <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">100</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">10</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="可等待对象">可等待对象</h4>
+<ul>
+<li><code>Task</code> / <code>Task&lt;T&gt;</code>（最常用）</li>
+<li>Unity 环境：<code>YieldInstruction</code>、<code>CustomYieldInstruction</code></li>
+<li>自定义实现 <code>INotifyCompletion</code> 的对象</li>
+</ul>
+<h4 id="async-void-使用限制">async void 使用限制</h4>
+<ul>
+<li><strong>仅用于事件处理器</strong>（按钮点击、系统事件）</li>
+<li>异常无法被外部捕获，会直接抛出到同步上下文</li>
+<li>无法等待完成，无法取消，无法获取异常</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 正确：UI事件</span><br><span class="hljs-function"><span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Button_Click</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, EventArgs e</span>)</span><br>&#123; &#125;<br></code></pre></td></tr></table></figure>
+<h3 id="执行机制">执行机制</h3>
+<h4 id="完整执行流程（面试高频）">完整执行流程（面试高频）</h4>
+<ol>
+<li>调用异步方法，<strong>同步执行</strong>方法内代码，直到遇到第一个 await</li>
+<li>遇到 await，立即<strong>挂起当前方法</strong>，将控制权返回给调用方</li>
+<li>等待的异步操作在后台执行（线程池/IO完成端口）</li>
+<li>异步操作完成后，<strong>恢复执行</strong> await 后续代码</li>
+<li>自动根据同步上下文切回原线程（Unity 主线程）</li>
+</ol>
+<h4 id="同步上下文捕获">同步上下文捕获</h4>
+<ul>
+<li>默认情况下，await 会捕获当前 <code>SynchronizationContext</code></li>
+<li>完成后自动切回捕获的上下文（UI线程/Unity主线程）</li>
+<li>作用：允许直接操作UI、GameObject 等线程敏感对象</li>
+</ul>
+<h4 id="关闭上下文捕获">关闭上下文捕获</h4>
+<ul>
+<li>使用 <code>ConfigureAwait(false)</code> 关闭上下文捕获，提升性能</li>
+<li>无需访问主线程资源时必须使用</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">100</span>).ConfigureAwait(<span class="hljs-literal">false</span>);<br></code></pre></td></tr></table></figure>
+<h3 id="关键特性">关键特性</h3>
+<h4 id="非阻塞等待">非阻塞等待</h4>
+<ul>
+<li>await 不会阻塞调用线程，线程可被系统复用</li>
+<li>对比 <code>Thread.Sleep()</code> / <code>Wait()</code> 不会造成线程卡死</li>
+</ul>
+<h4 id="代码线性化">代码线性化</h4>
+<ul>
+<li>异步代码结构与同步代码一致，无嵌套回调</li>
+<li>可读性、可维护性远高于 Thread、ThreadPool</li>
+</ul>
+<h4 id="自动线程切换">自动线程切换</h4>
+<ul>
+<li>无需手动管理线程，系统自动调度</li>
+<li>可在异步逻辑中安全切回主线程操作UI/Unity对象</li>
+</ul>
+<h4 id="异常处理一致">异常处理一致</h4>
+<ul>
+<li>可直接使用 <code>try-catch</code> 捕获异步异常</li>
+<li>无需处理 <code>AggregateException</code>，自动解包异常</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">async</span> Task <span class="hljs-title">TestAsync</span>()</span><br>&#123;<br>    <span class="hljs-keyword">try</span><br>    &#123;<br>        <span class="hljs-keyword">await</span> Task.Run(() =&gt; &#123; &#125;);<br>    &#125;<br>    <span class="hljs-keyword">catch</span> (Exception ex)<br>    &#123;<br>        <span class="hljs-comment">// 直接捕获异常</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="常见陷阱">常见陷阱</h3>
+<h4 id="async-void-异常丢失">async void 异常丢失</h4>
+<ul>
+<li>普通方法使用 async void，异常无法被捕获，直接崩溃</li>
+<li>禁止在非事件方法中使用</li>
+</ul>
+<h4 id="过度-await-导致性能下降">过度 await 导致性能下降</h4>
+<ul>
+<li>无意义的 await 会增加线程调度开销</li>
+<li>同步逻辑无需添加 await</li>
+</ul>
+<h4 id="阻塞调用造成死锁">阻塞调用造成死锁</h4>
+<ul>
+<li>在异步代码中使用 <code>Wait()</code>、<code>Result</code>、<code>Sleep()</code> 会阻塞线程</li>
+<li>结合上下文捕获极易产生死锁</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 死锁代码（禁止）</span><br>task.Wait();<br><span class="hljs-built_in">int</span> result = task.Result;<br></code></pre></td></tr></table></figure>
+<h4 id="上下文捕获导致主线程卡顿">上下文捕获导致主线程卡顿</h4>
+<ul>
+<li>大量异步操作捕获主线程上下文会造成排队卡顿</li>
+<li>后台计算任务必须使用 <code>ConfigureAwait(false)</code></li>
+</ul>
+<h4 id="忘记释放取消源导致内存泄漏">忘记释放取消源导致内存泄漏</h4>
+<ul>
+<li><code>CancellationTokenSource</code> 用完未释放会造成对象无法回收</li>
+<li>必须使用 <code>using</code> 或手动调用 <code>Dispose()</code></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> cts = <span class="hljs-keyword">new</span> CancellationTokenSource();<br></code></pre></td></tr></table></figure>
+<h3 id="异步最佳实践">异步最佳实践</h3>
+<ul>
+<li>异步方法命名以 <strong>Async</strong> 结尾</li>
+<li>优先返回 <code>Task / Task&lt;T&gt;</code>，禁止滥用 async void</li>
+<li>后台任务一律使用 <code>ConfigureAwait(false)</code></li>
+<li>异常必须捕获，禁止未观察异常</li>
+<li>配合 CancellationToken 实现任务可取消</li>
+<li>Unity 中仅在主线程操作 GameObject，异步仅用于计算与IO</li>
+</ul>
+<h2 id="高级异步知识点">高级异步知识点</h2>
+<h3 id="ValueTask-T-（C-7-2）"><code>ValueTask&lt;T&gt;</code>（C# 7.2）</h3>
+<h4 id="核心定义-5">核心定义</h4>
+<ul>
+<li><strong><code>ValueTask&lt;T&gt;</code></strong>：值类型异步操作对象，用来替代引用类型 <code>Task&lt;T&gt;</code>，大幅减少堆内存分配与GC压力</li>
+<li>区别：<code>Task</code> 是类（分配堆内存），<code>ValueTask</code> 是结构体（无GC或低GC）</li>
+</ul>
+<h4 id="使用场景">使用场景</h4>
+<ul>
+<li>异步方法<strong>大部分情况下会同步完成</strong>（缓存命中、快速判断）</li>
+<li>游戏热路径、高频调用接口、每帧执行的异步逻辑</li>
+<li>追求极致性能、降低GC频率的场景</li>
+</ul>
+<h4 id="基础语法-2">基础语法</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 低GC异步方法</span><br><span class="hljs-function"><span class="hljs-keyword">async</span> ValueTask&lt;<span class="hljs-built_in">int</span>&gt; <span class="hljs-title">GetValueAsync</span>()</span><br>&#123;<br>    <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">10</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">10</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="重要特性">重要特性</h4>
+<ul>
+<li>支持 <code>await</code>，用法与 <code>Task</code> 完全一致</li>
+<li>同步完成时<strong>零堆分配</strong>，性能远高于 <code>Task</code></li>
+<li>只能<strong>等待一次</strong>，不可复用、不可 <code>Wait()</code>、不可 <code>WhenAll</code></li>
+<li>适用高频、同步完成占比高的异步操作</li>
+</ul>
+<h3 id="IAsyncEnumerable（C-8-0）"><code>IAsyncEnumerable</code>（C# 8.0）</h3>
+<h4 id="核心定义-6">核心定义</h4>
+<ul>
+<li><strong><code>IAsyncEnumerable&lt;T&gt;</code></strong>：异步流式枚举接口，用于<strong>分批、渐进式返回数据</strong></li>
+<li>配合 <code>await foreach</code> 遍历，每一项数据都可异步获取</li>
+</ul>
+<h4 id="核心语法">核心语法</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 异步迭代器</span><br><span class="hljs-function"><span class="hljs-keyword">async</span> IAsyncEnumerable&lt;<span class="hljs-built_in">int</span>&gt; <span class="hljs-title">GetDataAsync</span>()</span><br>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++)<br>    &#123;<br>        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">100</span>);<br>        <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> i;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 消费</span><br><span class="hljs-keyword">await</span> <span class="hljs-keyword">foreach</span> (<span class="hljs-function"><span class="hljs-keyword">var</span> item <span class="hljs-keyword">in</span> <span class="hljs-title">GetDataAsync</span>())</span><br>&#123;<br>    <span class="hljs-comment">// 处理每一项</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="使用场景-2">使用场景</h4>
+<ul>
+<li>网络分批下载、分页加载数据</li>
+<li>数据库流式读取、日志流式读取</li>
+<li>大量数据分批次返回，避免一次性加载</li>
+</ul>
+<h3 id="异步锁">异步锁</h3>
+<h4 id="核心问题-2">核心问题</h4>
+<ul>
+<li><code>lock</code> 不支持异步，不能在 <code>await</code> 前后使用，会直接编译报错/死锁</li>
+<li>异步代码必须使用<strong>异步可等待锁</strong></li>
+</ul>
+<h4 id="SemaphoreSlim（推荐）">SemaphoreSlim（推荐）</h4>
+<ul>
+<li>轻量级异步信号量，可实现异步独占锁</li>
+<li>支持 <code>WaitAsync()</code> 非阻塞等待</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> SemaphoreSlim _semaphore = <span class="hljs-keyword">new</span> SemaphoreSlim(<span class="hljs-number">1</span>);<br><br><span class="hljs-function"><span class="hljs-keyword">async</span> Task <span class="hljs-title">UseResourceAsync</span>()</span><br>&#123;<br>    <span class="hljs-keyword">await</span> _semaphore.WaitAsync();<br>    <span class="hljs-keyword">try</span><br>    &#123;<br>        <span class="hljs-comment">// 异步临界区</span><br>        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">100</span>);<br>    &#125;<br>    <span class="hljs-keyword">finally</span><br>    &#123;<br>        _semaphore.Release();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="自定义-AsyncLock">自定义 <code>AsyncLock</code></h4>
+<ul>
+<li>封装 <code>SemaphoreSlim</code> 实现简洁异步锁</li>
+<li>支持 <code>using</code> 自动释放</li>
+</ul>
+<h4 id="使用规范">使用规范</h4>
+<ul>
+<li>异步方法<strong>绝对禁止使用 <code>lock</code></strong></li>
+<li>临界区内尽量避免长时间阻塞</li>
+<li>必须用 <code>finally</code> 保证释放锁，防止死锁</li>
+</ul>
+<h3 id="TaskCompletionSource"><code>TaskCompletionSource</code></h3>
+<h4 id="核心定义-7">核心定义</h4>
+<ul>
+<li><strong><code>TaskCompletionSource</code></strong>：手动控制 Task 完成、失败、取消的工具</li>
+<li>作用：将<strong>回调式API</strong> 转为 <strong>Task/await 异步模式</strong></li>
+</ul>
+<h4 id="基础用法">基础用法</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs csharp">TaskCompletionSource&lt;<span class="hljs-built_in">int</span>&gt; tcs = <span class="hljs-keyword">new</span> TaskCompletionSource&lt;<span class="hljs-built_in">int</span>&gt;();<br><br><span class="hljs-comment">// 异步完成</span><br>tcs.SetResult(<span class="hljs-number">100</span>);<br><br><span class="hljs-comment">// 异常</span><br>tcs.SetException(<span class="hljs-keyword">new</span> Exception());<br><br><span class="hljs-comment">// 取消</span><br>tcs.SetCanceled();<br><br><span class="hljs-comment">// 外部等待</span><br><span class="hljs-keyword">await</span> tcs.Task;<br></code></pre></td></tr></table></figure>
+<h4 id="使用场景-3">使用场景</h4>
+<ul>
+<li>封装 Unity 异步操作：<code>UnityWebRequest</code>、<code>AssetBundle</code>、<code>Addressables</code></li>
+<li>封装事件/回调型SDK为await风格</li>
+<li>自定义异步流程控制</li>
+</ul>
+<h3 id="并行任务">并行任务</h3>
+<h4 id="核心定义-8">核心定义</h4>
+<ul>
+<li>并行任务：充分利用多核CPU，<strong>同步执行多个CPU密集型计算</strong></li>
+<li>区别于异步IO：并行 = 多核同时计算；异步 = 非阻塞等待</li>
+</ul>
+<h4 id="Parallel-类">Parallel 类</h4>
+<ul>
+<li>并行循环，自动使用多核</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Parallel.For(<span class="hljs-number">0</span>, <span class="hljs-number">1000</span>, i =&gt;<br>&#123;<br>    <span class="hljs-comment">// CPU密集计算</span><br>&#125;);<br><br>Parallel.ForEach(list, item =&gt;<br>&#123;<br>    <span class="hljs-comment">// 并行处理</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<h4 id="PLINQ-并行LINQ">PLINQ 并行LINQ</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">var</span> result = list.AsParallel()<br>                .Where(x =&gt; x &gt; <span class="hljs-number">0</span>)<br>                .OrderBy(x =&gt; x)<br>                .ToList();<br></code></pre></td></tr></table></figure>
+<h4 id="使用场景-4">使用场景</h4>
+<ul>
+<li>大量数据计算、物理模拟、路径预处理、图形处理</li>
+<li><strong>纯CPU密集型任务</strong></li>
+<li>不适用于IO操作、不适用于Unity主线程操作</li>
+</ul>
+<h4 id="注意事项">注意事项</h4>
+<ul>
+<li>并行会占用大量CPU，游戏中谨慎使用</li>
+<li>共享数据必须加锁，保证线程安全</li>
+<li>避免小任务频繁调度，降低并行效率</li>
+</ul>
+<h2 id="Unity-环境下异步">Unity 环境下异步</h2>
+<h3 id="Unity-主线程限制">Unity 主线程限制</h3>
+<h4 id="核心规则">核心规则</h4>
+<ul>
+<li><strong>Unity 引擎对象线程安全限制</strong>：只有<strong>主线程</strong>可以创建、访问、修改 <code>GameObject</code>、<code>Transform</code>、<code>Component</code>、<code>MonoBehaviour</code> 等对象</li>
+<li>工作线程/线程池/Task 后台线程<strong>严禁执行</strong>：
+<ul>
+<li><code>new GameObject()</code></li>
+<li><code>GetComponent</code></li>
+<li><code>transform.position</code></li>
+<li><code>Find</code>、<code>SetActive</code></li>
+<li>任何引擎 API 调用</li>
+</ul>
+</li>
+<li>工作线程<strong>仅允许</strong>执行：纯数值计算、数据解析、文件 IO、网络请求、逻辑预处理</li>
+</ul>
+<h3 id="Unity-异步支持">Unity 异步支持</h3>
+<h4 id="版本支持">版本支持</h4>
+<ul>
+<li><strong>async/await 在 Unity 2018.3 及以上版本完全稳定支持</strong></li>
+<li>兼容 .NET 4.x / .NET Standard 2.1 运行时</li>
+</ul>
+<h4 id="Unity-原生可等待对象">Unity 原生可等待对象</h4>
+<p>可直接在 <code>await</code> 后使用，无需额外封装：</p>
+<ul>
+<li><code>AsyncOperation</code>：场景加载、资源加载</li>
+<li><code>ResourceRequest</code>：Resources 异步加载</li>
+<li><code>AssetBundleRequest</code>：AB 包异步加载</li>
+<li><code>UnityWebRequest</code>：网络请求、下载</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 直接 await Unity 异步操作</span><br><span class="hljs-function"><span class="hljs-keyword">async</span> Task <span class="hljs-title">LoadSceneAsync</span>()</span><br>&#123;<br>    <span class="hljs-keyword">await</span> SceneManager.LoadSceneAsync(<span class="hljs-string">&quot;Game&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="线程切换回主线程">线程切换回主线程</h3>
+<h4 id="自动切回主线程">自动切回主线程</h4>
+<ul>
+<li>Unity 已实现 <code>SynchronizationContext</code></li>
+<li><strong>await 完成后会自动切回主线程</strong></li>
+<li>可直接在 await 后操作 <code>GameObject</code>、UI 等引擎对象</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">async</span> Task <span class="hljs-title">Test</span>()</span><br>&#123;<br>    <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">1000</span>);<br>    <span class="hljs-comment">// 自动回到 Unity 主线程，可安全操作对象</span><br>    gameObject.SetActive(<span class="hljs-literal">true</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="手动主线程调度（通用方案）">手动主线程调度（通用方案）</h4>
+<ul>
+<li>自定义主线程队列（适用于旧版本/封装库）</li>
+<li>常用方案：<code>UnityMainThreadDispatcher</code>、<code>MonoBehaviour</code> 消息队列</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 工作线程中调度到主线程</span><br>UnityMainThreadDispatcher.Instance.Enqueue(() =&gt;<br>&#123;<br>    <span class="hljs-comment">// 主线程执行逻辑</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<h3 id="协程-vs-async-await">协程 vs async/await</h3>
+<h4 id="Coroutine（协程）">Coroutine（协程）</h4>
+<ul>
+<li>运行在<strong>Unity 主线程</strong>，基于迭代器实现</li>
+<li>轻量、无 GC、无线程切换</li>
+<li>无返回值、异常处理弱、不支持跨线程、无法组合复杂任务</li>
+<li>适用：简单延时、简单帧等待</li>
+</ul>
+<h4 id="async-await">async/await</h4>
+<ul>
+<li>支持<strong>跨线程异步</strong>、强类型返回值、完整异常处理</li>
+<li>支持 <code>WhenAll</code>、<code>WhenAny</code>、取消、异步流、并行</li>
+<li>可封装所有 Unity 异步操作</li>
+<li>适用：网络、加载、复杂异步流程、后台计算</li>
+</ul>
+<h4 id="现代-Unity-最佳实践">现代 Unity 最佳实践</h4>
+<ul>
+<li>简单帧等待：协程</li>
+<li><strong>复杂异步、网络、资源加载、后台任务：优先 async/await</strong></li>
+</ul>
+<h3 id="IL2CPP-下注意事项">IL2CPP 下注意事项</h3>
+<h4 id="兼容性">兼容性</h4>
+<ul>
+<li>async/await、Task、ValueTask 在 IL2CPP 下<strong>完全支持</strong></li>
+<li>异步功能可正常发布到 Android、iOS、PC</li>
+</ul>
+<h4 id="性能与-GC-优化">性能与 GC 优化</h4>
+<ul>
+<li>避免大量<strong>短生命周期 Task</strong>，减少堆分配与 GC</li>
+<li><strong>高频异步方法必须使用 ValueTask<T></strong></li>
+<li>后台任务使用 <code>ConfigureAwait(false)</code> 提升性能</li>
+<li>避免异步委托闭包造成额外 GC</li>
+</ul>
+<h4 id="线程安全强制规范">线程安全强制规范</h4>
+<ul>
+<li>IL2CPP 下<strong>线程检查更严格</strong></li>
+<li>非主线程访问 Unity 对象会直接崩溃</li>
+<li>必须严格遵守：<strong>线程只做计算，主线程只操作引擎</strong></li>
+</ul>
+<h3 id="Unity-异步最佳实践">Unity 异步最佳实践</h3>
+<ul>
+<li>资源加载、场景加载、网络请求全部使用 async/await</li>
+<li>后台计算完成后通过 await 自动切回主线程更新 UI</li>
+<li>高频调用异步方法使用 ValueTask 降低 GC</li>
+<li>异步锁使用 SemaphoreSlim.WaitAsync()</li>
+<li>所有异步任务搭配 <code>CancellationToken</code> 支持取消</li>
+<li>IL2CPP 打包前做全面 GC 与线程安全测试</li>
+</ul>
+<h2 id="协程">协程</h2>
+<h3 id="核心概念">核心概念</h3>
+<h4 id="核心定义-9">核心定义</h4>
+<p>**协程（Coroutine）**是 Unity <strong>基于 C# 迭代器（<code>IEnumerator</code>）<strong>实现的</strong>主线程分段执行机制</strong>，<strong>并非多线程</strong>。</p>
+<p>所有逻辑始终运行在 Unity 主线程，依靠引擎每帧调度实现<strong>分段执行、暂停等待</strong>，是 Unity 开发中最常用的延时、分帧、异步等待工具。</p>
+<h4 id="本质原理">本质原理</h4>
+<ul>
+<li>基于 <code>yield return</code> 实现<strong>暂停执行</strong>，不阻塞主线程</li>
+<li>由 Unity 引擎在特定时机（帧结束、物理帧、延时结束）<strong>恢复执行</strong></li>
+<li>属于协作式任务，主动让出执行权，而非操作系统抢占式调度</li>
+<li>不创建线程、无线程切换开销、无 GC 压力（复用<code>yield</code>对象时）</li>
+</ul>
+<h4 id="主要作用">主要作用</h4>
+<ul>
+<li>延时执行逻辑（延迟调用、技能冷却、倒计时）</li>
+<li>分帧执行大量计算（批量加载、数据处理），避免主线程卡顿</li>
+<li>等待资源加载、场景加载、网络请求完成</li>
+<li>执行序列逻辑（动画流程、对话系统、技能释放流程）</li>
+<li>非阻塞等待，保持游戏运行流畅</li>
+</ul>
+<h4 id="关键特性-2">关键特性</h4>
+<ul>
+<li>全程运行在<strong>主线程</strong>，可安全访问 <code>GameObject</code>、<code>Transform</code>、组件等所有 Unity 对象</li>
+<li>轻量级、无 GC、无多线程竞态/死锁问题</li>
+<li>支持等待、嵌套、分帧，编写简单</li>
+<li><strong>无法并行计算</strong>，不能利用多核 CPU，不能替代多线程</li>
+</ul>
+<h3 id="基础语法-3">基础语法</h3>
+<h4 id="协程方法定义规则">协程方法定义规则</h4>
+<ul>
+<li>返回值固定为 <strong><code>IEnumerator</code></strong></li>
+<li>方法内必须使用 <strong><code>yield return</code></strong> 定义暂停点</li>
+<li>必须依托 <code>MonoBehaviour</code> 脚本启动与运行</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 标准协程定义</span><br><span class="hljs-function">IEnumerator <span class="hljs-title">BasicCoroutine</span>()</span><br>&#123;<br>    <span class="hljs-comment">// 第一段逻辑：调用时立即执行</span><br>    Debug.Log(<span class="hljs-string">&quot;协程启动，立即执行&quot;</span>);<br><br>    <span class="hljs-comment">// 暂停：等待下一帧再继续</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br><br>    <span class="hljs-comment">// 第二段逻辑：下一帧执行</span><br>    Debug.Log(<span class="hljs-string">&quot;下一帧恢复执行&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="启动协程">启动协程</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 方式1：直接启动（无法停止）</span><br>StartCoroutine(BasicCoroutine());<br><br><span class="hljs-comment">// 方式2：保存引用（推荐，可精准停止）</span><br>Coroutine m_MyCoroutine;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Start</span>()</span><br>&#123;<br>    m_MyCoroutine = StartCoroutine(BasicCoroutine());<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="停止协程">停止协程</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 停止指定协程（必须用引用）</span><br>StopCoroutine(m_MyCoroutine);<br><br><span class="hljs-comment">// 停止当前脚本所有协程</span><br>StopAllCoroutines();<br></code></pre></td></tr></table></figure>
+<h3 id="常用-yield-指令">常用 yield 指令</h3>
+<h4 id="帧相关等待">帧相关等待</h4>
+<p><strong>等待下一帧（最常用）</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br></code></pre></td></tr></table></figure>
+<p>适用：分帧执行、简单延迟一帧逻辑</p>
+<p><strong>等待当前帧渲染完毕</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForEndOfFrame</span>()</span>;<br></code></pre></td></tr></table></figure>
+<p>适用：截图、相机后处理、UI渲染完成后操作</p>
+<p><strong>等待下一个物理帧（<code>FixedUpdate</code>）</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForFixedUpdate</span>()</span>;<br></code></pre></td></tr></table></figure>
+<p>适用：物理相关逻辑、力、射线检测</p>
+<h4 id="时间相关等待">时间相关等待</h4>
+<p><strong>受时间缩放影响的延时</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params"><span class="hljs-number">2f</span></span>)</span>;<br></code></pre></td></tr></table></figure>
+<p>适用：游戏内计时、技能冷却（受 <code>timeScale</code> 影响）</p>
+<p><strong>真实时间延时（不受缩放影响）</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSecondsRealtime</span>(<span class="hljs-params"><span class="hljs-number">2f</span></span>)</span>;<br></code></pre></td></tr></table></figure>
+<p>适用：游戏暂停、广告计时、真实时间倒计时</p>
+<h4 id="条件等待">条件等待</h4>
+<p><strong>等待条件为 true</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitUntil</span>(<span class="hljs-params">(</span>)</span> =&gt; isReady == <span class="hljs-literal">true</span>);<br></code></pre></td></tr></table></figure>
+<p>适用：等待加载完成、等待玩家输入、等待条件达成</p>
+<p><strong>等待条件为 false</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitWhile</span>(<span class="hljs-params">(</span>)</span> =&gt; isPlaying == <span class="hljs-literal">true</span>);<br></code></pre></td></tr></table></figure>
+<p>适用：等待动画结束、等待状态关闭</p>
+<h4 id="异步操作等待">异步操作等待</h4>
+<p><strong>等待 Unity 异步操作完成</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp">AsyncOperation loadOp = SceneManager.LoadSceneAsync(<span class="hljs-string">&quot;Battle&quot;</span>);<br><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> loadOp;<br></code></pre></td></tr></table></figure>
+<p>适用：场景加载、资源加载、<code>UnityWebRequest</code> 网络请求</p>
+<h3 id="高频实用示例">高频实用示例</h3>
+<h4 id="延时执行一次">延时执行一次</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function">IEnumerator <span class="hljs-title">DelayAction</span>(<span class="hljs-params"><span class="hljs-built_in">float</span> delay, Action action</span>)</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params">delay</span>)</span>;<br>    action?.Invoke();<br>&#125;<br><br><span class="hljs-comment">// 使用：2秒后销毁物体</span><br>StartCoroutine(DelayAction(<span class="hljs-number">2f</span>, () =&gt; Destroy(gameObject)));<br></code></pre></td></tr></table></figure>
+<h4 id="分帧执行大量计算（防卡顿）">分帧执行大量计算（防卡顿）</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function">IEnumerator <span class="hljs-title">CalculateInFrames</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> count</span>)</span><br>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; count; i++)<br>    &#123;<br>        <span class="hljs-comment">// 每100次计算分一帧执行</span><br>        <span class="hljs-keyword">if</span> (i % <span class="hljs-number">100</span> == <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br><br>        <span class="hljs-comment">// 计算逻辑</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="循环延时（倒计时-循环任务）">循环延时（倒计时/循环任务）</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function">IEnumerator <span class="hljs-title">LoopCountdown</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> seconds</span>)</span><br>&#123;<br>    <span class="hljs-keyword">while</span> (seconds &gt; <span class="hljs-number">0</span>)<br>    &#123;<br>        Debug.Log(seconds);<br>        seconds--;<br>        <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params"><span class="hljs-number">1f</span></span>)</span>;<br>    &#125;<br>    Debug.Log(<span class="hljs-string">&quot;时间到&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="等待资源加载完成">等待资源加载完成</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function">IEnumerator <span class="hljs-title">LoadResource</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> path</span>)</span><br>&#123;<br>    ResourceRequest request = Resources.LoadAsync&lt;GameObject&gt;(path);<br>    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> request;<br><br>    GameObject prefab = request.asset <span class="hljs-keyword">as</span> GameObject;<br>    Debug.Log(<span class="hljs-string">&quot;加载完成：&quot;</span> + prefab.name);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="技能序列执行">技能序列执行</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function">IEnumerator <span class="hljs-title">SkillSequence</span>()</span><br>&#123;<br>    Debug.Log(<span class="hljs-string">&quot;释放前摇&quot;</span>);<br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params"><span class="hljs-number">0.5f</span></span>)</span>;<br><br>    Debug.Log(<span class="hljs-string">&quot;释放技能&quot;</span>);<br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params"><span class="hljs-number">1f</span></span>)</span>;<br><br>    Debug.Log(<span class="hljs-string">&quot;技能后摇&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="嵌套协程（结构化异步）">嵌套协程（结构化异步）</h3>
+<h4 id="核心规则-2">核心规则</h4>
+<ul>
+<li>父协程可通过 <code>yield return StartCoroutine()</code> 调用子协程</li>
+<li><strong>父协程会等待子协程完全执行完毕</strong>再继续</li>
+<li>支持多层嵌套，实现清晰的流程化逻辑</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function">IEnumerator <span class="hljs-title">SkillLogic</span>()</span><br>&#123;<br>    Debug.Log(<span class="hljs-string">&quot;开始技能&quot;</span>);<br><br>    <span class="hljs-comment">// 等待子协程执行完</span><br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-title">StartCoroutine</span>(<span class="hljs-params">PlayEffect(</span>))</span>;<br><br>    Debug.Log(<span class="hljs-string">&quot;技能结束&quot;</span>);<br>&#125;<br><br><span class="hljs-function">IEnumerator <span class="hljs-title">PlayEffect</span>()</span><br>&#123;<br>    Debug.Log(<span class="hljs-string">&quot;播放特效&quot;</span>);<br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params"><span class="hljs-number">1f</span></span>)</span>;<br>    Debug.Log(<span class="hljs-string">&quot;特效结束&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="协程生命周期">协程生命周期</h3>
+<h4 id="生命周期规则">生命周期规则</h4>
+<ul>
+<li>协程<strong>完全依附于 MonoBehaviour 所在对象</strong></li>
+<li><code>enabled = false</code> <strong>不会停止</strong>协程</li>
+<li><code>gameObject.SetActive(false)</code> <strong>立即终止协程</strong></li>
+<li><code>Destroy(gameObject)</code> <strong>立即终止协程</strong></li>
+<li>场景切换时，所有协程自动清空停止</li>
+<li>协程运行中对象被销毁，不会报错，但直接中断</li>
+</ul>
+<h4 id="最佳实践">最佳实践</h4>
+<ul>
+<li>长期协程（如背景音乐、全局管理）放在<strong>常驻不销毁对象</strong>上</li>
+<li>频繁开关的物体，协程要在 <code>OnDisable</code> 中手动停止</li>
+</ul>
+<h3 id="协程高级优化">协程高级优化</h3>
+<h4 id="复用-yield-对象，减少-GC">复用 yield 对象，减少 GC</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 全局静态复用，避免重复new</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> WaitForEndOfFrame WaitEndOfFrame = <span class="hljs-keyword">new</span> WaitForEndOfFrame();<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> WaitForFixedUpdate WaitFixedUpdate = <span class="hljs-keyword">new</span> WaitForFixedUpdate();<br><br><span class="hljs-comment">// 使用</span><br><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> WaitEndOfFrame;<br></code></pre></td></tr></table></figure>
+<h4 id="协程带参数">协程带参数</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function">IEnumerator <span class="hljs-title">MoveToTarget</span>(<span class="hljs-params">Transform target, Vector3 endPos, <span class="hljs-built_in">float</span> duration</span>)</span><br>&#123;<br>    <span class="hljs-built_in">float</span> time = <span class="hljs-number">0</span>;<br>    Vector3 start = target.position;<br><br>    <span class="hljs-keyword">while</span> (time &lt; duration)<br>    &#123;<br>        time += Time.deltaTime;<br>        target.position = Vector3.Lerp(start, endPos, time / duration);<br>        <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="停止所有协程（清理用）">停止所有协程（清理用）</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">OnDisable</span>()</span><br>&#123;<br>    StopAllCoroutines();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="协程-vs-Thread-多线程">协程 vs Thread 多线程</h3>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>协程</th>
+<th>多线程 Thread</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行线程</td>
+<td>仅主线程</td>
+<td>多线程并行</td>
+</tr>
+<tr>
+<td>Unity 对象访问</td>
+<td>完全安全</td>
+<td>禁止访问，会直接崩溃</td>
+</tr>
+<tr>
+<td>线程安全</td>
+<td>无线程竞争、无死锁</td>
+<td>必须加锁，存在竞态风险</td>
+</tr>
+<tr>
+<td>性能开销</td>
+<td>极低、无GC</td>
+<td>线程创建/切换开销大</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>延时、分帧、加载、流程</td>
+<td>CPU密集计算、网络IO、文件处理</td>
+</tr>
+</tbody>
+</table>
+<h3 id="协程-vs-async-await-2">协程 vs async/await</h3>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>协程</th>
+<th>async/await</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>跨线程支持</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>异常处理</td>
+<td>无法try-catch，报错直接中断</td>
+<td>完整try-catch，异常安全可捕获</td>
+</tr>
+<tr>
+<td>任务组合</td>
+<td>无WhenAll/WhenAny</td>
+<td>支持任务组合、取消、超时</td>
+</tr>
+<tr>
+<td>语法复杂度</td>
+<td>简单易学</td>
+<td>稍复杂，但功能极强</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>简单延时、分帧、简单动画</td>
+<td>网络、加载、复杂异步、后台计算</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Unity-现代开发规范">Unity 现代开发规范</h3>
+<ul>
+<li><strong>简单延时、分帧、简单动画、简单序列</strong> → <strong>协程</strong></li>
+<li><strong>网络请求、资源加载、场景管理、复杂异步流程、取消/超时</strong> → <strong>async/await</strong></li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="顶点处理 顶点处理是渲染管线的初始阶段，负责对输入顶点进行坐标变换、属性计算和几何操作，为后续的光栅化和像素处理提供标准化的几何数据。以下是该小节的核心内容： 一、坐标变换与空间转换 1. 多级变换级联  模型变换（Model Transform）：将顶点从局部坐标系（模型空间）转换到世界坐标系，应用缩放、旋转、平移（如网格模型的全局定位）。 视图变换（View Transform）：以相机为原点">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/%E5%9B%BE%E5%BD%A2%E5%AD%A6/22%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/221%E9%A1%B6%E7%82%B9%E5%A4%84%E7%90%86/README.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="顶点处理 顶点处理是渲染管线的初始阶段，负责对输入顶点进行坐标变换、属性计算和几何操作，为后续的光栅化和像素处理提供标准化的几何数据。以下是该小节的核心内容： 一、坐标变换与空间转换 1. 多级变换级联  模型变换（Model Transform）：将顶点从局部坐标系（模型空间）转换到世界坐标系，应用缩放、旋转、平移（如网格模型的全局定位）。 视图变换（View Transform）：以相机为原点">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.387Z">
+<meta property="article:modified_time" content="2025-04-15T12:11:52.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h3 id="顶点处理">顶点处理</h3>
+<p>顶点处理是渲染管线的初始阶段，负责对输入顶点进行坐标变换、属性计算和几何操作，为后续的光栅化和像素处理提供标准化的几何数据。以下是该小节的核心内容：</p>
+<h3 id="一、坐标变换与空间转换">一、坐标变换与空间转换</h3>
+<h4 id="1-多级变换级联">1. <strong>多级变换级联</strong></h4>
+<ul>
+<li><strong>模型变换（Model Transform）</strong>：将顶点从局部坐标系（模型空间）转换到世界坐标系，应用缩放、旋转、平移（如网格模型的全局定位）。</li>
+<li><strong>视图变换（View Transform）</strong>：以相机为原点，将世界空间顶点转换到视图空间（相机空间），等价于反向变换相机的位置和朝向（如“相机观察”矩阵）。</li>
+<li><strong>投影变换（Projection Transform）</strong>：
+<ul>
+<li><strong>正交投影</strong>：保持物体比例，用于2D图形或工程图（如UI元素、CAD视图）。</li>
+<li><strong>透视投影</strong>：模拟真实相机的近大远小效果，通过视锥体裁剪生成裁剪空间坐标（齐次坐标 ((x, y, z, w))），最终经齐次除法得到标准化设备坐标（NDC，范围 ([-1, 1]^3)）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-齐次坐标与裁剪空间">2. <strong>齐次坐标与裁剪空间</strong></h4>
+<ul>
+<li>顶点坐标通过模型、视图、投影矩阵级联变换为裁剪空间坐标，裁剪阶段会剔除完全在视锥体外的图元，保留部分在视锥体内的图元进行插值（如三角形的边缘裁剪）。</li>
+</ul>
+<h3 id="二、顶点属性处理">二、顶点属性处理</h3>
+<h4 id="1-基础属性传递">1. <strong>基础属性传递</strong></h4>
+<ul>
+<li><strong>位置（Position）</strong>：必选属性，经坐标变换后输出到裁剪空间。</li>
+<li><strong>法线（Normal）</strong>：用于光照计算，需通过逆转置矩阵变换以保持法线与切线的正交性（尤其在非均匀缩放时）。</li>
+<li><strong>纹理坐标（UV）</strong>：顶点在纹理贴图上的二维坐标，支持多组UV（如主UV用于纹理映射，次UV用于光照贴图）。</li>
+<li><strong>切线与副切线（Tangent &amp; Bitangent）</strong>：定义局部坐标系，用于法线贴图的空间转换（切线空间到世界空间的矩阵构建）。</li>
+</ul>
+<h4 id="2-可编程属性扩展">2. <strong>可编程属性扩展</strong></h4>
+<ul>
+<li><strong>自定义属性</strong>：如顶点颜色（Vertex Color）、骨骼权重（蒙皮权重）、实例化参数（如批量渲染时的位移/旋转偏移）。</li>
+<li><strong>属性插值</strong>：顶点处理阶段输出的属性会在光栅化阶段被线性插值到片元（如三角形顶点的UV插值到内部像素）。</li>
+</ul>
+<h3 id="三、着色器阶段核心功能">三、着色器阶段核心功能</h3>
+<h4 id="1-顶点着色器（Vertex-Shader）">1. <strong>顶点着色器（Vertex Shader）</strong></h4>
+<ul>
+<li><strong>核心任务</strong>：
+<ul>
+<li>计算顶点的裁剪空间坐标（必选输出）。</li>
+<li>处理顶点属性并传递给片元着色器（如输出插值用的法线、UV等）。</li>
+</ul>
+</li>
+<li><strong>可编程能力</strong>：
+<ul>
+<li>支持复杂数学运算（如矩阵变换、向量插值）。</li>
+<li>实现顶点变形（如骨骼蒙皮、顶点动画、过程化几何生成）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-可选着色器阶段">2. <strong>可选着色器阶段</strong></h4>
+<ul>
+<li><strong>几何着色器（Geometry Shader）</strong>（可选）：
+<ul>
+<li>输入图元（点/线/三角形），输出新的图元（如将点扩展为四边形面片，或生成线段的箭头端点）。</li>
+<li>用途：粒子特效（点生成四边形面片）、碰撞检测辅助可视化（绘制包围盒）。</li>
+</ul>
+</li>
+<li><strong>曲面细分着色器（Tessellation Shader）</strong>（可选，DirectX/OpenGL支持）：
+<ul>
+<li>结合细分控制着色器（Tessellation Control Shader）和细分计算着色器（Tessellation Evaluation Shader），动态生成细分顶点，实现细节层次（LOD）或曲面光滑（如实时细分高模细节）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="四、几何处理操作">四、几何处理操作</h3>
+<h4 id="1-顶点变形技术">1. <strong>顶点变形技术</strong></h4>
+<ul>
+<li><strong>骨骼蒙皮（Skinning）</strong>：
+<ul>
+<li>顶点受多个骨骼权重影响，通过骨骼变换矩阵的线性组合（加权平均）计算蒙皮后的顶点位置（如角色动画中的关节驱动网格变形）。</li>
+<li>优化：GPU实例化骨骼矩阵，利用硬件并行加速蒙皮计算。</li>
+</ul>
+</li>
+<li><strong>顶点混合（Vertex Blending）</strong>：
+<ul>
+<li>多组顶点位置的线性插值（如Blendshapes表情动画，或基于权重的变形目标混合）。</li>
+</ul>
+</li>
+<li><strong>过程化顶点生成</strong>：
+<ul>
+<li>基于算法动态生成顶点（如程序化地形的高度图顶点、粒子系统的初始位置计算）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-图元装配准备">2. <strong>图元装配准备</strong></h4>
+<ul>
+<li><strong>输入图元类型</strong>：点列表、线列表、线带、三角形列表、三角形带、三角形扇（不同图元类型影响光栅化效率）。</li>
+<li><strong>索引缓冲区（Index Buffer）</strong>：通过索引重用顶点数据，减少存储开销（如多个三角形共享顶点时仅存储一次顶点）。</li>
+</ul>
+<h3 id="五、数据优化与性能考量">五、数据优化与性能考量</h3>
+<h4 id="1-顶点缓存局部性（Vertex-Cache-Optimization）">1. <strong>顶点缓存局部性（Vertex Cache Optimization）</strong></h4>
+<ul>
+<li><strong>原理</strong>：利用GPU缓存特性，按顶点访问顺序排序（如相邻三角形共享顶点），减少显存访问延迟。</li>
+<li><strong>工具</strong>：自动重排序索引缓冲区（如NVIDIA的OptiX库或引擎内置工具）。</li>
+</ul>
+<h4 id="2-属性压缩">2. <strong>属性压缩</strong></h4>
+<ul>
+<li><strong>位置压缩</strong>：将32位浮点数坐标转换为16位半精度或定点数（如Unity的ETC2/EAC格式，适用于移动设备）。</li>
+<li><strong>法线压缩</strong>：利用法线方向的单位向量特性，存储为球面坐标的二维分量（如仅存储x、y分量，z分量通过归一化计算得到）。</li>
+</ul>
+<h4 id="3-实例化渲染（Instancing）">3. <strong>实例化渲染（Instancing）</strong></h4>
+<ul>
+<li><strong>批量处理</strong>：对相同模型的多个实例，仅传输一次顶点数据，通过实例化参数（Instance ID）动态修改每个实例的变换矩阵（如森林场景中的树木批量渲染）。</li>
+</ul>
+<h3 id="六、输出与后续流程衔接">六、输出与后续流程衔接</h3>
+<h4 id="1-裁剪与屏幕映射">1. <strong>裁剪与屏幕映射</strong></h4>
+<ul>
+<li>裁剪后的顶点坐标经齐次除法（(x/w, y/w, z/w)）转换为NDC坐标，最终映射到屏幕空间（视口变换，Viewport Transform），生成像素坐标（(x’, y’)）。</li>
+</ul>
+<h4 id="2-传递给光栅化的信息">2. <strong>传递给光栅化的信息</strong></h4>
+<ul>
+<li>顶点处理阶段输出的裁剪空间坐标、插值属性（UV、法线、颜色等）作为光栅化阶段的输入，用于生成片元（Fragment）的逐像素数据。</li>
+</ul>
+<h3 id="七、应用场景与前沿技术">七、应用场景与前沿技术</h3>
+<ol>
+<li><strong>实时渲染</strong>：
+<ul>
+<li>角色动画的骨骼蒙皮与顶点混合，实现自然的关节变形。</li>
+<li>程序化生成动态顶点（如布料模拟中的顶点位置更新）。</li>
+</ul>
+</li>
+<li><strong>可视化与科学计算</strong>：
+<ul>
+<li>大规模点云渲染（顶点着色器直接处理点坐标，结合几何着色器生成渲染面片）。</li>
+</ul>
+</li>
+<li><strong>前沿优化</strong>：
+<ul>
+<li><strong>GPU驱动管线（GPU-Driven Pipeline）</strong>：顶点处理阶段由GPU直接控制，减少CPU瓶颈（如虚幻引擎的GPU Driven Culling）。</li>
+<li><strong>神经顶点变形</strong>：利用深度学习预测顶点位置（如基于AI的角色表情动画，生成更自然的顶点位移）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="避免重复内容">避免重复内容</h3>
+<p>本小节聚焦「渲染管线中的顶点处理阶段」，不涉及以下内容：</p>
+<ul>
+<li>坐标变换的数学原理（属于2.1.2坐标变换，此处侧重管线中的应用）</li>
+<li>网格处理中的细分/简化算法（属于2.1.3网格处理）</li>
+<li>顶点属性的几何表示（如网格数据结构，属于2.1.1几何表示）</li>
+<li>着色器语言语法（如HLSL/GLSL细节，属于1.2.3图形API基础）</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

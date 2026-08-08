@@ -1,0 +1,886 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="顶点数据管理 顶点数据管理步骤 对象声明 1unsigned int VBO, VAO, EBO; 声明了三个无符号整数变量，用于存储这三种缓冲对象的ID。 生成缓冲对象 123glGenBuffers(1, &amp;VBO);glGenVertexArrays(1, &amp;VAO);glGenBuffers(1, &amp;EBO);  glGenBuffers函数生成指定数量的缓冲对象，">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/%E5%9B%BE%E5%BD%A2%E5%AD%A6/12%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/123%E5%9B%BE%E5%BD%A2API/OpenGL/03%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="顶点数据管理 顶点数据管理步骤 对象声明 1unsigned int VBO, VAO, EBO; 声明了三个无符号整数变量，用于存储这三种缓冲对象的ID。 生成缓冲对象 123glGenBuffers(1, &amp;VBO);glGenVertexArrays(1, &amp;VAO);glGenBuffers(1, &amp;EBO);  glGenBuffers函数生成指定数量的缓冲对象，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.364Z">
+<meta property="article:modified_time" content="2025-09-13T13:53:24.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="顶点数据管理">顶点数据管理</h1>
+<h2 id="顶点数据管理步骤">顶点数据管理步骤</h2>
+<h3 id="对象声明">对象声明</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> VBO, VAO, EBO;<br></code></pre></td></tr></table></figure>
+<p>声明了三个无符号整数变量，用于存储这三种缓冲对象的ID。</p>
+<h3 id="生成缓冲对象">生成缓冲对象</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">glGenBuffers</span>(<span class="hljs-number">1</span>, &amp;VBO);<br><span class="hljs-built_in">glGenVertexArrays</span>(<span class="hljs-number">1</span>, &amp;VAO);<br><span class="hljs-built_in">glGenBuffers</span>(<span class="hljs-number">1</span>, &amp;EBO);<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>glGenBuffers</code>函数生成指定数量的缓冲对象，并将它们的ID存储在变量中</li>
+<li>第一个参数是要生成的对象数量，第二个参数是存储ID的变量地址</li>
+</ul>
+<h3 id="绑定VAO">绑定VAO</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">glBindVertexArray</span>(VAO);<br></code></pre></td></tr></table></figure>
+<p>绑定VAO，之后所有的顶点属性配置都会保存在当前绑定的VAO中，方便后续渲染时快速切换配置。</p>
+<h3 id="绑定缓冲对象到目标">绑定缓冲对象到目标</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, VBO);<br><span class="hljs-built_in">glBindBuffer</span>(GL_ELEMENT_ARRAY_BUFFER, EBO);<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>GL_ARRAY_BUFFER</code>：用于顶点数据的目标</li>
+<li><code>GL_ELEMENT_ARRAY_BUFFER</code>：用于索引数据的目标</li>
+<li>绑定后，后续的缓冲操作都会作用于当前绑定的缓冲对象</li>
+</ul>
+<h3 id="将数据复制到缓冲内存">将数据复制到缓冲内存</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">glBufferData</span>(GL_ARRAY_BUFFER, <span class="hljs-built_in">sizeof</span>(vertices), vertices, GL_STATIC_DRAW);<br><span class="hljs-built_in">glBufferData</span>(GL_ELEMENT_ARRAY_BUFFER, <span class="hljs-built_in">sizeof</span>(indices), indices, GL_STATIC_DRAW);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>第一个参数：目标缓冲类型</li>
+<li>第二个参数：数据大小（字节）</li>
+<li>第三个参数：要复制的数据指针</li>
+<li>第四个参数：使用提示（<code>GL_STATIC_DRAW</code>表示数据不会频繁修改）</li>
+</ul>
+<h3 id="配置顶点属性指针">配置顶点属性指针</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">glVertexAttribPointer</span>(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>, GL_FLOAT, GL_FALSE, <span class="hljs-number">3</span> * <span class="hljs-built_in">sizeof</span>(<span class="hljs-type">float</span>), (<span class="hljs-type">void</span>*)<span class="hljs-number">0</span>);<br><span class="hljs-built_in">glEnableVertexAttribArray</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>glVertexAttribPointer</code>：定义了顶点数据的解析方式
+<ul>
+<li>参数1：顶点属性位置索引（与着色器中的layout(location = 0)对应）</li>
+<li>参数2：每个顶点属性的分量数量（3表示xyz坐标）</li>
+<li>参数3：数据类型</li>
+<li>参数4：是否归一化</li>
+<li>参数5：步长（连续顶点属性之间的字节偏移量）</li>
+<li>参数6：数据在缓冲中的起始偏移量</li>
+</ul>
+</li>
+<li><code>glEnableVertexAttribArray</code>：启用指定索引的顶点属性</li>
+</ul>
+<h3 id="解绑缓冲对象">解绑缓冲对象</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, <span class="hljs-number">0</span>);<br><span class="hljs-built_in">glBindVertexArray</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>解绑VBO和VAO，防止后续操作意外修改这些缓冲对象</li>
+<li>注意：EBO不需要手动解绑，它会被当前绑定的VAO保管</li>
+</ul>
+<h3 id="绘制图形">绘制图形</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">glDrawElements</span>(GL_TRIANGLES, <span class="hljs-number">6</span>, GL_UNSIGNED_INT, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>这是使用索引绘制的函数：</p>
+<ul>
+<li>
+<p>参数 1：绘制的图元类型（这里是三角形）</p>
+</li>
+<li>
+<p>参数 2：要绘制的索引数量（6 个索引）</p>
+</li>
+<li>
+<p>参数 3：索引的数据类型（无符号整数）</p>
+</li>
+<li>
+<p>参数 4：索引数据在 EBO 中的偏移量（0 表示从起始位置开始）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="资源释放部分">资源释放部分</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//释放顶点数组对象</span><br><span class="hljs-built_in">glDeleteVertexArrays</span>(<span class="hljs-number">1</span>, &amp;VAO);<br><span class="hljs-comment">//释放顶点缓冲对象</span><br><span class="hljs-built_in">glDeleteBuffers</span>(<span class="hljs-number">1</span>, &amp;VBO);<br><span class="hljs-comment">//释放元素缓冲对象</span><br><span class="hljs-built_in">glDeleteBuffers</span>(<span class="hljs-number">1</span>, &amp;EBO);<br><span class="hljs-comment">//释放着色器程序</span><br><span class="hljs-built_in">glDeleteProgram</span>(shaderProgram);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>这些函数会通知 OpenGL 释放对应的 GPU 资源，避免内存泄漏：</p>
+<ul>
+<li>
+<p><code>glDeleteVertexArrays</code>：删除 VAO</p>
+</li>
+<li>
+<p><code>glDeleteBuffers</code>：删除 VBO 和 EBO</p>
+</li>
+<li>
+<p><code>glDeleteProgram</code>：删除着色器程序</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="顶点缓冲区对象VBO">顶点缓冲区对象VBO</h2>
+<ol>
+<li>
+<p><strong><code>glGenBuffers</code></strong>：</p>
+<ul>
+<li>作用：生成一个或多个缓冲区对象的名称。</li>
+<li>细节：这个函数不分配 GPU 内存，只是创建一个或多个缓冲区对象的名称，这些名称可以用于后续的绑定和数据操作。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>glBindBuffer</code></strong>：</p>
+<ul>
+<li>作用：将一个缓冲区对象绑定到一个特定的缓冲区目标。</li>
+<li>细节：绑定操作使得后续对缓冲区目标的调用（如 <code>glBufferData</code>）都会影响到绑定的缓冲区对象。可以将其视为“激活”或“选择”一个缓冲区以便进行操作。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>glBufferData</code></strong>：</p>
+<ul>
+<li>作用：为绑定的缓冲区对象分配内存，并可选地上传数据。</li>
+<li>细节：这个函数分配 GPU 内存，并根据提供的参数初始化缓冲区内容。如果提供了数据指针，数据将被复制到 GPU 内存中；如果没有提供数据指针（即 <code>data</code> 参数为 <code>NULL</code>），则只分配内存，内容未定义。</li>
+</ul>
+</li>
+</ol>
+<p>这三个函数的典型使用流程如下：</p>
+<ol>
+<li>调用 <code>glGenBuffers</code> 来获取一个或多个缓冲区对象的名称。</li>
+<li>调用 <code>glBindBuffer</code> 并传入缓冲区对象的名称和目标（如 <code>GL_ARRAY_BUFFER</code>），以绑定缓冲区对象。</li>
+<li>调用 <code>glBufferData</code> 并传入缓冲区大小、数据指针和数据使用模式，以分配内存并初始化缓冲区内容。</li>
+</ol>
+<p>这个过程确保了应用程序能够将数据有效地传输到 GPU，供后续的渲染操作使用。</p>
+<h3 id="glGenBuffers"><code>glGenBuffers</code></h3>
+<p><code>glGenBuffers</code> 是用于<strong>生成缓冲区对象名称</strong>的函数。这个函数会返回一个或多个缓冲区对象的名称，这些名称可以随后用于绑定和操作相应的缓冲区。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glGenBuffers</span><span class="hljs-params">(GLsizei n, GLuint *buffers)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：
+<ul>
+<li><code>n</code>：要生成的缓冲区对象名称的数量。这个值必须大于 0。</li>
+<li><code>buffers</code>：一个指向 <code>GLuint</code> 类型数组的指针，用于存储生成的缓冲区对象名称。指向一个数组的指针，该数组足够大，可以存储 <code>n</code> 个缓冲区对象的名称。这些名称随后可以被用来绑定缓冲区，以便你可以向 GPU 上传数据或从中读取数据。</li>
+</ul>
+</li>
+</ul>
+<h3 id="glBindBuffer"><code>glBindBuffer</code></h3>
+<p><code>glBindBuffer</code> 是用于<strong>绑定缓冲区对象到特定缓冲区目标</strong>的函数。缓冲区目标定义了缓冲区的用途，例如顶点数据、索引数据或统一缓冲区对象（UBO）。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glBindBuffer</span><span class="hljs-params">(GLenum target, GLuint buffer)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：
+<ul>
+<li><code>target</code>：指定缓冲区的目标，这个目标决定了缓冲区的用途。例如，<code>GL_ARRAY_BUFFER</code> 用于顶点属性数据，<code>GL_ELEMENT_ARRAY_BUFFER</code> 用于索引数据。包括但不限于：
+<ul>
+<li><code>GL_ARRAY_BUFFER</code>：用于存储顶点属性数据，如顶点坐标、颜色、纹理坐标等。</li>
+<li><code>GL_ELEMENT_ARRAY_BUFFER</code>：用于存储索引数据，通常用于 <code>glDrawElements</code> 函数。</li>
+<li><code>GL_UNIFORM_BUFFER</code>：用于存储着色器的统一变量。</li>
+<li><code>GL_TEXTURE_BUFFER</code>：用于存储纹理数据。</li>
+<li>还有其他一些针对特定扩展的目标。</li>
+</ul>
+</li>
+<li><code>buffer</code>：指定要绑定的缓冲区对象的名称。传递 <code>0</code> 可以解绑当前绑定的缓冲区。</li>
+</ul>
+</li>
+</ul>
+<p><code>glBindBuffer</code>用于设置渲染管线的缓冲区状态。通过绑定不同的缓冲区到不同的目标，可以控制数据如何在渲染管线中流动。</p>
+<h3 id="glDeleteBuffers"><code>glDeleteBuffers</code></h3>
+<p><code>glDeleteBuffers</code> 是 OpenGL 中用于删除缓冲区对象的函数。当你不再需要一个或多个缓冲区对象（例如 VBO、EBO 等）时，应该使用这个函数来释放它们占用的资源。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glDeleteBuffers</span><span class="hljs-params">(GLsizei n, <span class="hljs-type">const</span> GLuint *buffers)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>参数</strong>：</p>
+<ul>
+<li><code>n</code>：要删除的缓冲区对象名称的数量。</li>
+<li><code>buffers</code>：一个指向包含缓冲区对象名称的数组的指针，该数组包含了要删除的缓冲区对象的名称。</li>
+</ul>
+</li>
+<li>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>
+<p>删除缓冲区对象后，不应再对这些对象进行操作，否则可能会导致未定义的行为。</p>
+</li>
+<li>
+<p>在应用程序退出之前，或者在不再需要这些缓冲区之前，应该清理和删除所有创建的缓冲区对象，以避免资源泄露。</p>
+</li>
+<li>
+<p>如果尝试删除一个已经绑定的缓冲区，OpenGL 的行为是未定义的。因此，在删除缓冲区之前，确保已经解绑了所有相关的缓冲区。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>解绑VBO</strong></p>
+<ul>
+<li>
+<p>在 OpenGL 中，VBO（顶点缓冲区对象）可以在数据上传到 GPU 后解绑。解绑 VBO 是一个好习惯，因为它允许 OpenGL 优化资源的使用，并且可以避免意外修改已经绑定的缓冲区。</p>
+</li>
+<li>
+<p>通常，在以下情况下解绑 VBO：</p>
+<ol>
+<li>
+<p><strong>数据上传完成后</strong>：一旦你使用 <code>glBufferData</code> 或 <code>glBufferSubData</code> 将数据上传到 VBO，就可以解绑 VBO。</p>
+</li>
+<li>
+<p><strong>切换到另一个缓冲区</strong>：如果你需要绑定另一个缓冲区（例如，切换到另一个 VBO 或者绑定 EBO），那么在此之前应该解绑当前的 VBO。</p>
+</li>
+<li>
+<p><strong>完成渲染命令设置</strong>：在设置了所有顶点属性指针和绘制调用之后，可以解绑 VBO。</p>
+</li>
+<li>
+<p><strong>在渲染循环的开始或结束</strong>：在渲染循环中，你可以在每次绘制调用之前重新绑定 VBO，然后在绘制完成后解绑。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>解绑 VBO 不会改变缓冲区中的数据，也不会影响已经设置的顶点属性指针。如果你在渲染循环中重复使用同一个 VBO，那么可以在循环开始时绑定它，并在循环结束时解绑。这样做有助于避免在每次迭代中重复绑定和解绑操作，从而提高性能。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="glBufferData"><code>glBufferData</code></h3>
+<p><code>glBufferData</code> 是用于创建和初始化缓冲区对象（如 VBO、EBO 等）的函数。这个函数不仅可以用来创建缓冲区，还可以用来更新已经存在的缓冲区的内容。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glBufferData</span><span class="hljs-params">(GLenum target, GLsizeiptr size, <span class="hljs-type">const</span> <span class="hljs-type">void</span>* data, GLenum usage)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：
+<ul>
+<li><code>target</code>：指定缓冲区的目标，例如 <code>GL_ARRAY_BUFFER</code> 或 <code>GL_ELEMENT_ARRAY_BUFFER</code>。</li>
+<li><code>size</code>：指定要创建的缓冲区的大小，以字节为单位。</li>
+<li><code>data</code>：指向要复制到缓冲区的初始数据的指针。如果设置为 <code>NULL</code>，则缓冲区被分配但不被初始化，其内容是未定义的。</li>
+<li><code>usage</code>：指定期望的缓冲区数据使用模式，这有助于 OpenGL 优化内存分配和访问模式。常见的使用模式有：
+<ul>
+<li><code>GL_STATIC_DRAW</code>：数据不会或几乎不会改变，但可能会被多次绘制。</li>
+<li><code>GL_DYNAMIC_DRAW</code>：数据会频繁改变，但可能会被多次绘制。</li>
+<li><code>GL_STREAM_DRAW</code>：数据每次绘制时都会改变。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><code>glBufferData</code> 可以用于初始化新创建的缓冲区，也可以用于更新已经存在的缓冲区。如果需要更新缓冲区的部分数据，可以使用 <code>glBufferSubData</code> 函数。如果只是需要更改整个缓冲区的数据，可以重新调用 <code>glBufferData</code> 来重新上传数据。</p>
+<p>请注意，<code>glBufferData</code> 可能会在内部进行内存复制，因此提供的数据在函数调用后可以被释放或修改，而不会影响 GPU 上的数据。</p>
+<p>现在已经把顶点数据储存在显卡的内存中，用VBO这个顶点缓冲对象管理。后续顶点着色器和片段着色器来处理这些数据</p>
+<h2 id="顶点数组对象VAO">顶点数组对象VAO</h2>
+<ol>
+<li>
+<p><strong><code>glGenVertexArrays</code></strong>：</p>
+<ul>
+<li>作用：生成一个或多个 VAO 名称。</li>
+<li>细节：这个函数创建了 VAO 的名称（即句柄），并将它们存储在提供的数组中。这些名称随后可以用来创建和引用 VAO。此时，VAO 只是一个空的容器，没有关联任何状态或顶点数据。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>glBindVertexArray</code></strong>：</p>
+<ul>
+<li>作用：绑定一个 VAO，使其成为当前的顶点数组对象。</li>
+<li>细节：当你绑定一个 VAO 时，OpenGL 会记录当前的顶点属性状态，包括顶点缓冲区的绑定和顶点属性指针的配置。绑定 VAO 后，你可以进行顶点属性的设置，如绑定 VBO、设置顶点属性指针、启用或禁用顶点属性等。这些设置会被保存在 VAO 中，当你再次绑定同一个 VAO 时，这些设置会自动恢复，从而避免了重复配置的需要。</li>
+</ul>
+</li>
+</ol>
+<p><code>glGenVertexArrays</code> 用于创建 VAO 的名称， <code>glBindVertexArray</code> 用于将 VAO 绑定到当前的 OpenGL 状态，以便你可以配置和管理顶点属性。这种机制允许将顶点属性配置与 VAO 关联，从而在渲染时快速恢复这些配置。</p>
+<h3 id="glGenVertexArray"><code>glGenVertexArray</code></h3>
+<p><code>glGenVertexArrays</code> 是 OpenGL 中用于生成顶点数组对象（VAO）名称的函数。VAO 用于存储顶点属性的状态，包括顶点缓冲区对象（VBO）的绑定和顶点属性指针的配置。使用 VAO 可以简化顶点属性的设置过程，并提高渲染效率。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glGenVertexArrays</span><span class="hljs-params">(GLsizei n, GLuint *arrays)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：
+<ul>
+<li><code>n</code>：要生成的 VAO 名称的数量。这个值必须大于 0。</li>
+<li><code>arrays</code>：一个指向 <code>GLuint</code> 类型数组的指针，用于存储生成的 VAO 名称。指向一个数组的指针，该数组足够大，可以存储 <code>n</code> 个 VAO 名称。这些名称随后可以被用来绑定 VAO，以便你可以配置和管理顶点属性。</li>
+</ul>
+</li>
+</ul>
+<h3 id="glBindVertexArray"><code>glBindVertexArray</code></h3>
+<p><code>glBindVertexArray</code> 是 OpenGL 中用于绑定顶点数组对象（VAO）的函数。当你绑定一个 VAO 时，OpenGL 会将当前的顶点属性状态（包括顶点缓冲区对象（VBO）的绑定和顶点属性指针的配置）与该 VAO 关联起来。这样，当你下次绑定这个 VAO 时，所有之前配置的状态都会自动加载，从而简化了渲染流程。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glBindVertexArray</span><span class="hljs-params">(GLuint <span class="hljs-built_in">array</span>)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>参数</strong>：</p>
+<ul>
+<li><code>array</code>：要绑定的 VAO 的名称。如果传递 <code>0</code>，则会解绑当前的 VAO。指定要绑定的 VAO 的名称。这个名称是通过调用 <code>glGenVertexArrays</code> 函数生成的。如果你传递 <code>0</code>，那么当前绑定的 VAO 将被解绑。</li>
+</ul>
+</li>
+<li>
+<p><strong>解绑VAO</strong></p>
+<ul>
+<li>
+<p>在 OpenGL 中，VAO（顶点数组对象）的解绑通常不是必要的，因为 VAO 本身不存储任何 GPU 数据，它只是保存了顶点属性的状态。VAO 的主要作用是保存顶点属性指针和启用状态的配置，以便在渲染时可以快速恢复这些配置。因此，一旦你完成了 VAO 的配置，你可以在渲染循环中重复绑定和解绑 VAO，而不需要在每次使用后立即解绑。</p>
+<ol>
+<li>
+<p><strong>在切换到另一个 VAO 之前</strong>：如果你需要绑定另一个 VAO，那么在此之前应该解绑当前的 VAO。</p>
+</li>
+<li>
+<p><strong>在完成一系列设置之后</strong>：在设置了 VAO 的所有顶点属性指针和状态后，可以解绑 VAO。</p>
+</li>
+<li>
+<p><strong>在渲染循环的开始或结束</strong>：在渲染循环中，你可以在每次绘制调用之前绑定 VAO，并在绘制完成后解绑。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>解绑 VAO 不会影响 VAO 保存的状态，也不会影响 GPU 上的数据。在下一次需要使用 VAO 时，你只需重新绑定它，OpenGL 会恢复之前保存的所有顶点属性配置。解绑 VAO 主要是为了确保当前没有 VAO 被激活，这在某些情况下可以避免混淆或错误。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="glDeleteVertexArrays"><code>glDeleteVertexArrays</code></h3>
+<p><code>glDeleteVertexArrays</code> 是 OpenGL 中用于删除顶点数组对象（VAO）的函数。当你完成了 VAO 的使用，并且不再需要它时，应该调用这个函数来释放相关资源。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glDeleteVertexArrays</span><span class="hljs-params">(GLsizei n, <span class="hljs-type">const</span> GLuint *arrays)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>参数</strong>：</p>
+<ul>
+<li><code>n</code>：要删除的 VAO 名称的数量。</li>
+<li><code>arrays</code>：一个指向包含 VAO 名称的数组的指针。该数组包含了要删除的 VAO 的名称。</li>
+</ul>
+</li>
+<li>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>
+<p>删除 VAO 后，不应再对它进行操作，否则可能会导致未定义的行为。</p>
+</li>
+<li>
+<p>在应用程序退出之前，或者在不再需要这些 VAO 之前，应该清理和删除所有创建的 VAO，以避免资源泄露。</p>
+</li>
+<li>
+<p>如果尝试删除一个当前绑定的 VAO，OpenGL 的行为是未定义的。因此，在删除 VAO 之前，确保已经解绑了所有相关的 VAO。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="链接-解析顶点属性">链接/解析顶点属性</h2>
+<ol>
+<li>
+<p><strong><code>glVertexAttribPointer</code></strong>：</p>
+<ul>
+<li>作用：指定顶点缓冲区对象（VBO）中顶点属性数据的格式和位置。</li>
+<li>细节：这个函数定义了顶点属性的布局，包括每个顶点属性的组件数量、数据类型、是否需要归一化、步长（连续顶点属性之间的距离）以及指针（数据在 VBO 中的起始位置）。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>glEnableVertexAttribArray</code></strong>：</p>
+<ul>
+<li>作用：启用一个顶点属性数组，使得 OpenGL 在渲染时会读取并使用该顶点属性。</li>
+<li>细节：这个函数通过顶点属性的索引来启用它。在调用 <code>glVertexAttribPointer</code> 设置了顶点属性指针之后，必须启用对应的顶点属性，否则 OpenGL 将忽略该属性。</li>
+</ul>
+</li>
+</ol>
+<p><code>glVertexAttribPointer</code> 负责告诉 OpenGL 如何解释 VBO 中的顶点数据，而 <code>glEnableVertexAttribArray</code> 则确保对应的顶点属性在渲染时被激活和使用。这两个函数通常在绑定了 VAO 之后一起使用，以确保顶点属性的正确配置。</p>
+<h3 id="glVertexAttribPointer"><code>glVertexAttribPointer</code></h3>
+<p><code>glVertexAttribPointer</code> 是 OpenGL 中用于定义顶点属性指针的函数。这个函数指定了顶点缓冲区对象（VBO）中顶点数据的格式和位置，这样 OpenGL 就知道如何解释顶点数据。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glVertexAttribPointer</span><span class="hljs-params">(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, <span class="hljs-type">const</span> <span class="hljs-type">void</span>* pointer)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：
+<ul>
+<li><code>index</code>：顶点属性的索引，这个索引与着色器中 <code>layout(location = index)</code> 定义的布局相匹配。</li>
+<li><code>size</code>：每个顶点属性的组件数量（例如，对于 xyz 坐标，<code>size</code> 将是 3）。</li>
+<li><code>type</code>：数据的类型，例如 <code>GL_FLOAT</code>、<code>GL_INT</code> 或 <code>GL_UNSIGNED_INT</code> 等。</li>
+<li><code>normalized</code>：如果为 <code>GL_TRUE</code>，当 <code>type</code> 是整数类型时，数据会被归一化到 [0,1] 或 [-1,1] 范围内。</li>
+<li><code>stride</code>：连续顶点属性之间的字节距离。如果设置为 0，OpenGL 会假定数据是紧密打包的。</li>
+<li><code>pointer</code>：指向第一个顶点属性的指针（即 VBO 中数据的起始位置）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="glEnableVertexAttribArray"><code>glEnableVertexAttribArray</code></h3>
+<p><code>glEnableVertexAttribArray</code> 是 OpenGL 中用于启用顶点属性数组的函数。在 OpenGL 3.0 及以后的版本中，顶点属性（如顶点坐标、颜色、纹理坐标等）是通过通用顶点属性接口进行控制的。每个顶点属性都有一个与之关联的索引，你可以通过调用 <code>glEnableVertexAttribArray</code> 来启用或禁用特定索引的顶点属性。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glEnableVertexAttribArray</span><span class="hljs-params">(GLuint index)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：
+<ul>
+<li><code>index</code>：要启用的顶点属性的索引。这个索引与顶点着色器中接收顶点属性的变量的 <code>location</code> 相对应。</li>
+</ul>
+</li>
+</ul>
+<h2 id="绘制图元">绘制图元</h2>
+<h3 id="glDrawArrays"><code>glDrawArrays</code></h3>
+<ul>
+<li><strong>作用</strong>：直接根据顶点缓冲区中的顶点数据顺序绘制图元，不需要索引缓冲（EBO）。</li>
+<li><strong>适用场景</strong>：顶点数据无重复利用的情况（如独立三角形列表）。</li>
+</ul>
+<p>函数原型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glDrawArrays</span><span class="hljs-params">(GLenum mode, GLint first, GLsizei count)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：
+<ul>
+<li><code>mode</code>：绘制的图元类型，常用值包括：
+<ul>
+<li><code>GL_TRIANGLES</code>：每个组3个顶点构成一个三角形</li>
+<li><code>GL_TRIANGLE_STRIP</code>：连续三角形带（共享边）</li>
+<li><code>GL_TRIANGLE_FAN</code>：三角形扇（围绕一个中心点）</li>
+<li><code>GL_LINES</code>：线段（每2个顶点一条线段）</li>
+<li><code>GL_LINE_STRIP</code>：连续线段</li>
+<li><code>GL_POINTS</code>：点集</li>
+</ul>
+</li>
+<li><code>first</code>：起始顶点的索引（从VBO中第几个顶点开始绘制）</li>
+<li><code>count</code>：要绘制的顶点总数</li>
+</ul>
+</li>
+</ul>
+<h3 id="glDrawElements"><code>glDrawElements</code></h3>
+<ul>
+<li><strong>作用</strong>：通过索引缓冲区（EBO）中的索引数据绘制图元，可重复利用顶点数据。</li>
+<li><strong>适用场景</strong>：顶点数据有重复的复杂模型（如网格、四边形由两个三角形组成的情况），能显著减少数据冗余。</li>
+</ul>
+<p>函数原型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">glDrawElements</span><span class="hljs-params">(GLenum mode, GLsizei count, GLenum type, <span class="hljs-type">const</span> <span class="hljs-type">void</span>* indices)</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：
+<ul>
+<li><code>mode</code>：同<code>glDrawArrays</code>，指定图元类型</li>
+<li><code>count</code>：要绘制的索引总数（不是顶点数）</li>
+<li><code>type</code>：索引数据的数据类型，常用值：
+<ul>
+<li><code>GL_UNSIGNED_BYTE</code>：无符号字节（0-255范围）</li>
+<li><code>GL_UNSIGNED_SHORT</code>：无符号短整型（0-65535范围）</li>
+<li><code>GL_UNSIGNED_INT</code>：无符号整型（更大范围）</li>
+</ul>
+</li>
+<li><code>indices</code>：索引数据在EBO中的起始偏移量（通常为<code>0</code>，表示从开头开始）</li>
+</ul>
+</li>
+</ul>
+<h3 id="绘制函数与顶点属性的关系">绘制函数与顶点属性的关系</h3>
+<ul>
+<li>绘制函数依赖于<strong>已激活的着色器程序</strong>和<strong>已绑定的VAO</strong>：
+<ul>
+<li>必须先通过<code>glUseProgram</code>激活着色器程序</li>
+<li>必须先通过<code>glBindVertexArray</code>绑定包含顶点属性配置的VAO</li>
+<li>对于<code>glDrawElements</code>，还需要确保EBO已绑定到VAO或显式绑定</li>
+</ul>
+</li>
+</ul>
+<h3 id="其他常用绘制函数">其他常用绘制函数</h3>
+<ul>
+<li><code>glDrawArraysInstanced</code>：实例化绘制，用于高效绘制多个相同物体（如粒子系统）</li>
+<li><code>glDrawElementsInstanced</code>：带索引的实例化绘制</li>
+<li><code>glMultiDrawArrays</code>/<code>glMultiDrawElements</code>：一次调用绘制多个图元组</li>
+</ul>
+<p>这些函数在需要批量绘制或实例化渲染时非常有用，能显著提升渲染效率。</p>
+<p>绘制函数是 OpenGL 渲染管线的&quot;执行命令&quot;，它们根据之前配置的顶点属性（<code>glVertexAttribPointer</code>/<code>glEnableVertexAttribArray</code>）和缓冲数据，最终将图元渲染到屏幕上。</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

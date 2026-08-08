@@ -1,0 +1,509 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 让自己习惯C++ 条款1 视C++为一个语言联邦 条款2 尽量以const，enum，inline替换#define 条款3 尽可能使用const 条款4 确定对象在使用前已先初始化   内置类型：手动赋值   自定义类：构造函数   注意：   初始化(推荐)   ClassA::ClassA(const int a) : theA(a) 12345- 赋值- &#96;&#96;&#96;c++  ClassA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/cpp/EffectiveC++.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="1. 让自己习惯C++ 条款1 视C++为一个语言联邦 条款2 尽量以const，enum，inline替换#define 条款3 尽可能使用const 条款4 确定对象在使用前已先初始化   内置类型：手动赋值   自定义类：构造函数   注意：   初始化(推荐)   ClassA::ClassA(const int a) : theA(a) 12345- 赋值- &#96;&#96;&#96;c++  ClassA">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.530Z">
+<meta property="article:modified_time" content="2026-03-09T02:10:51.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="1.-让自己习惯c++">1. 让自己习惯C++</h1>
+<h2 id="条款1-视C-为一个语言联邦">条款1 视C++为一个语言联邦</h2>
+<h2 id="条款2-尽量以const，enum，inline替换-define">条款2 尽量以const，enum，inline替换#define</h2>
+<h2 id="条款3-尽可能使用const">条款3 尽可能使用const</h2>
+<h2 id="条款4-确定对象在使用前已先初始化">条款4 确定对象在使用前已先初始化</h2>
+<ul>
+<li>
+<p>内置类型：手动赋值</p>
+</li>
+<li>
+<p>自定义类：构造函数</p>
+<ul>
+<li>
+<p>注意：</p>
+<ul>
+<li>
+<p>初始化(推荐)</p>
+</li>
+<li>
+<pre><code class="language-c++">ClassA::ClassA(const int a) : theA(a)
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><br>- 赋值<br><br>- ```c++<br>  ClassA::<span class="hljs-built_in">ClassA</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span> a) &#123; theA = a; &#125;<br></code></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>问题：对于不同编译单元全局静态对象初始化次序的问题</strong></p>
+<p>解决：将全局静态对象搬到自己的专属函数内，该对象在此函数内被声明为static，这些函数返回一个引用指向它们所含的对象。（单例模式）函数内的本地静态对象会在该函数被调用期间，首次遇上该对象的定义式时被初始化。在多线程中在程序的单线程启动阶段，手工调用所有引用返回函数可消除与初始化相关的竞速形势。</p>
+<h1 id="2,-构造/析构/赋值运算">2, 构造/析构/赋值运算</h1>
+<h2 id="条款5-了解C-默默编写并调用哪些函数">条款5 了解C++默默编写并调用哪些函数</h2>
+<p>在 C++ 中，如果一个类没有显式定义某些成员函数，编译器会<strong>默认生成</strong>以下 6 个特殊成员函数，这些是笔试高频考点：</p>
+<ol>
+<li><strong>默认构造函数</strong>：无参数的构造函数，仅当类没有显式定义任何构造函数时才会生成，用于创建对象时初始化成员。</li>
+<li><strong>析构函数</strong>：用于对象销毁时清理资源，默认是内联的，不抛出异常。</li>
+<li><strong>拷贝构造函数</strong>：用同类型对象初始化新对象时调用，默认行为是<strong>成员逐个拷贝</strong>。</li>
+<li><strong>拷贝赋值运算符</strong>：用同类型对象给已有对象赋值时调用，默认行为也是<strong>成员逐个拷贝</strong>。</li>
+<li><strong>移动构造函数</strong>：C++11 新增，当对象是右值时调用，默认行为是<strong>成员逐个移动</strong>，仅当类没有显式定义拷贝相关函数、移动相关函数和析构函数时才会生成。</li>
+<li><strong>移动赋值运算符</strong>：C++11 新增，用右值对象给已有对象赋值时调用，默认行为是<strong>成员逐个移动</strong>，生成条件和移动构造函数相同。</li>
+</ol>
+<h2 id="条款6-若不想用编译器自动生成的函数，就该明确拒绝">条款6 若不想用编译器自动生成的函数，就该明确拒绝</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Empty</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Empty</span>() = <span class="hljs-keyword">delete</span>;<br>    ~<span class="hljs-built_in">Empty</span>() = <span class="hljs-keyword">delete</span>;<br>    <span class="hljs-built_in">Empty</span>(<span class="hljs-type">const</span> Empty&amp;) = <span class="hljs-keyword">delete</span>;<br>    Empty&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> Empty&amp;) = <span class="hljs-keyword">delete</span>;<br>    <span class="hljs-built_in">Empty</span>(Empty&amp;&amp;) = <span class="hljs-keyword">delete</span>;<br>    Empty&amp; <span class="hljs-keyword">operator</span>=(Empty&amp;&amp;) = <span class="hljs-keyword">delete</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="条款7-为多态基类声明virtual析构函数">条款7 为多态基类声明virtual析构函数</h2>
+<p><strong>问题：用基类类型的指针指向一个派生类的对象，然后通过这个基类指针调用 delete 来销毁对象，如果基类析构不是虚函数，这时候只会销毁基类部分，派生类的资源可能泄漏。</strong></p>
+<p>解决：给基类一个虚析构函数</p>
+<h2 id="条款8-别让异常逃离析构函数">条款8 别让异常逃离析构函数</h2>
+<p>析构函数绝对不要抛出异常，如果一个析构函数调用的函数可能抛出异常，析构函数应该捕获任何异常，然后处理他们(不传播)或者结束程序。</p>
+<h2 id="条款9-绝不在构造和析构过程中调用virtual函数">条款9 绝不在构造和析构过程中调用virtual函数</h2>
+<p>在基类对象的基类构造期间，对象类型是基类而不是派生类。</p>
+<h2 id="条款10-令operator-返回一个reference-to-this">条款10 令operator=返回一个reference to *this</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">Widget&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> Widget&amp; rhs)<br>&#123;<br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="条款11-在operator-处理自我赋值">条款11 在operator=处理自我赋值</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++">Widget&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> Widget&amp; rhs)<br>&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span> == &amp;rhs) <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    <span class="hljs-keyword">delete</span> pb;<br>    pb = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Bitmap</span>(*rhs.pb);<br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="条款12-复制对象时勿忘其每一个成分">条款12 复制对象时勿忘其每一个成分</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span> &#123;<br><span class="hljs-keyword">protected</span>:<br>    <span class="hljs-type">int</span> base_val; <span class="hljs-comment">// 基类成员</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 基类拷贝赋值</span><br>    Base&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> Base&amp; other) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == &amp;other) <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>        base_val = other.base_val; <span class="hljs-comment">// 复制基类成员</span><br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> Base &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> derived_val;<br><span class="hljs-keyword">public</span>:<br>    Derived&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> Derived&amp; other) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == &amp;other) <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>        Base::<span class="hljs-keyword">operator</span>=(other); <span class="hljs-comment">// 显式调用基类拷贝赋值</span><br>        derived_val = other.derived_val;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

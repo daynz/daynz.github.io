@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="反射 [toc] 反射基础 核心定义  反射：程序在运行时获取自身类型信息（类、方法、属性、字段、特性）并动态调用的机制 核心操作对象：Type（用于描述任意数据类型的元数据类） 作用：动态加载程序集、创建对象、调用方法、访问私有成员、读取特性，实现代码解耦与模块化扩展  核心作用  运行时获取类型信息：查看类结构、成员列表、特性标记、继承与接口实现 动态创建对象：根据类型名称字符串实例化对象，无">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Csharp/07Csharp%E5%8F%8D%E5%B0%84.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="反射 [toc] 反射基础 核心定义  反射：程序在运行时获取自身类型信息（类、方法、属性、字段、特性）并动态调用的机制 核心操作对象：Type（用于描述任意数据类型的元数据类） 作用：动态加载程序集、创建对象、调用方法、访问私有成员、读取特性，实现代码解耦与模块化扩展  核心作用  运行时获取类型信息：查看类结构、成员列表、特性标记、继承与接口实现 动态创建对象：根据类型名称字符串实例化对象，无">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.558Z">
+<meta property="article:modified_time" content="2026-04-25T09:24:47.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="反射">反射</h1>
+<p>[toc]</p>
+<h2 id="反射基础">反射基础</h2>
+<h3 id="核心定义">核心定义</h3>
+<ul>
+<li><strong>反射</strong>：程序在<strong>运行时获取自身类型信息</strong>（类、方法、属性、字段、特性）并<strong>动态调用的机制</strong></li>
+<li>核心操作对象：<strong><code>Type</code></strong>（用于描述任意数据类型的元数据类）</li>
+<li>作用：动态加载程序集、创建对象、调用方法、访问私有成员、读取特性，实现代码解耦与模块化扩展</li>
+</ul>
+<h3 id="核心作用">核心作用</h3>
+<ol>
+<li><strong>运行时获取类型信息</strong>：查看类结构、成员列表、特性标记、继承与接口实现</li>
+<li><strong>动态创建对象</strong>：根据类型名称字符串实例化对象，无需编译期<code>new</code></li>
+<li><strong>动态调用成员</strong>：调用公共/私有方法、读写字段与属性</li>
+<li><strong>读取特性元数据</strong>：获取<code>Attribute</code>附加的配置与说明信息</li>
+<li><strong>插件化与解耦</strong>：动态加载外部程序集，实现无侵入式扩展</li>
+</ol>
+<h3 id="核心类">核心类</h3>
+<ul>
+<li><strong><code>Type</code></strong>：描述类型结构（类、接口、结构体、枚举、委托）</li>
+<li><strong><code>Assembly</code></strong>：加载与操作程序集、动态链接库</li>
+<li><strong><code>MethodInfo</code></strong>：封装方法的元数据，用于调用</li>
+<li><strong><code>FieldInfo</code></strong>：封装字段的元数据，用于读写</li>
+<li><strong><code>PropertyInfo</code></strong>：封装属性的元数据，用于读写</li>
+<li><strong><code>Activator</code></strong>：提供静态方法快速动态创建对象实例</li>
+<li><strong><code>BindingFlags</code></strong>：反射查找成员时指定访问级别与类型</li>
+</ul>
+<h3 id="获取Type对象的3种方式">获取<code>Type</code>对象的3种方式</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 1. 通过已存在的实例获取</span><br>User user = <span class="hljs-keyword">new</span> User();<br>Type type1 = user.GetType();<br><br><span class="hljs-comment">// 2. 通过 typeof 直接获取（最常用、性能最高）</span><br>Type type2 = <span class="hljs-keyword">typeof</span>(User);<br><br><span class="hljs-comment">// 3. 通过类的全名字符串获取（动态加载专用）</span><br>Type type3 = Type.GetType(<span class="hljs-string">&quot;命名空间.User&quot;</span>);<br></code></pre></td></tr></table></figure>
+<h3 id="动态创建对象">动态创建对象</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 无参构造</span><br><span class="hljs-built_in">object</span> instance = Activator.CreateInstance(<span class="hljs-keyword">typeof</span>(User));<br><br><span class="hljs-comment">// 带参构造</span><br><span class="hljs-built_in">object</span> instance = Activator.CreateInstance(<span class="hljs-keyword">typeof</span>(User), <span class="hljs-string">&quot;参数1&quot;</span>, 参数<span class="hljs-number">2</span>);<br></code></pre></td></tr></table></figure>
+<h3 id="动态调用方法">动态调用方法</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Type type = <span class="hljs-keyword">typeof</span>(User);<br><span class="hljs-built_in">object</span> instance = Activator.CreateInstance(type);<br><br><span class="hljs-comment">// 获取公共方法</span><br>MethodInfo method = type.GetMethod(<span class="hljs-string">&quot;MethodName&quot;</span>);<br><br><span class="hljs-comment">// 调用（实例对象，参数数组）</span><br>method.Invoke(instance, <span class="hljs-keyword">new</span> <span class="hljs-built_in">object</span>[] &#123; <span class="hljs-string">&quot;参数&quot;</span> &#125;);<br></code></pre></td></tr></table></figure>
+<h3 id="动态访问属性与字段">动态访问属性与字段</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Type type = <span class="hljs-keyword">typeof</span>(User);<br><span class="hljs-built_in">object</span> instance = Activator.CreateInstance(type);<br><br><span class="hljs-comment">// 访问属性</span><br>PropertyInfo prop = type.GetProperty(<span class="hljs-string">&quot;PropertyName&quot;</span>);<br>prop.SetValue(instance, <span class="hljs-string">&quot;赋值内容&quot;</span>);<br><span class="hljs-built_in">object</span> <span class="hljs-keyword">value</span> = prop.GetValue(instance);<br><br><span class="hljs-comment">// 访问字段</span><br>FieldInfo field = type.GetField(<span class="hljs-string">&quot;fieldName&quot;</span>);<br>field.SetValue(instance, <span class="hljs-string">&quot;赋值内容&quot;</span>);<br><span class="hljs-built_in">object</span> fieldValue = field.GetValue(instance);<br></code></pre></td></tr></table></figure>
+<h3 id="访问私有成员">访问私有成员</h3>
+<p>需配合**<code>BindingFlags</code>**指定查找条件</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 获取私有实例方法</span><br>MethodInfo method = type.GetMethod(<br>    <span class="hljs-string">&quot;PrivateMethod&quot;</span>, <br>    BindingFlags.Instance | BindingFlags.NonPublic<br>);<br><br><span class="hljs-comment">// 获取私有字段</span><br>FieldInfo field = type.GetField(<br>    <span class="hljs-string">&quot;_privateField&quot;</span>, <br>    BindingFlags.Instance | BindingFlags.NonPublic<br>);<br><br><span class="hljs-comment">// 调用/赋值方式与公共成员一致</span><br>method.Invoke(instance, <span class="hljs-literal">null</span>);<br></code></pre></td></tr></table></figure>
+<h3 id="反射读取特性">反射读取特性</h3>
+<p>反射与特性结合，实现运行时读取元数据</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Type type = <span class="hljs-keyword">typeof</span>(User);<br><br><span class="hljs-comment">// 获取单个特性</span><br><span class="hljs-keyword">var</span> attr = type.GetCustomAttribute&lt;MyCustomAttribute&gt;();<br><br><span class="hljs-comment">// 获取所有特性</span><br><span class="hljs-keyword">var</span> attrs = type.GetCustomAttributes();<br></code></pre></td></tr></table></figure>
+<h3 id="获取类型基础信息">获取类型基础信息</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs csharp">Type type = <span class="hljs-keyword">typeof</span>(User);<br><br><span class="hljs-built_in">bool</span> isClass = type.IsClass;<br><span class="hljs-built_in">bool</span> isPublic = type.IsPublic;<br><span class="hljs-built_in">bool</span> isAbstract = type.IsAbstract;<br><span class="hljs-built_in">bool</span> isGenericType = type.IsGenericType;<br><br><span class="hljs-built_in">string</span> typeName = type.Name;<br><span class="hljs-built_in">string</span> fullName = type.FullName;<br><br>Type baseType = type.BaseType;<br>Type[] interfaces = type.GetInterfaces();<br></code></pre></td></tr></table></figure>
+<h3 id="常用-BindingFlags-枚举">常用 <code>BindingFlags</code> 枚举</h3>
+<ul>
+<li><code>BindingFlags.Instance</code>：实例成员</li>
+<li><code>BindingFlags.Static</code>：静态成员</li>
+<li><code>BindingFlags.Public</code>：公共成员</li>
+<li><code>BindingFlags.NonPublic</code>：私有/保护/内部成员</li>
+<li>组合写法：<code>BindingFlags.Instance | BindingFlags.NonPublic</code></li>
+</ul>
+<h3 id="执行原理">执行原理</h3>
+<ol>
+<li>编译后，类型、成员、特性信息以<strong>元数据</strong>形式保存在程序集中</li>
+<li>运行时，CLR 读取元数据并构建<code>Type</code>对象</li>
+<li>通过<code>Invoke</code>等方法间接执行成员，实现<strong>晚绑定</strong></li>
+<li>泛型类型会在运行时生成闭合类型，反射可正常识别</li>
+</ol>
+<h3 id="性能说明">性能说明</h3>
+<ol>
+<li>反射调用性能低于直接硬编码调用</li>
+<li>高频调用场景建议<strong>缓存<code>Type</code>、<code>MethodInfo</code>、<code>PropertyInfo</code></strong></li>
+<li>高性能替代方案：<code>Expression</code>表达式目录树、<code>delegate</code>委托、<code>dynamic</code></li>
+<li>引用类型共用JIT代码，值类型独立生成，无额外装箱拆箱损耗</li>
+</ol>
+<h3 id="注意事项">注意事项</h3>
+<ol>
+<li>编译时无语法校验，名称/类型错误会在运行时抛出异常</li>
+<li>可访问私有成员，<strong>破坏封装性</strong>，必须谨慎使用</li>
+<li>动态代码可读性、可调试性低于静态编码</li>
+<li>泛型反射需要单独处理构造、闭合类型等操作</li>
+<li>所有反射操作建议使用<code>try-catch</code>异常捕获</li>
+<li>避免在<code>Update</code>等高频函数中直接使用反射</li>
+</ol>
+<h2 id="反射原理">反射原理</h2>
+<p><strong>反射是 .NET 运行时提供的元数据自省机制</strong>：程序在运行时可动态获取类型、成员、程序集信息，并创建对象、调用方法、读写字段 / 属性，无需编译期硬编码类型引用。Unity 依赖反射实现脚本生命周期、组件查找、序列化、热更新等核心能力。</p>
+<h3 id="元数据与-Type-对象">元数据与 Type 对象</h3>
+<ul>
+<li>
+<p><strong>元数据（Metadata）</strong>：C# 编译时，编译器为每个类型（类/结构体/接口/枚举）生成完整描述信息（名称、基类、接口、字段、方法、构造函数、访问权限、内存布局等），嵌入程序集（Assembly）。</p>
+</li>
+<li>
+<p><strong>Type 对象</strong>：程序集加载到应用程序域（<code>AppDomain</code>）时，.NET 运行时为每个类型创建唯一的 <strong><code>System.Type</code></strong> 对象，作为该类型的“元数据入口”。</p>
+<ul>
+<li>所有实例共享同一个 Type 对象。</li>
+<li>Type 内部结构（简化）：<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Type</span> &#123;<br>    <span class="hljs-built_in">string</span> Name;          <span class="hljs-comment">// 类型名</span><br>    <span class="hljs-built_in">string</span> Namespace;      <span class="hljs-comment">// 命名空间</span><br>    Type BaseType;         <span class="hljs-comment">// 基类</span><br>    Type[] Interfaces;     <span class="hljs-comment">// 实现的接口</span><br>    FieldInfo[] Fields;    <span class="hljs-comment">// 字段元数据</span><br>    MethodInfo[] Methods;  <span class="hljs-comment">// 方法元数据</span><br>    ConstructorInfo[] Ctors;<span class="hljs-comment">// 构造函数</span><br>    <span class="hljs-comment">// ... 内存大小、偏移、特性等</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li>通过 Type 可遍历所有成员，按内存偏移直接访问私有成员。</li>
+</ul>
+</li>
+</ul>
+<h3 id="反射的执行流程">反射的执行流程</h3>
+<ol>
+<li><strong>获取 Type</strong>：通过 <code>typeof(类名)</code>、<code>对象.GetType()</code>、<code>Type.GetType(&quot;全类名&quot;)</code>、<code>Assembly.GetType()</code> 拿到类型元数据。</li>
+<li><strong>获取成员</strong>：用 <code>GetField()</code>/<code>GetMethod()</code>/<code>GetProperty()</code> 拿到 <code>FieldInfo</code>/<code>MethodInfo</code>/<code>PropertyInfo</code>（成员元数据）。</li>
+<li><strong>动态操作</strong>：
+<ul>
+<li>创建对象：<code>Activator.CreateInstance(Type)</code>。</li>
+<li>调用方法：<code>MethodInfo.Invoke(实例, 参数)</code>。</li>
+<li>读写字段：<code>FieldInfo.GetValue(实例)</code>/<code>SetValue(实例, 值)</code>。</li>
+</ul>
+</li>
+<li><strong>跨边界访问</strong>：通过 <code>BindingFlags</code> 可绕过 <code>public/protected/private</code> 访问限制。</li>
+</ol>
+<h3 id="Unity-中的反射底层">Unity 中的反射底层</h3>
+<ul>
+<li>Unity 核心（C++）调用 C# 脚本生命周期（<code>Start</code>/<code>Update</code>/<code>OnEnable</code>）时，<strong>完全依赖反射</strong>：
+<ol>
+<li>C++ 层通过 Mono/IL2CPP 获取 C# 程序集。</li>
+<li>反射查找脚本类的 <code>Update</code> 方法（支持 private）。</li>
+<li>运行时动态调用，实现脚本与引擎的绑定。</li>
+</ol>
+</li>
+<li>序列化（Inspector 显示、<code>JsonUtility</code>）、<code>GetComponent</code>、<code>AddComponent</code> 均基于反射实现类型匹配与实例创建。</li>
+</ul>
+<h2 id="反射核心-API">反射核心 API</h2>
+<h3 id="核心命名空间">核心命名空间</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> System;       <span class="hljs-comment">// Type</span><br><span class="hljs-keyword">using</span> System.Reflection; <span class="hljs-comment">// FieldInfo/MethodInfo/Assembly</span><br></code></pre></td></tr></table></figure>
+<h3 id="获取-Type">获取 Type</h3>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>用法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>typeof</strong></td>
+<td><code>Type t = typeof(Player);</code></td>
+<td>编译期已知类型，性能最高</td>
+</tr>
+<tr>
+<td><strong>GetType()</strong></td>
+<td><code>Type t = playerObj.GetType();</code></td>
+<td>运行时从实例获取</td>
+</tr>
+<tr>
+<td><strong>Type.GetType</strong></td>
+<td><code>Type t = Type.GetType(&quot;MyGame.Player&quot;);</code></td>
+<td>按全类名字符串获取（需程序集已加载）</td>
+</tr>
+<tr>
+<td><strong>Assembly 获取</strong></td>
+<td><code>Assembly asm = Assembly.GetExecutingAssembly();</code><br><code>Type t = asm.GetType(&quot;MyGame.Player&quot;);</code></td>
+<td>遍历/查询指定程序集类型</td>
+</tr>
+</tbody>
+</table>
+<h3 id="成员获取（BindingFlags-必用）">成员获取（<code>BindingFlags</code> 必用）</h3>
+<p><strong><code>BindingFlags</code> 是反射权限控制核心</strong>，常用组合：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 实例 + 公开 + 私有（最常用）</span><br><span class="hljs-keyword">var</span> flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;<br></code></pre></td></tr></table></figure>
+<h4 id="字段（FieldInfo）">字段（<code>FieldInfo</code>）</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 获取私有实例字段 m_Health</span><br>FieldInfo field = <span class="hljs-keyword">typeof</span>(Player).GetField(<span class="hljs-string">&quot;m_Health&quot;</span>, flags);<br><span class="hljs-comment">// 读取值</span><br><span class="hljs-built_in">int</span> health = (<span class="hljs-built_in">int</span>)field.GetValue(playerInstance);<br><span class="hljs-comment">// 设置值</span><br>field.SetValue(playerInstance, <span class="hljs-number">100</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="方法（MethodInfo）">方法（<code>MethodInfo</code>）</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 获取方法：TakeDamage(int damage)</span><br>MethodInfo method = <span class="hljs-keyword">typeof</span>(Player).GetMethod(<span class="hljs-string">&quot;TakeDamage&quot;</span>, flags, <span class="hljs-keyword">new</span> Type[] &#123; <span class="hljs-keyword">typeof</span>(<span class="hljs-built_in">int</span>) &#125;);<br><span class="hljs-comment">// 调用（实例，参数数组）</span><br>method.Invoke(playerInstance, <span class="hljs-keyword">new</span> <span class="hljs-built_in">object</span>[] &#123; <span class="hljs-number">20</span> &#125;);<br></code></pre></td></tr></table></figure>
+<h4 id="属性（PropertyInfo）">属性（<code>PropertyInfo</code>）</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs csharp">PropertyInfo prop = <span class="hljs-keyword">typeof</span>(Player).GetProperty(<span class="hljs-string">&quot;Health&quot;</span>, flags);<br><span class="hljs-built_in">int</span> currentHealth = (<span class="hljs-built_in">int</span>)prop.GetValue(playerInstance);<br>prop.SetValue(playerInstance, <span class="hljs-number">150</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="构造函数（ConstructorInfo）">构造函数（<code>ConstructorInfo</code>）</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp">ConstructorInfo ctor = <span class="hljs-keyword">typeof</span>(Player).GetConstructor(Type.EmptyTypes);<br>Player newPlayer = (Player)ctor.Invoke(<span class="hljs-literal">null</span>);<br><span class="hljs-comment">// 简化：Activator.CreateInstance</span><br>Player newPlayer2 = (Player)Activator.CreateInstance(<span class="hljs-keyword">typeof</span>(Player));<br></code></pre></td></tr></table></figure>
+<h3 id="程序集操作（Unity-热更新-插件常用）">程序集操作（Unity 热更新/插件常用）</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 获取当前执行程序集（Assembly-CSharp）</span><br>Assembly asm = Assembly.GetExecutingAssembly();<br><span class="hljs-comment">// 获取所有类型</span><br>Type[] allTypes = asm.GetTypes();<br><span class="hljs-comment">// 加载外部 DLL（热更新）</span><br>Assembly hotfixAsm = Assembly.LoadFrom(<span class="hljs-string">&quot;Hotfix.dll&quot;</span>);<br></code></pre></td></tr></table></figure>
+<h2 id="Unity-反射的典型应用场景">Unity 反射的典型应用场景</h2>
+<h3 id="访问-Unity-组件私有成员（调试-黑盒修改）">访问 Unity 组件私有成员（调试/黑盒修改）</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 修改 Transform 私有缩放字段 m_LocalScale</span><br>FieldInfo scaleField = <span class="hljs-keyword">typeof</span>(Transform).GetField(<br>    <span class="hljs-string">&quot;m_LocalScale&quot;</span>, <br>    BindingFlags.NonPublic | BindingFlags.Instance<br>);<br><span class="hljs-keyword">if</span> (scaleField != <span class="hljs-literal">null</span>) &#123;<br>    scaleField.SetValue(transform, <span class="hljs-keyword">new</span> Vector3(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>));<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="动态创建-添加组件（配置驱动）">动态创建/添加组件（配置驱动）</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 按字符串动态添加 Rigidbody</span><br>Type rbType = Type.GetType(<span class="hljs-string">&quot;UnityEngine.Rigidbody, UnityEngine&quot;</span>);<br>GameObject go = <span class="hljs-keyword">new</span> GameObject(<span class="hljs-string">&quot;DynamicObj&quot;</span>);<br>Rigidbody rb = (Rigidbody)go.AddComponent(rbType);<br></code></pre></td></tr></table></figure>
+<h3 id="框架级解耦（事件-依赖注入-热更新）">框架级解耦（事件/依赖注入/热更新）</h3>
+<ul>
+<li>自动注册事件：扫描所有类，反射查找带 <code>[EventListener]</code> 特性的方法并绑定。</li>
+<li>热更新：加载外部 DLL，反射创建热更类实例并替换原有逻辑。</li>
+<li>序列化框架（如 JsonUtility、Protobuf）：反射遍历字段完成读写。</li>
+</ul>
+<h3 id="编辑器工具（Editor-反射）">编辑器工具（Editor 反射）</h3>
+<ul>
+<li>自动扫描场景中所有实现 <code>IConfigurable</code> 接口的组件并批量配置。</li>
+<li>反射调用 Unity 编辑器内部 API（如 <code>EditorUtility</code> 私有方法）。</li>
+</ul>
+<h2 id="Unity-反射的关键限制与坑点">Unity 反射的关键限制与坑点</h2>
+<h3 id="IL2CPP-与-AOT-限制">IL2CPP 与 AOT 限制</h3>
+<ul>
+<li><strong>Mono（JIT）</strong>：完全支持反射，元数据完整保留。</li>
+<li><strong>IL2CPP（AOT）</strong>：默认<strong>裁剪未使用的元数据</strong>，导致运行时反射找不到类型/方法（编辑器正常、打包崩溃）。
+<ul>
+<li>解决：
+<ol>
+<li><strong>link.xml</strong>：明确保留反射用到的类型/程序集。</li>
+<li><strong>[Preserve] 特性</strong>：标记类/成员不被裁剪。</li>
+<li>避免动态字符串获取类型，尽量用 <code>typeof</code>。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="性能开销">性能开销</h3>
+<ul>
+<li>反射调用比直接调用慢 <strong>100–1000 倍</strong>（<code>GetMethod</code>/<code>Invoke</code> 均为重量级操作）。</li>
+<li>优化原则：
+<ul>
+<li><strong>禁止在 <code>Update/FixedUpdate</code> 中使用反射</strong>。</li>
+<li><strong>缓存反射结果</strong>：<code>Type</code>/<code>MethodInfo</code> 只获取一次，全局复用。</li>
+<li>用<strong>委托/接口</strong>替代高频反射调用。</li>
+</ul>
+</li>
+</ul>
+<h3 id="访问权限与安全">访问权限与安全</h3>
+<ul>
+<li>反射可绕过所有访问修饰符（private/protected/internal），破坏封装。</li>
+<li>易引入隐藏 bug（如修改私有字段导致引擎内部逻辑异常）。</li>
+</ul>
+<h2 id="最佳实践">最佳实践</h2>
+<ol>
+<li><strong>能用直接调用就不用反射</strong>：仅在解耦、动态、框架场景使用。</li>
+<li><strong>缓存反射对象</strong>：<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 全局缓存</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> MethodInfo _takeDamageMethod = <br>    <span class="hljs-keyword">typeof</span>(Player).GetMethod(<span class="hljs-string">&quot;TakeDamage&quot;</span>, BindingFlags.Instance | BindingFlags.Public);<br></code></pre></td></tr></table></figure>
+</li>
+<li><strong>IL2CPP 提前配置</strong>：项目初期规划 link.xml，避免打包后反射失效。</li>
+<li><strong>替代方案</strong>：
+<ul>
+<li>接口/抽象类：编译期绑定，性能最优。</li>
+<li>委托：运行时绑定，性能接近直接调用。</li>
+<li>Unity <code>SendMessage</code>：底层也是反射，但更易用（性能仍差）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="完整测试示例">完整测试示例</h2>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TestReflection</span> : <span class="hljs-title">MonoBehaviour</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> _privateHealth = <span class="hljs-number">100</span>; <span class="hljs-comment">// 私有字段</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Start</span>()</span> &#123;<br>        <span class="hljs-comment">// 1. 获取当前类 Type</span><br>        Type type = GetType();<br><br>        <span class="hljs-comment">// 2. 获取私有字段</span><br>        FieldInfo healthField = type.GetField(<br>            <span class="hljs-string">&quot;_privateHealth&quot;</span>, <br>            BindingFlags.Instance | BindingFlags.NonPublic<br>        );<br><br>        <span class="hljs-comment">// 3. 读取并修改私有字段</span><br>        Debug.Log(<span class="hljs-string">$&quot;原私有Health: <span class="hljs-subst">&#123;healthField.GetValue(<span class="hljs-keyword">this</span>)&#125;</span>&quot;</span>);<br>        healthField.SetValue(<span class="hljs-keyword">this</span>, <span class="hljs-number">200</span>);<br>        Debug.Log(<span class="hljs-string">$&quot;修改后Health: <span class="hljs-subst">&#123;healthField.GetValue(<span class="hljs-keyword">this</span>)&#125;</span>&quot;</span>);<br><br>        <span class="hljs-comment">// 4. 动态调用私有方法</span><br>        MethodInfo healMethod = type.GetMethod(<br>            <span class="hljs-string">&quot;Heal&quot;</span>, <br>            BindingFlags.Instance | BindingFlags.NonPublic,<br>            <span class="hljs-literal">null</span>,<br>            <span class="hljs-keyword">new</span> Type[] &#123; <span class="hljs-keyword">typeof</span>(<span class="hljs-built_in">int</span>) &#125;,<br>            <span class="hljs-literal">null</span><br>        );<br>        healMethod.Invoke(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">object</span>[] &#123; <span class="hljs-number">50</span> &#125;);<br>    &#125;<br><br>    <span class="hljs-comment">// 私有方法</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Heal</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> amount</span>)</span> &#123;<br>        _privateHealth += amount;<br>        Debug.Log(<span class="hljs-string">$&quot;Heal <span class="hljs-subst">&#123;amount&#125;</span>, 当前Health: <span class="hljs-subst">&#123;_privateHealth&#125;</span>&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

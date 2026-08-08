@@ -1,0 +1,935 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="C++ 标准库头文件 C++ 标准库的接口由下列头文件的汇集定义。    头文件 引入 C++ 版本 功能说明     &lt;cstdlib&gt; 早期标准 通用工具：程序控制、动态内存分配、随机数、排序等   &lt;csignal&gt; 早期标准 信号管理的函数与宏常量   &lt;csetjmp&gt; 早期标准 保存（及跳转）到执行环境的宏（与函数）   &lt;cstdarg&amp;gt">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/cpp/01%E5%A4%B4%E6%96%87%E4%BB%B6/%E6%A0%87%E5%87%86%E5%BA%93%E5%A4%B4%E6%96%87%E4%BB%B6.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="C++ 标准库头文件 C++ 标准库的接口由下列头文件的汇集定义。    头文件 引入 C++ 版本 功能说明     &lt;cstdlib&gt; 早期标准 通用工具：程序控制、动态内存分配、随机数、排序等   &lt;csignal&gt; 早期标准 信号管理的函数与宏常量   &lt;csetjmp&gt; 早期标准 保存（及跳转）到执行环境的宏（与函数）   &lt;cstdarg&amp;gt">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.511Z">
+<meta property="article:modified_time" content="2026-04-07T13:47:44.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="c++-标准库头文件">C++ 标准库头文件</h1>
+<p>C++ 标准库的接口由下列头文件的汇集定义。</p>
+<table>
+<thead>
+<tr>
+<th>头文件</th>
+<th>引入 C++ 版本</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;cstdlib&gt;</code></td>
+<td>早期标准</td>
+<td>通用工具：程序控制、动态内存分配、随机数、排序等</td>
+</tr>
+<tr>
+<td><code>&lt;csignal&gt;</code></td>
+<td>早期标准</td>
+<td>信号管理的函数与宏常量</td>
+</tr>
+<tr>
+<td><code>&lt;csetjmp&gt;</code></td>
+<td>早期标准</td>
+<td>保存（及跳转）到执行环境的宏（与函数）</td>
+</tr>
+<tr>
+<td><code>&lt;cstdarg&gt;</code></td>
+<td>早期标准</td>
+<td>变长实参列表的处理</td>
+</tr>
+<tr>
+<td><code>&lt;typeinfo&gt;</code></td>
+<td>早期标准</td>
+<td>运行时类型信息工具</td>
+</tr>
+<tr>
+<td><code>&lt;bitset&gt;</code></td>
+<td>早期标准</td>
+<td><code>std::bitset</code> 类模板</td>
+</tr>
+<tr>
+<td><code>&lt;functional&gt;</code></td>
+<td>早期标准</td>
+<td>函数对象、函数调用、绑定操作及引用包装</td>
+</tr>
+<tr>
+<td><code>&lt;cstddef&gt;</code></td>
+<td>早期标准</td>
+<td>标准宏与 <code>typedef</code></td>
+</tr>
+<tr>
+<td><code>&lt;ctime&gt;</code></td>
+<td>早期标准</td>
+<td>C 风格日期 / 时间工具</td>
+</tr>
+<tr>
+<td><code>&lt;utility&gt;</code></td>
+<td>早期标准</td>
+<td>多种工具组件</td>
+</tr>
+<tr>
+<td><code>&lt;new&gt;</code></td>
+<td>早期标准</td>
+<td>低层内存管理工具</td>
+</tr>
+<tr>
+<td><code>&lt;memory&gt;</code></td>
+<td>早期标准</td>
+<td>高层内存管理工具</td>
+</tr>
+<tr>
+<td><code>&lt;climits&gt;</code></td>
+<td>早期标准</td>
+<td>整数类型的极限</td>
+</tr>
+<tr>
+<td><code>&lt;cfloat&gt;</code></td>
+<td>早期标准</td>
+<td>浮点类型的极限</td>
+</tr>
+<tr>
+<td><code>&lt;limits&gt;</code></td>
+<td>早期标准</td>
+<td>查询算术类型属性的一致方式</td>
+</tr>
+<tr>
+<td><code>&lt;exception&gt;</code></td>
+<td>早期标准</td>
+<td>异常处理工具</td>
+</tr>
+<tr>
+<td><code>&lt;stdexcept&gt;</code></td>
+<td>早期标准</td>
+<td>标准异常对象</td>
+</tr>
+<tr>
+<td><code>&lt;cassert&gt;</code></td>
+<td>早期标准</td>
+<td>比较其实参与零的条件编译宏</td>
+</tr>
+<tr>
+<td><code>&lt;cerrno&gt;</code></td>
+<td>早期标准</td>
+<td>含有最后一次错误号的宏</td>
+</tr>
+<tr>
+<td><code>&lt;cctype&gt;</code></td>
+<td>早期标准</td>
+<td>确定窄字符类别的函数</td>
+</tr>
+<tr>
+<td><code>&lt;cwctype&gt;</code></td>
+<td>早期标准</td>
+<td>确定宽字符的类别的函数</td>
+</tr>
+<tr>
+<td><code>&lt;cstring&gt;</code></td>
+<td>早期标准</td>
+<td>多种窄字符串处理函数</td>
+</tr>
+<tr>
+<td><code>&lt;cwchar&gt;</code></td>
+<td>早期标准</td>
+<td>多种宽与多字节字符串处理函数</td>
+</tr>
+<tr>
+<td><code>&lt;string&gt;</code></td>
+<td>早期标准</td>
+<td><code>std::basic_string</code> 类模板</td>
+</tr>
+<tr>
+<td><code>&lt;clocale&gt;</code></td>
+<td>早期标准</td>
+<td>C 本地化工具</td>
+</tr>
+<tr>
+<td><code>&lt;locale&gt;</code></td>
+<td>早期标准</td>
+<td>本地化工具</td>
+</tr>
+<tr>
+<td><code>&lt;iosfwd&gt;</code></td>
+<td>早期标准</td>
+<td>输入 / 输出库中所有类的前置声明</td>
+</tr>
+<tr>
+<td><code>&lt;ios&gt;</code></td>
+<td>早期标准</td>
+<td><code>std::ios_base</code> 类、<code>std::basic_ios</code> 类模板与数个 <code>typedef</code></td>
+</tr>
+<tr>
+<td><code>&lt;istream&gt;</code></td>
+<td>早期标准</td>
+<td><code>std::basic_istream</code> 类模板与数个 <code>typedef</code></td>
+</tr>
+<tr>
+<td><code>&lt;ostream&gt;</code></td>
+<td>早期标准</td>
+<td><code>std::basic_ostream</code>、<code>std::basic_iostream</code> 类模板与数个 <code>typedef</code></td>
+</tr>
+<tr>
+<td><code>&lt;iostream&gt;</code></td>
+<td>早期标准</td>
+<td>数个标准流对象</td>
+</tr>
+<tr>
+<td><code>&lt;fstream&gt;</code></td>
+<td>早期标准</td>
+<td><code>std::basic_fstream</code>、<code>std::basic_ifstream</code>、<code>std::basic_ofstream</code> 类模板及数个 <code>typedef</code></td>
+</tr>
+<tr>
+<td><code>&lt;sstream&gt;</code></td>
+<td>早期标准</td>
+<td><code>std::basic_stringstream</code>、<code>std::basic_istringstream</code>、<code>std::basic_ostringstream</code> 类模板与数个 <code>typedef</code></td>
+</tr>
+<tr>
+<td><code>&lt;cstdio&gt;</code></td>
+<td>早期标准</td>
+<td>C 风格输入输出函数</td>
+</tr>
+<tr>
+<td><code>&lt;iomanip&gt;</code></td>
+<td>早期标准</td>
+<td>格式化输入与输出的辅助函数</td>
+</tr>
+<tr>
+<td><code>&lt;streambuf&gt;</code></td>
+<td>早期标准</td>
+<td><code>std::basic_streambuf</code> 类模板</td>
+</tr>
+</tbody>
+</table>
+<h2 id="C-11">C++11</h2>
+<table>
+<thead>
+<tr>
+<th>头文件</th>
+<th>引入 C++ 版本</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;ratio&gt;</code></td>
+<td>C++11</td>
+<td>编译时有理数算术</td>
+</tr>
+<tr>
+<td><code>&lt;cfenv&gt;</code></td>
+<td>C++11</td>
+<td>浮点环境访问函数</td>
+</tr>
+<tr>
+<td><code>&lt;chrono&gt;</code></td>
+<td>C++11</td>
+<td>C++ 时间工具</td>
+</tr>
+<tr>
+<td><code>&lt;typeindex&gt;</code></td>
+<td>C++11</td>
+<td><code>std::type_index</code></td>
+</tr>
+<tr>
+<td><code>&lt;initializer_list&gt;</code></td>
+<td>C++11</td>
+<td><code>std::initializer_list</code> 类模板</td>
+</tr>
+<tr>
+<td><code>&lt;type_traits&gt;</code></td>
+<td>C++11</td>
+<td>编译时类型信息</td>
+</tr>
+<tr>
+<td><code>&lt;tuple&gt;</code></td>
+<td>C++11</td>
+<td><code>std::tuple</code> 类模板</td>
+</tr>
+<tr>
+<td><code>&lt;regex&gt;</code></td>
+<td>C++11</td>
+<td>支持正则表达式处理的类、算法及迭代器</td>
+</tr>
+<tr>
+<td><code>&lt;atomic&gt;</code></td>
+<td>C++11</td>
+<td>原子操作库</td>
+</tr>
+<tr>
+<td><code>&lt;condition_variable&gt;</code></td>
+<td>C++11</td>
+<td>线程等待条件</td>
+</tr>
+<tr>
+<td><code>&lt;thread&gt;</code></td>
+<td>C++11</td>
+<td><code>std::thread</code> 类与支持函数</td>
+</tr>
+<tr>
+<td><code>&lt;mutex&gt;</code></td>
+<td>C++11</td>
+<td>互斥元件</td>
+</tr>
+<tr>
+<td><code>&lt;future&gt;</code></td>
+<td>C++11</td>
+<td>异步计算元件</td>
+</tr>
+<tr>
+<td><code>&lt;random&gt;</code></td>
+<td>C++11</td>
+<td>随机数生成器与分布</td>
+</tr>
+<tr>
+<td><code>&lt;unordered_set&gt;</code></td>
+<td>C++11</td>
+<td><code>std::unordered_set</code> 与 <code>std::unordered_multiset</code> 无序关联容器</td>
+</tr>
+<tr>
+<td><code>&lt;unordered_map&gt;</code></td>
+<td>C++11</td>
+<td><code>std::unordered_map</code> 与 <code>std::unordered_multimap</code> 无序关联容器</td>
+</tr>
+<tr>
+<td><code>&lt;cuchar&gt;</code></td>
+<td>C++11</td>
+<td>C 风格 Unicode 字符转换函数</td>
+</tr>
+<tr>
+<td><code>&lt;cstdint&gt;</code></td>
+<td>C++11</td>
+<td>定宽整数类型与其他类型的极限</td>
+</tr>
+<tr>
+<td><code>&lt;cinttypes&gt;</code></td>
+<td>C++11</td>
+<td>格式化宏、<code>intmax_t</code> 与 <code>uintmax_t</code> 数学与转换</td>
+</tr>
+<tr>
+<td><code>&lt;forward_list&gt;</code></td>
+<td>C++11</td>
+<td><code>std::forward_list</code> 容器</td>
+</tr>
+<tr>
+<td><code>&lt;codecvt&gt;</code></td>
+<td>C++11（C++17 中弃用）</td>
+<td>Unicode 转换设施</td>
+</tr>
+<tr>
+<td><code>&lt;scoped_allocator&gt;</code></td>
+<td>C++11</td>
+<td>嵌套分配器类</td>
+</tr>
+<tr>
+<td><code>&lt;system_error&gt;</code></td>
+<td>C++11</td>
+<td>定义 <code>std::error_code</code>，依赖平台的错误码</td>
+</tr>
+</tbody>
+</table>
+<h2 id="C-14">C++14</h2>
+<table>
+<thead>
+<tr>
+<th>头文件</th>
+<th>引入 C++ 版本</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;shared_mutex&gt;</code></td>
+<td>C++14</td>
+<td>共享互斥元件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="C-17">C++17</h2>
+<table>
+<thead>
+<tr>
+<th>头文件</th>
+<th>引入 C++ 版本</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;filesystem&gt;</code></td>
+<td>C++17</td>
+<td><code>std::path</code> 类与支持函数</td>
+</tr>
+<tr>
+<td><code>&lt;memory_resource&gt;</code></td>
+<td>C++17</td>
+<td>多态分配器与内存资源</td>
+</tr>
+<tr>
+<td><code>&lt;any&gt;</code></td>
+<td>C++17</td>
+<td><code>std::any</code> 类</td>
+</tr>
+<tr>
+<td><code>&lt;optional&gt;</code></td>
+<td>C++17</td>
+<td><code>std::optional</code> 类模板</td>
+</tr>
+<tr>
+<td><code>&lt;variant&gt;</code></td>
+<td>C++17</td>
+<td><code>std::variant</code> 类模板</td>
+</tr>
+</tbody>
+</table>
+<h2 id="C-20">C++20</h2>
+<table>
+<thead>
+<tr>
+<th>头文件</th>
+<th>引入 C++ 版本</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;concepts&gt;</code></td>
+<td>C++20</td>
+<td>基础库概念</td>
+</tr>
+<tr>
+<td><code>&lt;coroutine&gt;</code></td>
+<td>C++20</td>
+<td>协程支持库</td>
+</tr>
+<tr>
+<td><code>&lt;bit&gt;</code></td>
+<td>C++20</td>
+<td>位操纵函数</td>
+</tr>
+<tr>
+<td><code>&lt;numbers&gt;</code></td>
+<td>C++20</td>
+<td>数学常数</td>
+</tr>
+<tr>
+<td><code>&lt;syncstream&gt;</code></td>
+<td>C++20</td>
+<td><code>std::basic_osyncstream</code>、<code>std::basic_syncbuf</code> 及 <code>typedef</code></td>
+</tr>
+<tr>
+<td><code>&lt;stop_token&gt;</code></td>
+<td>C++20</td>
+<td><code>std::jthread</code> 的停止记号</td>
+</tr>
+<tr>
+<td><code>&lt;semaphore&gt;</code></td>
+<td>C++20</td>
+<td>信号量</td>
+</tr>
+<tr>
+<td><code>&lt;latch&gt;</code></td>
+<td>C++20</td>
+<td>闩</td>
+</tr>
+<tr>
+<td><code>&lt;barrier&gt;</code></td>
+<td>C++20</td>
+<td>屏障</td>
+</tr>
+<tr>
+<td><code>&lt;format&gt;</code></td>
+<td>C++20</td>
+<td>格式化库，包括 <code>std::format</code></td>
+</tr>
+<tr>
+<td><code>&lt;compare&gt;</code></td>
+<td>C++20</td>
+<td>三路比较运算符支持</td>
+</tr>
+<tr>
+<td><code>&lt;version&gt;</code></td>
+<td>C++20</td>
+<td>提供依赖实现的库信息</td>
+</tr>
+<tr>
+<td><code>&lt;source_location&gt;</code></td>
+<td>C++20</td>
+<td>提供获得源码位置的手段</td>
+</tr>
+<tr>
+<td><code>&lt;span&gt;</code></td>
+<td>C++20</td>
+<td><code>std::span</code> 视图</td>
+</tr>
+<tr>
+<td><code>&lt;ranges&gt;</code></td>
+<td>C++20</td>
+<td>范围访问、元件、要求、工具及适配器</td>
+</tr>
+</tbody>
+</table>
+<h2 id="C-23">C++23</h2>
+<table>
+<thead>
+<tr>
+<th>头文件</th>
+<th>引入 C++ 版本</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;stacktrace&gt;</code></td>
+<td>C++23</td>
+<td>栈踪库</td>
+</tr>
+<tr>
+<td><code>&lt;spanstream&gt;</code></td>
+<td>C++23</td>
+<td><code>std::basic_spanstream</code>、<code>std::basic_ispanstream</code>、<code>std::basic_ospanstream</code> 类模板与 <code>typedef</code></td>
+</tr>
+</tbody>
+</table>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

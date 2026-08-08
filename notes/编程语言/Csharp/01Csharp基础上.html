@@ -1,0 +1,1482 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="C# 基础 [toc] 开发环境与基础语法 C# 与 Unity 关系 与 .NET 基础 核心定义  C#：微软推出的强类型、面向对象的编程语言，基于 .NET 平台运行 Unity：由 Unity Technologies 开发的跨平台游戏引擎，用于开发 2D&#x2F;3D 游戏、AR&#x2F;VR 应用等 .NET：微软提供的软件开发平台，包含运行时（CLR）、基础类库（BCL）和语言编译器（C#、F# 等">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Csharp/01Csharp%E5%9F%BA%E7%A1%80%E4%B8%8A.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="C# 基础 [toc] 开发环境与基础语法 C# 与 Unity 关系 与 .NET 基础 核心定义  C#：微软推出的强类型、面向对象的编程语言，基于 .NET 平台运行 Unity：由 Unity Technologies 开发的跨平台游戏引擎，用于开发 2D&#x2F;3D 游戏、AR&#x2F;VR 应用等 .NET：微软提供的软件开发平台，包含运行时（CLR）、基础类库（BCL）和语言编译器（C#、F# 等">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.556Z">
+<meta property="article:modified_time" content="2026-04-24T08:31:40.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="c-基础">C# 基础</h1>
+<p>[toc]</p>
+<h2 id="开发环境与基础语法">开发环境与基础语法</h2>
+<h3 id="C-与-Unity-关系-与-NET-基础">C# 与 Unity 关系 与 .NET 基础</h3>
+<h4 id="核心定义">核心定义</h4>
+<ul>
+<li><strong>C#</strong>：微软推出的强类型、面向对象的编程语言，基于 .NET 平台运行</li>
+<li><strong>Unity</strong>：由 Unity Technologies 开发的跨平台游戏引擎，用于开发 2D/3D 游戏、AR/VR 应用等</li>
+<li><strong>.NET</strong>：微软提供的软件开发平台，包含运行时（CLR）、基础类库（BCL）和语言编译器（C#、F# 等）</li>
+</ul>
+<h4 id="C-与-Unity-的关系">C# 与 Unity 的关系</h4>
+<ul>
+<li><strong>脚本语言</strong>：C# 是 Unity 的<strong>主要官方脚本语言</strong>（替代了早期的 UnityScript），用于编写游戏逻辑、交互系统、数据管理等</li>
+<li><strong>引擎集成</strong>：Unity 引擎核心（C++ 编写）通过 .NET 运行时暴露 API 给 C#，开发者通过 C# 调用引擎功能（如渲染、物理、输入）</li>
+<li><strong>性能平衡</strong>：C# 兼具类型安全、开发效率与运行性能，配合 Unity 的 IL2CPP 技术可进一步优化性能</li>
+<li><strong>生态支持</strong>：C# 的 .NET 生态（NuGet 包、第三方库）可部分用于 Unity 开发（需符合 Unity 的 .NET 配置）</li>
+</ul>
+<h4 id="NET-基础架构">.NET 基础架构</h4>
+<ul>
+<li><strong>.NET 平台演变</strong>
+<ul>
+<li>.NET Framework：早期 Windows 专属平台（Unity 旧版本使用）</li>
+<li>.NET Core：跨平台开源重构版本（Unity 2018+ 逐步支持）</li>
+<li>.NET 5+：统一的跨平台 .NET（Unity 2022 LTS+ 默认使用 .NET 6）</li>
+</ul>
+</li>
+<li><strong>核心组件</strong>
+<ul>
+<li><strong>CLR（Common Language Runtime）</strong>：公共语言运行时，负责代码执行（内存管理、垃圾回收、JIT 编译）</li>
+<li><strong>BCL（Base Class Library）</strong>：基础类库，提供常用功能（集合、IO、网络、数学等）</li>
+<li><strong>C# 编译器</strong>：将 C# 代码编译为 IL（Intermediate Language，中间语言）</li>
+</ul>
+</li>
+<li><strong>编译与执行流程</strong>
+<ol>
+<li>C# 代码 → C# 编译器 → IL 代码（托管代码）</li>
+<li>IL 代码 → CLR（JIT 编译）→ 机器码（运行时执行）</li>
+<li>或通过 AOT（Ahead-of-Time）编译直接生成机器码（如 Unity IL2CPP）</li>
+</ol>
+</li>
+</ul>
+<h4 id="Unity-中的-NET-配置">Unity 中的 .NET 配置</h4>
+<ul>
+<li><strong>脚本运行时</strong>
+<ul>
+<li><strong>Mono</strong>：开源 .NET 运行时，支持 JIT 编译（Unity 旧版本默认，用于快速开发）</li>
+<li><strong>IL2CPP</strong>：Unity 自研技术，将 IL 代码转换为 C++ 代码，再编译为平台原生机器码（AOT 编译，性能更高，支持更多平台）</li>
+</ul>
+</li>
+<li><strong>.NET 版本配置</strong>
+<ul>
+<li>Unity 2022 LTS+：默认 .NET 6（兼容 C# 10）</li>
+<li>Unity 2021 LTS：默认 .NET Standard 2.1（兼容 C# 8.0）</li>
+<li>可在 <code>Player Settings</code> → <code>Other Settings</code> → <code>Configuration</code> 中调整</li>
+</ul>
+</li>
+<li><strong>API 限制</strong>
+<ul>
+<li>Unity 裁剪了部分 .NET BCL（如 Windows 专属 API），避免包体积过大</li>
+<li>部分 .NET 库需适配 Unity（如使用 NuGet 包时需确认兼容性）</li>
+</ul>
+</li>
+</ul>
+<h4 id="示例代码">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ExampleScript</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-comment">// 调用 Unity 引擎 API（C++ 核心通过 .NET 暴露）</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Start</span>()</span><br>    &#123;<br>        Debug.Log(<span class="hljs-string">&quot;Hello Unity + C#&quot;</span>); <span class="hljs-comment">// 输出日志</span><br>        transform.position = <span class="hljs-keyword">new</span> Vector3(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// 修改物体位置</span><br>    &#125;<br><br>    <span class="hljs-comment">// 使用 .NET BCL（基础类库）</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Update</span>()</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (Input.GetKeyDown(KeyCode.Space))<br>        &#123;<br>            <span class="hljs-comment">// 使用 .NET 的 System.DateTime 类</span><br>            System.DateTime now = System.DateTime.Now;<br>            Debug.Log(<span class="hljs-string">&quot;当前时间：&quot;</span> + now.ToString(<span class="hljs-string">&quot;HH:mm:ss&quot;</span>));<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项">注意事项</h4>
+<ul>
+<li>Unity 中 C# 脚本需继承 <code>MonoBehaviour</code> 才能挂载到 <code>GameObject</code> 并接收引擎生命周期事件（<code>Start</code>、<code>Update</code> 等）</li>
+<li>IL2CPP 模式下需注意 AOT 限制（如泛型类型的动态创建可能失败，需提前在代码中显式使用）</li>
+<li>避免在 Unity 中使用 Windows 专属 .NET API（如 <code>System.Windows.Forms</code>），否则跨平台发布时会报错</li>
+<li>.NET 的垃圾回收（GC）会影响 Unity 性能，需避免频繁分配临时对象（如在 <code>Update</code> 中大量 <code>new</code> 对象）</li>
+</ul>
+<h3 id="变量与常量">变量与常量</h3>
+<h4 id="核心定义-2">核心定义</h4>
+<ul>
+<li><strong>变量</strong>：存储可变数据的容器，声明后可多次修改值</li>
+<li><strong>常量</strong>：存储不可变数据的容器，声明后值不可修改</li>
+</ul>
+<h4 id="核心区别">核心区别</h4>
+<ul>
+<li><strong>可变性</strong>
+<ul>
+<li>变量：值可随时修改</li>
+<li>常量：值一旦确定不可修改</li>
+</ul>
+</li>
+<li><strong>赋值时机</strong>
+<ul>
+<li>变量：可在声明时或之后任意时机赋值</li>
+<li>常量：<code>const</code> 需在声明时赋值；<code>readonly</code>/<code>static readonly</code> 可在声明时或构造函数中赋值</li>
+</ul>
+</li>
+<li><strong>存储位置</strong>
+<ul>
+<li>变量：局部变量存储在栈，实例/静态变量随对象/类存储在托管堆</li>
+<li>常量：<code>const</code> 直接嵌入调用代码；<code>readonly</code>/<code>static readonly</code> 存储在托管堆</li>
+</ul>
+</li>
+</ul>
+<h4 id="变量分类">变量分类</h4>
+<ul>
+<li><strong>局部变量</strong>：声明在方法/代码块内，作用域限于当前块，需手动初始化</li>
+<li><strong>实例变量</strong>：声明在类内、方法外（非 <code>static</code>），作用域限于当前实例，随对象创建而存在</li>
+<li><strong>静态变量</strong>：声明在类内、方法外（带 <code>static</code>），作用域限于当前类，随类加载而存在</li>
+</ul>
+<h4 id="常量分类">常量分类</h4>
+<ul>
+<li><strong><code>const</code></strong>：编译时常量，仅支持基元类型，值需为编译时常量表达式</li>
+<li><strong><code>readonly</code></strong>：实例运行时常量，支持所有类型，可在实例构造函数中赋值</li>
+<li><strong><code>static readonly</code></strong>：静态运行时常量，支持所有类型，可在静态构造函数中赋值<br>
+（详见 <code>const</code>/<code>readonly</code>/<code>static readonly</code> 笔记）</li>
+</ul>
+<h4 id="示例代码-2">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Program</span>&#123;<br>    <span class="hljs-comment">// 实例变量</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> instanceVar = <span class="hljs-number">10</span>;<br>    <span class="hljs-comment">// 静态变量</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> staticVar = <span class="hljs-number">20</span>;<br>    <span class="hljs-comment">// const 常量</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> ConstVar = <span class="hljs-number">30</span>;<br>    <span class="hljs-comment">// readonly 常量</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">int</span> ReadonlyVar = <span class="hljs-number">40</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>()</span><br>    &#123;<br>        <span class="hljs-comment">// 局部变量</span><br>        <span class="hljs-built_in">int</span> localVar = <span class="hljs-number">50</span>;<br>        localVar = <span class="hljs-number">60</span>; <span class="hljs-comment">// 变量可修改</span><br><br>        Program p = <span class="hljs-keyword">new</span> Program();<br>        Console.WriteLine(p.instanceVar); <span class="hljs-comment">// 10</span><br>        Console.WriteLine(staticVar);     <span class="hljs-comment">// 20</span><br>        Console.WriteLine(ConstVar);      <span class="hljs-comment">// 30</span><br>        Console.WriteLine(p.ReadonlyVar); <span class="hljs-comment">// 40</span><br>        Console.WriteLine(localVar);      <span class="hljs-comment">// 60</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-2">注意事项</h4>
+<ul>
+<li>局部变量使用前必须初始化，否则编译报错</li>
+<li>变量命名遵循驼峰命名法（如 <code>localVar</code>），常量遵循帕斯卡命名法（如 <code>ConstVar</code>）</li>
+<li>避免在 <code>Update</code> 等高频调用方法中频繁声明局部变量（减少 GC 压力）</li>
+<li><code>const</code> 常量跨程序集使用时，若原值改变需重新编译引用程序集；<code>readonly</code>/<code>static readonly</code> 无需重新编译</li>
+</ul>
+<h3 id="const-readonly-static-readonly"><code>const</code> / <code>readonly</code> / <code>static readonly</code></h3>
+<h4 id="核心定义-3">核心定义</h4>
+<ul>
+<li><strong>const</strong>：编译时常量，声明时必须初始化，值不可改变</li>
+<li><strong>readonly</strong>：运行时常量，可在声明时或实例构造函数中初始化，值不可改变</li>
+<li><strong>static readonly</strong>：静态运行时常量，可在声明时或静态构造函数中初始化，值不可改变</li>
+</ul>
+<h4 id="核心区别-2">核心区别</h4>
+<ul>
+<li><strong>赋值时机</strong>
+<ul>
+<li>const：编译时赋值（值必须为编译时常量表达式）</li>
+<li>readonly：实例构造函数中赋值（实例级）或声明时</li>
+<li>static readonly：静态构造函数中赋值（类级）或声明时</li>
+</ul>
+</li>
+<li><strong>存储位置</strong>
+<ul>
+<li>const：直接嵌入调用代码（编译时替换）</li>
+<li>readonly：实例字段存储在堆内存，静态字段存储在高频堆</li>
+<li>static readonly：存储在高频堆（类级静态字段）</li>
+</ul>
+</li>
+<li><strong>适用类型</strong>
+<ul>
+<li>const：仅基元类型（int、double、string等）和枚举</li>
+<li>readonly：所有值类型和引用类型</li>
+<li>static readonly：所有值类型和引用类型</li>
+</ul>
+</li>
+<li><strong>跨程序集行为</strong>
+<ul>
+<li>const：引用程序集直接复制值（原值改变需重新编译引用程序集）</li>
+<li>readonly/static readonly：运行时读取原程序集值（原值改变无需重新编译引用程序集）</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用场景">使用场景</h4>
+<ul>
+<li><strong>const</strong>：绝对不变的常量（如数学常数π、固定配置值）</li>
+<li><strong>readonly</strong>：实例级常量（如对象创建时间、固定初始值）</li>
+<li><strong>static readonly</strong>：类级常量（如数据库连接字符串、全局配置值）</li>
+</ul>
+<h4 id="注意事项-3">注意事项</h4>
+<ul>
+<li>const无需static修饰（本身为静态）</li>
+<li>readonly仅能在构造函数中赋值（类方法不可修改）</li>
+<li>static readonly仅能在静态构造函数中赋值</li>
+<li>const的引用类型仅支持string（不可变且为编译时常量）</li>
+<li>readonly的引用类型，引用不可变但对象内容可修改（如readonly List<int>可Add/Remove元素）</li>
+</ul>
+<h4 id="示例代码-3">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// const示例</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> ConstValue = <span class="hljs-number">10</span>; <span class="hljs-comment">// 声明时必须初始化</span><br><span class="hljs-comment">// readonly示例</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">int</span> ReadonlyValue = <span class="hljs-number">20</span>; <span class="hljs-comment">// 声明时初始化</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">int</span> ReadonlyValue2; <span class="hljs-comment">// 构造函数中初始化</span><br><span class="hljs-comment">// static readonly示例</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">int</span> StaticReadonlyValue = <span class="hljs-number">30</span>; <span class="hljs-comment">// 声明时初始化</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">int</span> StaticReadonlyValue2; <span class="hljs-comment">// 静态构造函数中初始化</span><br><span class="hljs-comment">// 实例构造函数</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Program</span>()</span><br>&#123;<br>    ReadonlyValue2 = <span class="hljs-number">25</span>; <span class="hljs-comment">// 正确：构造函数中赋值readonly</span><br>&#125;<br><span class="hljs-comment">// 静态构造函数</span><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-title">Program</span>()</span><br>&#123;<br>    StaticReadonlyValue2 = <span class="hljs-number">35</span>; <span class="hljs-comment">// 正确：静态构造函数中赋值static readonly</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>()</span><br>&#123;<br>    Program p = <span class="hljs-keyword">new</span> Program();<br>    Console.WriteLine(ConstValue); <span class="hljs-comment">// 10</span><br>    Console.WriteLine(p.ReadonlyValue); <span class="hljs-comment">// 20</span><br>    Console.WriteLine(p.ReadonlyValue2); <span class="hljs-comment">// 25</span><br>    Console.WriteLine(StaticReadonlyValue); <span class="hljs-comment">// 30</span><br>    Console.WriteLine(StaticReadonlyValue2); <span class="hljs-comment">// 35</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="值类型与引用类型">值类型与引用类型</h3>
+<h4 id="核心定义-4">核心定义</h4>
+<ul>
+<li><strong>值类型</strong>：直接存储数据本身，变量持有数据的副本</li>
+<li><strong>引用类型</strong>：存储数据的引用（内存地址），变量持有指向堆内存中实际数据的指针</li>
+</ul>
+<h4 id="核心区别-3">核心区别</h4>
+<ul>
+<li><strong>存储位置</strong>
+<ul>
+<li>值类型：局部变量<strong>存储在栈</strong>，实例字段<strong>随对象存储在托管堆</strong></li>
+<li>引用类型：<strong>引用存储在栈</strong>，<strong>实际数据存储在托管堆</strong></li>
+</ul>
+</li>
+<li><strong>赋值行为</strong>
+<ul>
+<li>值类型：赋值时复制数据副本，修改新变量不影响原变量</li>
+<li>引用类型：赋值时复制引用，修改新变量指向的对象会影响原变量</li>
+</ul>
+</li>
+<li><strong>继承关系</strong>
+<ul>
+<li>值类型：隐式继承自 <code>System.ValueType</code>（间接继承自 <code>System.Object</code>）</li>
+<li>引用类型：直接或间接继承自 <code>System.Object</code></li>
+</ul>
+</li>
+<li><strong>null 支持</strong>
+<ul>
+<li>值类型：默认不可为 <code>null</code>（可空值类型 <code>Nullable&lt;T&gt;</code> 除外）</li>
+<li>引用类型：默认可为 <code>null</code></li>
+</ul>
+</li>
+<li><strong>内存管理</strong>
+<ul>
+<li>值类型：自动释放（栈空间自动回收，实例字段随对象回收）</li>
+<li>引用类型：由垃圾回收器（GC）管理堆内存的释放</li>
+</ul>
+</li>
+</ul>
+<h4 id="类型分类">类型分类</h4>
+<ul>
+<li><strong>值类型</strong>
+<ul>
+<li>结构体（<code>struct</code>）：如 <code>int</code>、<code>double</code>、<code>bool</code>、<code>DateTime</code>、自定义 <code>struct</code></li>
+<li>枚举（<code>enum</code>）</li>
+</ul>
+</li>
+<li><strong>引用类型</strong>
+<ul>
+<li>类（<code>class</code>）：如 <code>string</code>、<code>object</code>、自定义 <code>class</code></li>
+<li>接口（<code>interface</code>）</li>
+<li>委托（<code>delegate</code>）</li>
+<li>数组（<code>array</code>）</li>
+</ul>
+</li>
+</ul>
+<h4 id="注意事项-4">注意事项</h4>
+<ul>
+<li><code>string</code> 是特殊的引用类型：不可变（immutable），每次修改都会创建新对象</li>
+<li>值类型默认值为 <code>0</code>/<code>false</code>/<code>default(T)</code>，引用类型默认值为 <code>null</code></li>
+<li>值类型作为方法参数时，默认按值传递（复制副本）；引用类型默认按引用传递（复制引用）</li>
+<li>装箱/拆箱是值类型与引用类型之间的转换操作（详见装箱与拆箱笔记）</li>
+<li>可空值类型 <code>Nullable&lt;T&gt;</code>（如 <code>int?</code>）是值类型，但支持 <code>null</code>（内部通过结构体实现）</li>
+</ul>
+<h3 id="装箱与拆箱">装箱与拆箱</h3>
+<h4 id="核心定义-5">核心定义</h4>
+<ul>
+<li>
+<p><strong>装箱</strong>：将<strong>值类型</strong>隐式转换为<strong>引用类型</strong>（<code>object</code> 或接口类型）的过程。</p>
+<ul>
+<li>本质：在<strong>托管堆</strong>中开辟内存，新建一个引用类型包装对象，把栈上的值类型数据<strong>复制</strong>到堆中，栈上变量保存堆对象的引用地址。</li>
+</ul>
+</li>
+<li>
+<p><strong>拆箱</strong>：将<strong>已装箱的引用类型对象</strong>，显式转换回<strong>值类型</strong>的过程。</p>
+<ul>
+<li>本质：检测堆中包装对象的类型合法性，再把堆内的数据<strong>复制</strong>回栈内存。</li>
+</ul>
+</li>
+</ul>
+<h4 id="实现原理">实现原理</h4>
+<ul>
+<li>
+<p><strong>装箱</strong></p>
+<ol>
+<li>在托管堆分配内存（值类型大小 + 对象头）</li>
+<li>将值类型数据复制到堆内存</li>
+<li>返回堆内存的引用（存储到栈上的引用类型变量）</li>
+</ol>
+</li>
+<li>
+<p><strong>拆箱</strong></p>
+<ol>
+<li>检查引用类型变量是否为 <code>null</code>（是则抛 <code>NullReferenceException</code>）</li>
+<li>检查引用类型的实际类型是否与目标值类型严格匹配（不匹配则抛 <code>InvalidCastException</code>）</li>
+<li>将堆内存中的值类型数据复制到栈上的目标值类型变量</li>
+</ol>
+</li>
+</ul>
+<h4 id="装箱时机">装箱时机</h4>
+<ol>
+<li>值类型赋值给 object 变量、接口变量</li>
+<li>调用值类型未重写的 <code>object</code> 虚方法，且结构体未重写（<code>ToString</code>、<code>Equals</code>、<code>GetHashCode</code>）</li>
+<li>传入非泛型方法 / 集合（参数为 object）</li>
+<li>值类型作为参数传入可变参数 <code>params object[]</code></li>
+<li>值类型赋值给其实现的接口类型变量</li>
+<li>装箱为委托、事件捕获值类型变量</li>
+</ol>
+<h4 id="拆箱时机">拆箱时机</h4>
+<ol>
+<li>object ，接口引用强制转换为对应值类型</li>
+</ol>
+<h4 id="性能影响">性能影响</h4>
+<ul>
+<li><strong>内存分配与拷贝</strong>
+<ul>
+<li>装箱需要在<strong>堆</strong>上分配新对象，把栈上数据<strong>拷贝</strong>到堆。</li>
+<li>拆箱需要检查类型 + 把堆数据<strong>拷贝</strong>回栈。</li>
+<li>比直接值类型操作多了<strong>内存分配 + 两次拷贝</strong>。</li>
+</ul>
+</li>
+<li><strong>GC 压力增大</strong>
+<ul>
+<li>装箱产生的临时对象会留在堆里，用完后需要<strong>GC 垃圾回收</strong>。</li>
+<li>频繁装箱产生了大量临时小对象导致 <strong>GC 频繁触发</strong></li>
+</ul>
+</li>
+<li><strong>CPU 额外开销</strong>
+<ul>
+<li>类型检查、内存操作、对象头分配、寻址操作都比直接值操作更耗 CPU。</li>
+</ul>
+</li>
+</ul>
+<h4 id="注意事项-5">注意事项</h4>
+<ul>
+<li>拆箱类型必须与装箱时的<strong>原始值类型</strong>完全一致（不允许隐式转换，如 <code>int</code> 装箱后不能直接拆箱为 <code>long</code>）</li>
+<li>可空值类型（<code>Nullable&lt;T&gt;</code>）装箱：若有值则装箱为 <code>T</code>，若无值则装箱为 <code>null</code></li>
+<li>拆箱 <code>null</code> 引用会抛 <code>NullReferenceException</code></li>
+</ul>
+<h4 id="装箱与拆箱示例">装箱与拆箱示例</h4>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-built_in">int</span> num = <span class="hljs-number">100</span>;<br><span class="hljs-built_in">object</span> obj = num;<span class="hljs-comment">// 装箱：值类型 → 引用类型</span><br><span class="hljs-built_in">int</span> num2 = (<span class="hljs-built_in">int</span>)obj;<span class="hljs-comment">// 拆箱：引用类型 → 值类型</span><br></code></pre></td></tr></table></figure>
+<h4 id="减少装箱拆箱的方法">减少装箱拆箱的方法</h4>
+<p><strong>使用泛型</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 避免：ArrayList（object存储）</span><br><span class="hljs-comment">// 推荐：List&lt;T&gt;</span><br>List&lt;<span class="hljs-built_in">int</span>&gt; list = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">int</span>&gt;();<br>list.Add(<span class="hljs-number">123</span>); <span class="hljs-comment">// 无装箱</span><br></code></pre></td></tr></table></figure>
+<p><strong>重写值类型的 <code>object</code> 虚方法</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">struct</span> MyStruct<br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Value;<br>    <span class="hljs-comment">// 重写 ToString 避免调用基类时装箱</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">string</span> <span class="hljs-title">ToString</span>()</span> =&gt; Value.ToString();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>避免值类型向 object、接口隐式转换</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">interface</span> <span class="hljs-title">IMyInterface</span> &#123; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Method</span>()</span>; &#125;<br><span class="hljs-keyword">struct</span> MyStruct : IMyInterface &#123; <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Method</span>()</span> &#123; &#125; &#125;<br><br><span class="hljs-comment">// 避免：直接将 struct 赋值给接口（装箱）</span><br><span class="hljs-comment">// IMyInterface iface = new MyStruct();</span><br><br><span class="hljs-comment">// 推荐：直接使用 struct 实例</span><br>MyStruct s = <span class="hljs-keyword">new</span> MyStruct();<br>s.Method();<br></code></pre></td></tr></table></figure>
+<p><strong>使用 <code>Enum.TryParse</code> 替代 <code>Enum.Parse</code></strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 避免：Enum.Parse（返回 object，需拆箱）</span><br><span class="hljs-comment">// int val = (int)Enum.Parse(typeof(MyEnum), &quot;Value&quot;);</span><br><span class="hljs-comment">// 推荐：Enum.TryParse（无拆箱）</span><br><span class="hljs-keyword">if</span> (Enum.TryParse&lt;MyEnum&gt;(<span class="hljs-string">&quot;Value&quot;</span>, <span class="hljs-keyword">out</span> <span class="hljs-keyword">var</span> result))<br>&#123;<br>    <span class="hljs-built_in">int</span> val = (<span class="hljs-built_in">int</span>)result;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="常用类型">常用类型</h3>
+<h4 id="核心定义-6">核心定义</h4>
+<p>C# 常用类型涵盖值类型与引用类型，包括基础数据类型、字符串、数组、集合等，是开发中最常用的数据载体。</p>
+<h4 id="类型分类-2">类型分类</h4>
+<table>
+<thead>
+<tr>
+<th>类型类别</th>
+<th>具体类型</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>值类型-基元</td>
+<td><code>int</code>、<code>double</code>、<code>bool</code>、<code>char</code></td>
+<td>基础数值/布尔/字符类型</td>
+<td><code>int age = 18;</code></td>
+</tr>
+<tr>
+<td>值类型-结构体</td>
+<td><code>DateTime</code>、<code>TimeSpan</code>、<code>Guid</code></td>
+<td>复合值类型（日期、时间差、唯一标识）</td>
+<td><code>DateTime now = DateTime.Now;</code></td>
+</tr>
+<tr>
+<td>值类型-枚举</td>
+<td><code>enum</code></td>
+<td>一组命名常量的集合</td>
+<td><code>enum Day { Monday, Tuesday }</code></td>
+</tr>
+<tr>
+<td>引用类型-字符串</td>
+<td><code>string</code></td>
+<td>不可变的字符序列</td>
+<td><code>string name = &quot;Unity&quot;;</code></td>
+</tr>
+<tr>
+<td>引用类型-数组</td>
+<td><code>T[]</code></td>
+<td>固定长度的同类型元素集合</td>
+<td><code>int[] nums = {1, 2, 3};</code></td>
+</tr>
+<tr>
+<td>引用类型-集合</td>
+<td><code>List&lt;T&gt;</code>、<code>Dictionary&lt;TKey,TValue&gt;</code></td>
+<td>动态长度的泛型集合（列表、键值对）</td>
+<td><code>List&lt;int&gt; list = new List&lt;int&gt;();</code></td>
+</tr>
+<tr>
+<td>引用类型-类</td>
+<td><code>class</code></td>
+<td>自定义引用类型（封装数据与行为）</td>
+<td><code>class Player { }</code></td>
+</tr>
+<tr>
+<td>引用类型-接口</td>
+<td><code>interface</code></td>
+<td>行为契约（定义方法签名）</td>
+<td><code>interface IUpdate { }</code></td>
+</tr>
+<tr>
+<td>引用类型-委托</td>
+<td><code>Action</code>、<code>Func</code></td>
+<td>类型安全的函数指针</td>
+<td><code>Action log = () =&gt; { };</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="示例代码-4">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 1. 基元类型</span><br><span class="hljs-built_in">int</span> age = <span class="hljs-number">18</span>;<br><span class="hljs-built_in">double</span> price = <span class="hljs-number">99.99</span>;<br><span class="hljs-built_in">bool</span> isActive = <span class="hljs-literal">true</span>;<br><span class="hljs-built_in">char</span> grade = <span class="hljs-string">&#x27;A&#x27;</span>;<br><br><span class="hljs-comment">// 2. 结构体</span><br>DateTime now = DateTime.Now;<br>TimeSpan duration = TimeSpan.FromHours(<span class="hljs-number">2</span>);<br>Guid id = Guid.NewGuid();<br><br><span class="hljs-comment">// 3. 枚举</span><br>Day today = Day.Monday;<br><br><span class="hljs-comment">// 4. 字符串</span><br><span class="hljs-built_in">string</span> name = <span class="hljs-string">&quot;Unity Developer&quot;</span>;<br><span class="hljs-built_in">string</span> upperName = name.ToUpper(); <span class="hljs-comment">// 生成新字符串（不可变）</span><br><br><span class="hljs-comment">// 5. 数组</span><br><span class="hljs-built_in">int</span>[] nums = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span> &#125;;<br><span class="hljs-built_in">int</span> firstNum = nums[<span class="hljs-number">0</span>];<br><br><span class="hljs-comment">// 6. 泛型集合</span><br>List&lt;<span class="hljs-built_in">int</span>&gt; list = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">int</span>&gt; &#123; <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span> &#125;;<br>list.Add(<span class="hljs-number">40</span>); <span class="hljs-comment">// 动态添加元素</span><br><br>Dictionary&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">int</span>&gt; dict = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">int</span>&gt;<br>&#123;<br>    &#123; <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">25</span> &#125;,<br>    &#123; <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">30</span> &#125;<br>&#125;;<br><span class="hljs-built_in">int</span> aliceAge = dict[<span class="hljs-string">&quot;Alice&quot;</span>];<br><br><span class="hljs-comment">// 输出示例</span><br>Console.WriteLine(now.ToString(<span class="hljs-string">&quot;yyyy-MM-dd&quot;</span>));<br>Console.WriteLine(upperName);<br>Console.WriteLine(list.Count);<br><span class="hljs-comment">// 自定义枚举</span><br><span class="hljs-built_in">enum</span> Day &#123; Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday &#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-6">注意事项</h4>
+<ul>
+<li><code>string</code> 是引用类型但<strong>不可变</strong>，每次修改（如 <code>ToUpper</code>、<code>Substring</code>）都会创建新对象</li>
+<li>数组长度固定，泛型集合（<code>List&lt;T&gt;</code>、<code>Dictionary&lt;TKey,TValue&gt;</code>）长度动态可变</li>
+<li>选择集合的原则：有序列表用 <code>List&lt;T&gt;</code>，键值对用 <code>Dictionary&lt;TKey,TValue&gt;</code>，去重用 <code>HashSet&lt;T&gt;</code></li>
+<li>值类型默认值为 <code>0</code>/<code>false</code>/<code>default(T)</code>，引用类型默认值为 <code>null</code></li>
+<li>枚举底层默认是 <code>int</code>，可通过 <code>enum Day : byte { ... }</code> 指定底层类型</li>
+</ul>
+<h3 id="类型转换">类型转换</h3>
+<h4 id="核心定义-7">核心定义</h4>
+<ul>
+<li><strong>类型转换</strong>：将一个类型的值转换为另一个类型的过程</li>
+<li><strong>隐式转换</strong>：编译器自动完成的转换，无数据丢失，无需显式语法</li>
+<li><strong>显式转换</strong>：需手动指定的强制转换，可能丢失数据或抛出异常，需使用 <code>(T)</code> 语法</li>
+</ul>
+<h4 id="核心区别-4">核心区别</h4>
+<ul>
+<li><strong>安全性</strong>
+<ul>
+<li>隐式转换：类型安全，无数据丢失（如 <code>int</code> → <code>long</code>）</li>
+<li>显式转换：非类型安全，可能丢失精度或数据（如 <code>long</code> → <code>int</code>）</li>
+</ul>
+</li>
+<li><strong>语法要求</strong>
+<ul>
+<li>隐式转换：无需额外语法</li>
+<li>显式转换：需使用 <code>(目标类型)源变量</code> 语法</li>
+</ul>
+</li>
+</ul>
+<h4 id="转换分类">转换分类</h4>
+<ul>
+<li><strong>隐式转换规则</strong>
+<ol>
+<li>值类型：小范围类型 → 大范围类型（如 <code>sbyte</code>→<code>short</code>→<code>int</code>→<code>long</code>，<code>float</code>→<code>double</code>）</li>
+<li>引用类型：派生类 → 基类（如 <code>string</code>→<code>object</code>）</li>
+<li>值类型 → 其实现的接口类型（会发生装箱）</li>
+</ol>
+</li>
+<li><strong>显式转换规则</strong>
+<ol>
+<li>值类型：大范围类型 → 小范围类型（需强制转换，可能抛 <code>OverflowException</code>）</li>
+<li>引用类型：基类 → 派生类（需强制转换，可能抛 <code>InvalidCastException</code>）</li>
+</ol>
+</li>
+<li><strong>用户自定义转换</strong>
+<ul>
+<li>使用 <code>implicit operator</code> 定义隐式转换</li>
+<li>使用 <code>explicit operator</code> 定义显式转换</li>
+<li>仅适用于自定义 struct/class，不能转换继承关系的类型</li>
+</ul>
+</li>
+<li><strong>辅助类转换</strong>
+<ul>
+<li><code>Convert</code> 类：提供多种类型的通用转换方法（如 <code>Convert.ToInt32()</code>、<code>Convert.ToString()</code>），支持 <code>null</code> 处理</li>
+<li><code>Parse</code> 方法：将字符串转换为值类型（如 <code>int.Parse()</code>），格式错误时抛 <code>FormatException</code></li>
+<li><code>TryParse</code> 方法：安全的字符串转值类型（如 <code>int.TryParse()</code>），返回 <code>bool</code> 表示是否成功，不抛异常</li>
+</ul>
+</li>
+</ul>
+<h4 id="示例代码-5">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 1. 隐式转换</span><br><span class="hljs-built_in">int</span> intVal = <span class="hljs-number">100</span>;<br><span class="hljs-built_in">long</span> longVal = intVal; <span class="hljs-comment">// int → long（隐式，无数据丢失）</span><br><span class="hljs-built_in">object</span> objVal = <span class="hljs-string">&quot;hello&quot;</span>; <span class="hljs-comment">// string → object（隐式，派生类转基类）</span><br><br><span class="hljs-comment">// 2. 显式转换</span><br><span class="hljs-built_in">long</span> longVal2 = <span class="hljs-number">999999999</span>;<br><span class="hljs-built_in">int</span> intVal2 = (<span class="hljs-built_in">int</span>)longVal2; <span class="hljs-comment">// long → int（显式，需强制转换）</span><br><span class="hljs-built_in">object</span> objVal3 = <span class="hljs-string">&quot;world&quot;</span>;<br><span class="hljs-built_in">string</span> strVal3 = (<span class="hljs-built_in">string</span>)objVal3; <span class="hljs-comment">// object → string（显式，基类转派生类）</span><br><br><span class="hljs-comment">// 3. 用户自定义转换示例</span><br>Celsius c = <span class="hljs-keyword">new</span> Celsius(<span class="hljs-number">25</span>);<br>Fahrenheit f = c; <span class="hljs-comment">// 隐式转换（Celsius → Fahrenheit）</span><br>Celsius c2 = (Celsius)f; <span class="hljs-comment">// 显式转换（Fahrenheit → Celsius）</span><br><br><span class="hljs-comment">// 4. 辅助类转换</span><br><span class="hljs-comment">// Convert 类</span><br><span class="hljs-built_in">string</span> numStr = <span class="hljs-string">&quot;123&quot;</span>;<br><span class="hljs-built_in">int</span> num = Convert.ToInt32(numStr); <span class="hljs-comment">// string → int</span><br><span class="hljs-built_in">int</span>? nullableInt = <span class="hljs-literal">null</span>;<br><span class="hljs-built_in">int</span> num2 = Convert.ToInt32(nullableInt); <span class="hljs-comment">// 处理 null，返回 0</span><br><br><span class="hljs-comment">// Parse 方法</span><br><span class="hljs-built_in">string</span> doubleStr = <span class="hljs-string">&quot;3.14&quot;</span>;<br><span class="hljs-built_in">double</span> pi = <span class="hljs-built_in">double</span>.Parse(doubleStr); <span class="hljs-comment">// string → double</span><br><br><span class="hljs-comment">// TryParse 方法（推荐，安全）</span><br><span class="hljs-built_in">string</span> badStr = <span class="hljs-string">&quot;abc&quot;</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-built_in">int</span>.TryParse(badStr, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> result))<br>&#123;<br>    Console.WriteLine(<span class="hljs-string">&quot;转换成功：&quot;</span> + result);<br>&#125;<br><span class="hljs-keyword">else</span><br>&#123;<br>    Console.WriteLine(<span class="hljs-string">&quot;转换失败&quot;</span>);<br>&#125;<br><span class="hljs-comment">// 用户自定义类型：摄氏度</span><br><span class="hljs-keyword">struct</span> Celsius<br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Temperature;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Celsius</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> temp</span>)</span> &#123; Temperature = temp; &#125;<br><br>    <span class="hljs-comment">// 隐式转换：Celsius → Fahrenheit</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">implicit</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">Fahrenheit</span>(<span class="hljs-params">Celsius c</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Fahrenheit(c.Temperature * <span class="hljs-number">9</span> / <span class="hljs-number">5</span> + <span class="hljs-number">32</span>);<br>    &#125;<br>&#125;<br><span class="hljs-comment">// 用户自定义类型：华氏度</span><br><span class="hljs-keyword">struct</span> Fahrenheit<br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Temperature;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Fahrenheit</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> temp</span>)</span> &#123; Temperature = temp; &#125;<br><br>    <span class="hljs-comment">// 显式转换：Fahrenheit → Celsius</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">explicit</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">Celsius</span>(<span class="hljs-params">Fahrenheit f</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Celsius((f.Temperature - <span class="hljs-number">32</span>) * <span class="hljs-number">5</span> / <span class="hljs-number">9</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-7">注意事项</h4>
+<ul>
+<li>显式转换可能导致<strong>精度丢失</strong>（如 <code>double</code>→<code>int</code> 会截断小数）或<strong>溢出异常</strong>（可通过 <code>checked</code> 关键字启用溢出检查：<code>checked { int i = (int)longVal; }</code>）</li>
+<li>引用类型显式转换前，建议使用 <code>is</code> 或 <code>as</code> 关键字检查类型兼容性：
+<ul>
+<li><code>is</code>：返回 <code>bool</code> 表示是否匹配（<code>if (obj is string str) { ... }</code>）</li>
+<li><code>as</code>：转换失败时返回 <code>null</code>（<code>string str = obj as string; if (str != null) { ... }</code>）</li>
+</ul>
+</li>
+<li><code>Parse</code> 方法仅适用于字符串转值类型，格式错误时抛异常；<strong>优先使用 <code>TryParse</code></strong> 避免异常</li>
+<li><code>Convert</code> 类处理 <code>null</code> 时返回目标类型的默认值（如 <code>Convert.ToInt32(null)</code> 返回 <code>0</code>），而 <code>Parse(null)</code> 会抛 <code>ArgumentNullException</code></li>
+<li>用户自定义转换不能处理继承关系的类型转换（如基类与派生类之间的转换），那是系统默认的引用类型转换</li>
+</ul>
+<h3 id="运算符">运算符</h3>
+<h4 id="核心定义-8">核心定义</h4>
+<ul>
+<li><strong>算术运算符</strong>：用于数值计算（加、减、乘、除、取模、自增、自减等）</li>
+<li><strong>比较运算符</strong>：用于比较两个值的大小或相等关系，返回布尔值</li>
+<li><strong>逻辑运算符</strong>：用于布尔值的逻辑运算（与、或、非、异或等），支持短路特性</li>
+<li><strong>赋值运算符</strong>：用于给变量赋值，包括简单赋值和复合赋值（结合算术运算）</li>
+</ul>
+<h4 id="算术运算符">算术运算符</h4>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>示例</th>
+<th>结果（假设初始值）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+</code></td>
+<td>加法</td>
+<td><code>5 + 3</code></td>
+<td><code>8</code></td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>减法</td>
+<td><code>5 - 3</code></td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>乘法</td>
+<td><code>5 * 3</code></td>
+<td><code>15</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>除法（整数）</td>
+<td><code>5 / 2</code></td>
+<td><code>2</code>（截断小数）</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>除法（浮点数）</td>
+<td><code>5.0 / 2.0</code></td>
+<td><code>2.5</code></td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>取模（求余数）</td>
+<td><code>5 % 2</code></td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>++</code></td>
+<td>自增（前缀）</td>
+<td><code>++a</code></td>
+<td><code>a = a + 1</code>（先增后用）</td>
+</tr>
+<tr>
+<td><code>++</code></td>
+<td>自增（后缀）</td>
+<td><code>a++</code></td>
+<td><code>a = a + 1</code>（先用后增）</td>
+</tr>
+<tr>
+<td><code>--</code></td>
+<td>自减（前缀）</td>
+<td><code>--a</code></td>
+<td><code>a = a - 1</code>（先减后用）</td>
+</tr>
+<tr>
+<td><code>--</code></td>
+<td>自减（后缀）</td>
+<td><code>a--</code></td>
+<td><code>a = a - 1</code>（先用后减）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="比较运算符">比较运算符</h4>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>==</code></td>
+<td>等于</td>
+<td><code>5 == 3</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>!=</code></td>
+<td>不等于</td>
+<td><code>5 != 3</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>大于</td>
+<td><code>5 &gt; 3</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>小于</td>
+<td><code>5 &lt; 3</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>&gt;=</code></td>
+<td>大于等于</td>
+<td><code>5 &gt;= 3</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>&lt;=</code></td>
+<td>小于等于</td>
+<td><code>5 &lt;= 3</code></td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="逻辑运算符">逻辑运算符</h4>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>!</code></td>
+<td>逻辑非（取反）</td>
+<td><code>!true</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td>逻辑与（短路）</td>
+<td><code>true &amp;&amp; false</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>`</td>
+<td></td>
+<td>`</td>
+<td>逻辑或（短路）</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td>逻辑与（非短路）</td>
+<td><code>true &amp; false</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td>逻辑或（非短路）</td>
+<td>`true</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>逻辑异或</td>
+<td><code>true ^ false</code></td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="赋值运算符">赋值运算符</h4>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>示例</th>
+<th>等价于</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>=</code></td>
+<td>简单赋值</td>
+<td><code>a = 5</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>+=</code></td>
+<td>加等于</td>
+<td><code>a += 3</code></td>
+<td><code>a = a + 3</code></td>
+</tr>
+<tr>
+<td><code>-=</code></td>
+<td>减等于</td>
+<td><code>a -= 3</code></td>
+<td><code>a = a - 3</code></td>
+</tr>
+<tr>
+<td><code>*=</code></td>
+<td>乘等于</td>
+<td><code>a *= 3</code></td>
+<td><code>a = a * 3</code></td>
+</tr>
+<tr>
+<td><code>/=</code></td>
+<td>除等于</td>
+<td><code>a /= 3</code></td>
+<td><code>a = a / 3</code></td>
+</tr>
+<tr>
+<td><code>%=</code></td>
+<td>取模等于</td>
+<td><code>a %= 3</code></td>
+<td><code>a = a % 3</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="示例代码-6">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 1. 算术运算符</span><br><span class="hljs-built_in">int</span> a = <span class="hljs-number">5</span>, b = <span class="hljs-number">2</span>;<br>Console.WriteLine(a + b); <span class="hljs-comment">// 7</span><br>Console.WriteLine(a / b); <span class="hljs-comment">// 2（整数除法，截断小数）</span><br>Console.WriteLine(<span class="hljs-number">5.0</span> / <span class="hljs-number">2.0</span>); <span class="hljs-comment">// 2.5（浮点数除法）</span><br>Console.WriteLine(a % b); <span class="hljs-comment">// 1</span><br><span class="hljs-built_in">int</span> c = <span class="hljs-number">10</span>;<br>Console.WriteLine(++c); <span class="hljs-comment">// 11（先增后用）</span><br>Console.WriteLine(c++); <span class="hljs-comment">// 11（先用后增）</span><br>Console.WriteLine(c); <span class="hljs-comment">// 12</span><br><span class="hljs-comment">// 2. 比较运算符</span><br>Console.WriteLine(a == b); <span class="hljs-comment">// false</span><br>Console.WriteLine(a &gt; b); <span class="hljs-comment">// true</span><br>Console.WriteLine(a &lt;= b); <span class="hljs-comment">// false</span><br><span class="hljs-comment">// 3. 逻辑运算符</span><br><span class="hljs-built_in">bool</span> x = <span class="hljs-literal">true</span>, y = <span class="hljs-literal">false</span>;<br>Console.WriteLine(!x); <span class="hljs-comment">// false</span><br>Console.WriteLine(x &amp;&amp; y); <span class="hljs-comment">// false（短路：左为false直接返回）</span><br>Console.WriteLine(x || y); <span class="hljs-comment">// true（短路：左为true直接返回）</span><br>Console.WriteLine(x ^ y); <span class="hljs-comment">// true</span><br><span class="hljs-comment">// 4. 赋值运算符</span><br><span class="hljs-built_in">int</span> d = <span class="hljs-number">5</span>;<br>d += <span class="hljs-number">3</span>; <span class="hljs-comment">// d = 8</span><br>d *= <span class="hljs-number">2</span>; <span class="hljs-comment">// d = 16</span><br>Console.WriteLine(d); <span class="hljs-comment">// 16</span><br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-8">注意事项</h4>
+<ul>
+<li><strong>整数除法</strong>：<code>int</code> 类型相除结果仍为 <code>int</code>，小数部分直接截断；若需浮点数结果，至少一个操作数为浮点数（如 <code>5.0 / 2</code>）</li>
+<li><strong>自增/自减</strong>：前缀（<code>++a</code>）先修改变量值再使用，后缀（<code>a++</code>）先使用变量值再修改</li>
+<li><strong>逻辑短路</strong>：<code>&amp;&amp;</code> 左为 <code>false</code> 或 <code>||</code> 左为 <code>true</code> 时，直接返回结果，不执行右操作数（可避免空引用异常）</li>
+<li><strong>复合赋值</strong>：<code>+=</code> 等会自动进行类型转换（如 <code>byte b = 1; b += 2;</code> 合法，而 <code>b = b + 2</code> 需显式转换为 <code>byte</code>）</li>
+<li><strong>字符串比较</strong>：<code>string</code> 用 <code>==</code> 比较的是内容（C# 重载了运算符），其他引用类型默认比较引用地址</li>
+</ul>
+<h2 id="程序流程控制">程序流程控制</h2>
+<h3 id="条件语句">条件语句</h3>
+<h3 id="循环语句">循环语句</h3>
+<h3 id="跳转语句">跳转语句</h3>
+<h2 id="函数">函数</h2>
+<h3 id="函数基础">函数基础</h3>
+<h4 id="核心定义-9">核心定义</h4>
+<ul>
+<li><strong>函数（方法）</strong>：封装可重用代码的独立模块，接收输入参数，执行特定逻辑，返回输出结果（或无返回值）</li>
+<li><strong>作用</strong>：提高代码复用性、可读性和可维护性，将复杂任务拆分为多个小模块</li>
+</ul>
+<h4 id="语法结构">语法结构</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp">[访问修饰符] [返回类型] [函数名]([参数列表])<br>&#123;<br>    <span class="hljs-comment">// 方法体：执行逻辑</span><br>    [<span class="hljs-meta">return 返回值;</span>] <span class="hljs-comment">// 无返回值时省略</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>访问修饰符</strong>：控制函数的可访问性（如 <code>public</code>、<code>private</code>、<code>protected</code>、<code>internal</code>）</li>
+<li><strong>返回类型</strong>：函数返回值的类型；无返回值时用 <code>void</code></li>
+<li><strong>函数名</strong>：遵循帕斯卡命名法（如 <code>CalculateSum</code>）</li>
+<li><strong>参数列表</strong>：可选，由零个或多个参数组成，每个参数包含类型和名称，用逗号分隔</li>
+</ul>
+<h4 id="参数类型">参数类型</h4>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>关键字</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>值参数</td>
+<td>无</td>
+<td>默认传递方式，传递参数的副本，修改不影响原变量</td>
+<td><code>void Func(int a)</code></td>
+</tr>
+<tr>
+<td>引用参数</td>
+<td><code>ref</code></td>
+<td>传递参数的引用，修改会影响原变量，参数需先初始化</td>
+<td><code>void Func(ref int a)</code></td>
+</tr>
+<tr>
+<td>输出参数</td>
+<td><code>out</code></td>
+<td>用于返回多个结果，参数无需初始化，但函数内必须赋值</td>
+<td><code>void Func(out int a)</code></td>
+</tr>
+<tr>
+<td>参数数组</td>
+<td><code>params</code></td>
+<td>允许传递可变数量的同类型参数，必须是最后一个参数</td>
+<td><code>void Func(params int[] arr)</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="返回值">返回值</h4>
+<ul>
+<li><strong>无返回值</strong>：返回类型为 <code>void</code>，无需 <code>return</code> 语句（或用 <code>return;</code> 提前退出）</li>
+<li><strong>有返回值</strong>：返回类型为具体类型，必须用 <code>return</code> 语句返回匹配类型的值</li>
+<li><strong>多个返回值</strong>：可通过 <code>out</code> 参数、元组（<code>Tuple</code> 或 <code>ValueTuple</code>）或自定义类/结构体实现</li>
+</ul>
+<h4 id="函数重载">函数重载</h4>
+<ul>
+<li><strong>定义</strong>：同一个类中可以有多个同名函数，但<strong>参数列表必须不同</strong>（参数类型、数量、顺序不同）</li>
+<li><strong>规则</strong>：与返回类型无关，仅通过参数列表区分</li>
+<li><strong>作用</strong>：提供功能相似但输入不同的函数，提高易用性</li>
+</ul>
+<h4 id="递归">递归</h4>
+<ul>
+<li><strong>定义</strong>：函数直接或间接调用自身</li>
+<li><strong>要素</strong>：
+<ol>
+<li><strong>终止条件</strong>：避免无限递归（否则会导致栈溢出）</li>
+<li><strong>递归调用</strong>：逐步逼近终止条件</li>
+</ol>
+</li>
+</ul>
+<h4 id="示例代码-7">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>()</span><br>    &#123;<br>        <span class="hljs-comment">// 1. 调用无参数无返回值函数</span><br>        PrintHello();<br><br>        <span class="hljs-comment">// 2. 调用有参数有返回值函数</span><br>        <span class="hljs-built_in">int</span> sum = CalculateSum(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>);<br>        Console.WriteLine(<span class="hljs-string">&quot;Sum: &quot;</span> + sum); <span class="hljs-comment">// 8</span><br><br>        <span class="hljs-comment">// 3. 调用引用参数函数</span><br>        <span class="hljs-built_in">int</span> a = <span class="hljs-number">10</span>;<br>        ModifyValue(<span class="hljs-keyword">ref</span> a);<br>        Console.WriteLine(<span class="hljs-string">&quot;Modified a: &quot;</span> + a); <span class="hljs-comment">// 20</span><br><br>        <span class="hljs-comment">// 4. 调用输出参数函数</span><br>        <span class="hljs-built_in">int</span> result;<br>        <span class="hljs-built_in">bool</span> success = TryDivide(<span class="hljs-number">10</span>, <span class="hljs-number">2</span>, <span class="hljs-keyword">out</span> result);<br>        <span class="hljs-keyword">if</span> (success) Console.WriteLine(<span class="hljs-string">&quot;Divide Result: &quot;</span> + result); <span class="hljs-comment">// 5</span><br><br>        <span class="hljs-comment">// 5. 调用参数数组函数</span><br>        <span class="hljs-built_in">int</span> total = SumParams(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>);<br>        Console.WriteLine(<span class="hljs-string">&quot;Params Sum: &quot;</span> + total); <span class="hljs-comment">// 15</span><br><br>        <span class="hljs-comment">// 6. 调用重载函数</span><br>        Console.WriteLine(Add(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>)); <span class="hljs-comment">// 8（int版本）</span><br>        Console.WriteLine(Add(<span class="hljs-number">5.5</span>, <span class="hljs-number">3.3</span>)); <span class="hljs-comment">// 8.8（double版本）</span><br><br>        <span class="hljs-comment">// 7. 调用递归函数</span><br>        Console.WriteLine(Factorial(<span class="hljs-number">5</span>)); <span class="hljs-comment">// 120（5! = 5×4×3×2×1）</span><br>    &#125;<br><br>    <span class="hljs-comment">// 无参数无返回值函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">PrintHello</span>()</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">&quot;Hello World!&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 有参数有返回值函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> <span class="hljs-title">CalculateSum</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> x, <span class="hljs-built_in">int</span> y</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> x + y;<br>    &#125;<br><br>    <span class="hljs-comment">// 引用参数函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ModifyValue</span>(<span class="hljs-params"><span class="hljs-keyword">ref</span> <span class="hljs-built_in">int</span> num</span>)</span><br>    &#123;<br>        num *= <span class="hljs-number">2</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 输出参数函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">TryDivide</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> dividend, <span class="hljs-built_in">int</span> divisor, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> quotient</span>)</span><br>    &#123;<br>        quotient = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">if</span> (divisor == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        quotient = dividend / divisor;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 参数数组函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> <span class="hljs-title">SumParams</span>(<span class="hljs-params"><span class="hljs-keyword">params</span> <span class="hljs-built_in">int</span>[] numbers</span>)</span><br>    &#123;<br>        <span class="hljs-built_in">int</span> sum = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">foreach</span> (<span class="hljs-built_in">int</span> num <span class="hljs-keyword">in</span> numbers) sum += num;<br>        <span class="hljs-keyword">return</span> sum;<br>    &#125;<br><br>    <span class="hljs-comment">// 重载函数1：int版本</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> <span class="hljs-title">Add</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> x, <span class="hljs-built_in">int</span> y</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> x + y;<br>    &#125;<br><br>    <span class="hljs-comment">// 重载函数2：double版本</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">double</span> <span class="hljs-title">Add</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> x, <span class="hljs-built_in">double</span> y</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> x + y;<br>    &#125;<br><br>    <span class="hljs-comment">// 递归函数：计算阶乘</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> <span class="hljs-title">Factorial</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> n</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <span class="hljs-comment">// 终止条件</span><br>        <span class="hljs-keyword">return</span> n * Factorial(n - <span class="hljs-number">1</span>); <span class="hljs-comment">// 递归调用</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-9">注意事项</h4>
+<ul>
+<li><strong>参数传递默认是值传递</strong>：值类型传递副本，引用类型传递引用的副本（修改引用指向的对象会影响原对象，但修改引用本身不会）</li>
+<li><strong><code>ref</code> 与 <code>out</code> 的区别</strong>：
+<ul>
+<li><code>ref</code>：参数必须在调用前初始化，函数内可读取或修改</li>
+<li><code>out</code>：参数无需在调用前初始化，但函数内必须赋值</li>
+</ul>
+</li>
+<li><strong><code>params</code> 限制</strong>：必须是参数列表的最后一个参数，且只能是一维数组</li>
+<li><strong>函数重载规则</strong>：仅通过参数列表区分，与返回类型、访问修饰符无关</li>
+<li><strong>递归风险</strong>：无终止条件或终止条件不当会导致 <code>StackOverflowException</code>（栈溢出）</li>
+<li><strong>函数命名</strong>：遵循帕斯卡命名法，使用动词或动词短语（如 <code>Calculate</code>、<code>GetData</code>、<code>PrintResult</code>）</li>
+</ul>
+<h3 id="形参-实参-ref-out-in">形参/实参/<code>ref</code> / <code>out</code> / <code>in</code></h3>
+<h4 id="核心定义-10">核心定义</h4>
+<ul>
+<li><strong>形参（形式参数）</strong>：函数定义时声明的参数，用于接收调用者传递的数据，仅在函数内部有效</li>
+<li><strong>实参（实际参数）</strong>：调用函数时传递给形参的具体值或变量，必须与形参类型匹配</li>
+<li><strong><code>ref</code></strong>：引用参数修饰符，传递参数的引用（内存地址），函数内修改会影响原变量，参数需先初始化</li>
+<li><strong><code>out</code></strong>：输出参数修饰符，用于从函数返回多个结果，参数无需初始化，但函数内必须赋值</li>
+<li><strong><code>in</code></strong>：只读引用参数修饰符，传递参数的引用但禁止修改，用于大值类型的性能优化（避免复制）</li>
+</ul>
+<h4 id="核心区别-5">核心区别</h4>
+<table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>参数初始化要求</th>
+<th>函数内是否可修改</th>
+<th>主要用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无（值参数）</td>
+<td>调用前需初始化</td>
+<td>仅修改副本</td>
+<td>传递普通数据</td>
+</tr>
+<tr>
+<td><code>ref</code></td>
+<td>调用前需初始化</td>
+<td>可修改原变量</td>
+<td>需要修改原变量的场景</td>
+</tr>
+<tr>
+<td><code>out</code></td>
+<td>调用前无需初始化</td>
+<td>必须赋值</td>
+<td>从函数返回多个结果</td>
+</tr>
+<tr>
+<td><code>in</code></td>
+<td>调用前需初始化</td>
+<td>不可修改</td>
+<td>大值类型的只读传递（性能优化）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详细说明">详细说明</h4>
+<ul>
+<li><strong>形参与实参的关系</strong>：
+<ul>
+<li>形参是函数定义时的“占位符”，实参是调用时的“实际数据”</li>
+<li>值参数传递时，实参的值复制给形参，两者独立；引用参数传递时，形参指向实参的内存地址</li>
+</ul>
+</li>
+<li><strong><code>ref</code> 关键字</strong>：
+<ul>
+<li>传递参数的引用，函数内对形参的修改直接作用于原变量</li>
+<li>适用于需要修改原变量的场景（如交换两个变量的值）</li>
+</ul>
+</li>
+<li><strong><code>out</code> 关键字</strong>：
+<ul>
+<li>专门用于从函数输出数据，函数内必须给 <code>out</code> 参数赋值</li>
+<li>适用于需要返回多个结果的场景（如 <code>TryParse</code> 方法）</li>
+</ul>
+</li>
+<li><strong><code>in</code> 关键字</strong>：
+<ul>
+<li>传递只读引用，函数内无法修改参数，避免大值类型的复制开销</li>
+<li>适用于大结构体（如 <code>Matrix4x4</code>）的只读传递，提升性能</li>
+</ul>
+</li>
+</ul>
+<h4 id="示例代码-8">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>()</span><br>    &#123;<br>        <span class="hljs-comment">// 1. 形参与实参（值参数）</span><br>        <span class="hljs-built_in">int</span> x = <span class="hljs-number">10</span>;<br>        ValueParameter(x);<br>        Console.WriteLine(<span class="hljs-string">&quot;ValueParameter后x: &quot;</span> + x); <span class="hljs-comment">// 10（原变量未修改）</span><br><br>        <span class="hljs-comment">// 2. ref 参数</span><br>        <span class="hljs-built_in">int</span> a = <span class="hljs-number">10</span>, b = <span class="hljs-number">20</span>;<br>        Swap(<span class="hljs-keyword">ref</span> a, <span class="hljs-keyword">ref</span> b);<br>        Console.WriteLine(<span class="hljs-string">&quot;Swap后a: &quot;</span> + a + <span class="hljs-string">&quot;, b: &quot;</span> + b); <span class="hljs-comment">// 20, 10（原变量已交换）</span><br><br>        <span class="hljs-comment">// 3. out 参数</span><br>        <span class="hljs-built_in">int</span> result;<br>        <span class="hljs-built_in">bool</span> success = TryDivide(<span class="hljs-number">10</span>, <span class="hljs-number">3</span>, <span class="hljs-keyword">out</span> result);<br>        <span class="hljs-keyword">if</span> (success) Console.WriteLine(<span class="hljs-string">&quot;TryDivide结果: &quot;</span> + result); <span class="hljs-comment">// 3</span><br><br>        <span class="hljs-comment">// 4. in 参数</span><br>        LargeStruct large = <span class="hljs-keyword">new</span> LargeStruct &#123; Value = <span class="hljs-number">100</span> &#125;;<br>        ReadOnlyPass(<span class="hljs-keyword">in</span> large);<br>    &#125;<br><br>    <span class="hljs-comment">// 值参数：传递副本</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ValueParameter</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> num</span>)</span><br>    &#123;<br>        num = <span class="hljs-number">20</span>; <span class="hljs-comment">// 仅修改副本</span><br>    &#125;<br><br>    <span class="hljs-comment">// ref 参数：交换两个变量</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Swap</span>(<span class="hljs-params"><span class="hljs-keyword">ref</span> <span class="hljs-built_in">int</span> x, <span class="hljs-keyword">ref</span> <span class="hljs-built_in">int</span> y</span>)</span><br>    &#123;<br>        <span class="hljs-built_in">int</span> temp = x;<br>        x = y;<br>        y = temp;<br>    &#125;<br><br>    <span class="hljs-comment">// out 参数：尝试除法，返回是否成功及结果</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">TryDivide</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> dividend, <span class="hljs-built_in">int</span> divisor, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> quotient</span>)</span><br>    &#123;<br>        quotient = <span class="hljs-number">0</span>; <span class="hljs-comment">// out 参数必须赋值</span><br>        <span class="hljs-keyword">if</span> (divisor == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        quotient = dividend / divisor;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 大值类型（用于演示 in 参数）</span><br>    <span class="hljs-keyword">struct</span> LargeStruct<br>    &#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Value;<br>        <span class="hljs-comment">// 假设还有很多其他字段，总大小较大</span><br>    &#125;<br><br>    <span class="hljs-comment">// in 参数：只读传递，避免复制大结构体</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ReadOnlyPass</span>(<span class="hljs-params"><span class="hljs-keyword">in</span> LargeStruct ls</span>)</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">&quot;LargeStruct.Value: &quot;</span> + ls.Value);<br>        <span class="hljs-comment">// ls.Value = 200; // 编译错误：in 参数不可修改</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-10">注意事项</h4>
+<ul>
+<li><strong><code>ref</code> 与 <code>out</code> 的重载限制</strong>：不能仅通过 <code>ref</code> 和 <code>out</code> 区分函数重载（如 <code>void Func(ref int a)</code> 和 <code>void Func(out int a)</code> 视为同一签名）</li>
+<li><strong><code>in</code> 的性能优化场景</strong>：仅对大值类型（如超过 16 字节的结构体）有明显性能提升，小值类型反而可能增加开销</li>
+<li><strong><code>out</code> 参数的赋值要求</strong>：函数内所有代码路径都必须给 <code>out</code> 参数赋值，否则编译报错</li>
+<li><strong>引用类型的 <code>ref</code> 传递</strong>：引用类型本身传递的是引用的副本，使用 <code>ref</code> 可修改引用本身（如让原变量指向新对象）</li>
+<li><strong><code>in</code> 的隐式转换</strong>：<code>in</code> 参数可接受值类型的临时变量（如 <code>ReadOnlyPass(new LargeStruct())</code>），编译器会自动创建临时变量</li>
+</ul>
+<h3 id="params-可变参数"><code>params</code> 可变参数</h3>
+<h4 id="核心定义-11">核心定义</h4>
+<ul>
+<li><strong><code>params</code></strong>：参数数组修饰符，允许函数接收<strong>可变数量的同类型参数</strong>，参数类型必须为一维数组，且必须是参数列表的最后一个参数</li>
+</ul>
+<h4 id="核心特性">核心特性</h4>
+<table>
+<thead>
+<tr>
+<th>特性项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数位置</td>
+<td>必须是参数列表的<strong>最后一个参数</strong></td>
+</tr>
+<tr>
+<td>参数类型</td>
+<td>必须是<strong>一维数组</strong>（不能是多维数组）</td>
+</tr>
+<tr>
+<td>调用方式</td>
+<td>可传递多个同类型参数、一个一维数组、或不传参数</td>
+</tr>
+<tr>
+<td>编译器处理</td>
+<td>自动将多个参数打包成数组</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详细说明-2">详细说明</h4>
+<ul>
+<li><strong>参数位置限制</strong>：<code>params</code> 必须放在参数列表的最后，后面不能再跟其他参数</li>
+<li><strong>数组类型限制</strong>：仅支持一维数组，如 <code>int[]</code>、<code>string[]</code>，不支持 <code>int[,]</code> 等多维数组</li>
+<li><strong>灵活的调用方式</strong>：
+<ol>
+<li>传递多个同类型参数：<code>Func(1, 2, 3)</code></li>
+<li>传递一个一维数组：<code>Func(new int[] {1, 2, 3})</code></li>
+<li>不传参数：<code>Func()</code>（此时数组为空，不是 <code>null</code>）</li>
+</ol>
+</li>
+<li><strong>重载优先级</strong>：如果存在与调用参数完全匹配的非 <code>params</code> 函数，编译器优先调用非 <code>params</code> 版本</li>
+</ul>
+<h4 id="示例代码-9">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>()</span><br>    &#123;<br>        <span class="hljs-comment">// 1. 传递多个同类型参数</span><br>        <span class="hljs-built_in">int</span> sum1 = Sum(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>);<br>        Console.WriteLine(<span class="hljs-string">&quot;Sum1: &quot;</span> + sum1); <span class="hljs-comment">// 15</span><br><br>        <span class="hljs-comment">// 2. 传递一个一维数组</span><br>        <span class="hljs-built_in">int</span>[] arr = &#123; <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span> &#125;;<br>        <span class="hljs-built_in">int</span> sum2 = Sum(arr);<br>        Console.WriteLine(<span class="hljs-string">&quot;Sum2: &quot;</span> + sum2); <span class="hljs-comment">// 60</span><br><br>        <span class="hljs-comment">// 3. 不传参数（数组为空）</span><br>        <span class="hljs-built_in">int</span> sum3 = Sum();<br>        Console.WriteLine(<span class="hljs-string">&quot;Sum3: &quot;</span> + sum3); <span class="hljs-comment">// 0</span><br><br>        <span class="hljs-comment">// 4. 重载优先级：优先调用非 params 版本</span><br>        Print(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">// 调用 Print(int a, int b)</span><br>        Print(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">// 调用 Print(params int[] arr)</span><br>    &#125;<br><br>    <span class="hljs-comment">// params 可变参数函数：计算总和</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> <span class="hljs-title">Sum</span>(<span class="hljs-params"><span class="hljs-keyword">params</span> <span class="hljs-built_in">int</span>[] numbers</span>)</span><br>    &#123;<br>        <span class="hljs-built_in">int</span> sum = <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// numbers 不为 null，不传参数时为空数组</span><br>        <span class="hljs-keyword">foreach</span> (<span class="hljs-built_in">int</span> num <span class="hljs-keyword">in</span> numbers)<br>        &#123;<br>            sum += num;<br>        &#125;<br>        <span class="hljs-keyword">return</span> sum;<br>    &#125;<br><br>    <span class="hljs-comment">// 非 params 重载函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Print</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> a, <span class="hljs-built_in">int</span> b</span>)</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">&quot;非 params 版本：&quot;</span> + a + <span class="hljs-string">&quot;, &quot;</span> + b);<br>    &#125;<br><br>    <span class="hljs-comment">// params 重载函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Print</span>(<span class="hljs-params"><span class="hljs-keyword">params</span> <span class="hljs-built_in">int</span>[] arr</span>)</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">&quot;params 版本：&quot;</span> + <span class="hljs-built_in">string</span>.Join(<span class="hljs-string">&quot;, &quot;</span>, arr));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-11">注意事项</h4>
+<ul>
+<li><strong>参数位置必须最后</strong>：<code>void Func(int a, params int[] b)</code> 合法，<code>void Func(params int[] a, int b)</code> 编译错误</li>
+<li><strong>仅支持一维数组</strong>：<code>params int[,] arr</code> 编译错误</li>
+<li><strong>不能与 <code>ref</code>/<code>out</code>/<code>in</code> 同时使用</strong>：<code>params ref int[] arr</code> 编译错误</li>
+<li><strong>数组不为 null</strong>：不传参数时，<code>params</code> 数组为空数组（<code>Length == 0</code>），不是 <code>null</code>，无需 null 检查</li>
+<li><strong>重载优先级</strong>：匹配的非 <code>params</code> 函数优先，避免意外调用 <code>params</code> 版本</li>
+<li><strong>性能考虑</strong>：频繁调用 <code>params</code> 函数会产生临时数组，高频场景（如游戏循环）建议直接传递数组或使用重载</li>
+</ul>
+<h3 id="可选参数-命名参数">可选参数/命名参数</h3>
+<h4 id="核心定义-12">核心定义</h4>
+<ul>
+<li><strong>可选参数</strong>：函数定义时为参数指定默认值，调用时可省略该参数（自动使用默认值）</li>
+<li><strong>命名参数</strong>：函数调用时通过参数名指定值，不依赖参数的声明顺序</li>
+</ul>
+<h4 id="核心区别-6">核心区别</h4>
+<table>
+<thead>
+<tr>
+<th>特性项</th>
+<th>可选参数</th>
+<th>命名参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用位置</td>
+<td>函数定义时</td>
+<td>函数调用时</td>
+</tr>
+<tr>
+<td>核心功能</td>
+<td>允许省略参数（使用默认值）</td>
+<td>允许通过参数名指定值（不依赖顺序）</td>
+</tr>
+<tr>
+<td>语法要求</td>
+<td>定义时给参数赋值（默认值）</td>
+<td>调用时使用 <code>参数名:值</code> 格式</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详细说明-3">详细说明</h4>
+<ul>
+<li><strong>可选参数规则</strong>：
+<ol>
+<li>默认值必须是<strong>编译时常量</strong>（如字面量、<code>const</code> 常量、<code>enum</code> 值）</li>
+<li>必须放在参数列表的<strong>最后</strong>（在 <code>params</code> 之前，如果有 <code>params</code>）</li>
+<li>不能与 <code>ref</code>/<code>out</code> 同时使用（<code>in</code> 可以，但不常见）</li>
+</ol>
+</li>
+<li><strong>命名参数规则</strong>：
+<ol>
+<li>调用时使用 <code>参数名:值</code> 格式</li>
+<li>命名参数必须放在<strong>位置参数之后</strong>（先写位置参数，再写命名参数）</li>
+<li>可跳过中间可选参数，直接指定后续参数的值</li>
+</ol>
+</li>
+<li><strong>两者结合</strong>：命名参数常与可选参数配合使用，提高代码可读性，灵活选择要传递的参数</li>
+</ul>
+<h4 id="示例代码-10">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>()</span><br>    &#123;<br>        <span class="hljs-comment">// 1. 可选参数调用：省略部分参数</span><br>        PrintInfo(<span class="hljs-string">&quot;Alice&quot;</span>); <span class="hljs-comment">// 使用默认年龄 18，默认城市 &quot;北京&quot;</span><br>        PrintInfo(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>); <span class="hljs-comment">// 使用默认城市 &quot;北京&quot;</span><br>        PrintInfo(<span class="hljs-string">&quot;Charlie&quot;</span>, <span class="hljs-number">30</span>, <span class="hljs-string">&quot;上海&quot;</span>); <span class="hljs-comment">// 传递所有参数</span><br><br>        <span class="hljs-comment">// 2. 命名参数调用：指定参数名，改变顺序</span><br>        PrintInfo(city: <span class="hljs-string">&quot;广州&quot;</span>, name: <span class="hljs-string">&quot;David&quot;</span>, age: <span class="hljs-number">22</span>); <span class="hljs-comment">// 不依赖声明顺序</span><br><br>        <span class="hljs-comment">// 3. 结合使用：跳过中间可选参数</span><br>        PrintInfo(<span class="hljs-string">&quot;Eve&quot;</span>, city: <span class="hljs-string">&quot;深圳&quot;</span>); <span class="hljs-comment">// 省略年龄，使用默认值 18</span><br>    &#125;<br><br>    <span class="hljs-comment">// 可选参数函数：name 是必选参数，age 和 city 是可选参数</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">PrintInfo</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> name, <span class="hljs-built_in">int</span> age = <span class="hljs-number">18</span>, <span class="hljs-built_in">string</span> city = <span class="hljs-string">&quot;北京&quot;</span></span>)</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">$&quot;姓名：<span class="hljs-subst">&#123;name&#125;</span>，年龄：<span class="hljs-subst">&#123;age&#125;</span>，城市：<span class="hljs-subst">&#123;city&#125;</span>&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-12">注意事项</h4>
+<ul>
+<li><strong>可选参数默认值限制</strong>：不能是变量、对象实例（如 <code>new object()</code>）或非编译时常量表达式，必须是编译时能确定的值</li>
+<li><strong>可选参数位置</strong>：必须放在必选参数之后，<code>params</code> 之前（如 <code>void Func(string a, int b = 1, params int[] c)</code> 合法）</li>
+<li><strong>命名参数位置</strong>：调用时命名参数必须在位置参数之后（如 <code>Func(&quot;a&quot;, b: 1)</code> 合法，<code>Func(b: 1, &quot;a&quot;)</code> 编译错误）</li>
+<li><strong>避免重载歧义</strong>：如果存在与可选参数函数参数数量匹配的重载函数，编译器可能无法确定调用哪个（如 <code>void Func(int a)</code> 和 <code>void Func(int a, int b = 1)</code>，调用 <code>Func(1)</code> 会有歧义）</li>
+<li><strong>COM 互操作场景</strong>：可选参数最初是为 COM 互操作设计的（如 Office 自动化），可简化 COM 方法的调用（无需传递大量 <code>Missing.Value</code>）</li>
+</ul>
+<h3 id="函数重载-2">函数重载</h3>
+<h4 id="核心定义-13">核心定义</h4>
+<ul>
+<li><strong>函数重载</strong>：在同一个类中定义多个<strong>同名函数</strong>，但它们的<strong>参数列表必须不同</strong>（参数类型、数量、顺序不同），与返回类型、访问修饰符无关，用于为功能相似的操作提供不同的输入方式。</li>
+</ul>
+<h4 id="详细说明-4">详细说明</h4>
+<ul>
+<li><strong>重载的判断依据</strong>：仅通过<strong>参数列表</strong>区分，需满足以下任一条件：
+<ol>
+<li><strong>参数数量不同</strong>：如 <code>Func(int a)</code> 和 <code>Func(int a, int b)</code></li>
+<li><strong>参数类型不同</strong>：如 <code>Func(int a)</code> 和 <code>Func(double a)</code></li>
+<li><strong>参数顺序不同</strong>：如 <code>Func(int a, double b)</code> 和 <code>Func(double a, int b)</code></li>
+</ol>
+</li>
+<li><strong>与返回类型无关</strong>：仅返回类型不同的函数不能构成重载（如 <code>int Func()</code> 和 <code>void Func()</code> 编译报错）</li>
+<li><strong>编译器的重载解析</strong>：调用时编译器根据实参的类型、数量、顺序选择<strong>最佳匹配</strong>的重载版本，优先选择无需隐式转换的版本。</li>
+</ul>
+<h4 id="示例代码-11">示例代码</h4>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>()</span><br>    &#123;<br>        <span class="hljs-comment">// 1. 参数数量不同的重载</span><br>        Print(<span class="hljs-number">10</span>); <span class="hljs-comment">// 调用 Print(int a)</span><br>        Print(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>); <span class="hljs-comment">// 调用 Print(int a, int b)</span><br><br>        <span class="hljs-comment">// 2. 参数类型不同的重载</span><br>        Add(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">// 调用 Add(int a, int b)</span><br>        Add(<span class="hljs-number">5.5</span>, <span class="hljs-number">3.3</span>); <span class="hljs-comment">// 调用 Add(double a, double b)</span><br><br>        <span class="hljs-comment">// 3. 参数顺序不同的重载</span><br>        Display(<span class="hljs-number">10</span>, <span class="hljs-string">&quot;Hello&quot;</span>); <span class="hljs-comment">// 调用 Display(int a, string b)</span><br>        Display(<span class="hljs-string">&quot;World&quot;</span>, <span class="hljs-number">20</span>); <span class="hljs-comment">// 调用 Display(string a, int b)</span><br>    &#125;<br><br>    <span class="hljs-comment">// 参数数量不同的重载1</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Print</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> a</span>)</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">&quot;单参数：&quot;</span> + a);<br>    &#125;<br><br>    <span class="hljs-comment">// 参数数量不同的重载2</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Print</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> a, <span class="hljs-built_in">int</span> b</span>)</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">&quot;双参数：&quot;</span> + a + <span class="hljs-string">&quot;, &quot;</span> + b);<br>    &#125;<br><br>    <span class="hljs-comment">// 参数类型不同的重载1</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> <span class="hljs-title">Add</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> a, <span class="hljs-built_in">int</span> b</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> a + b;<br>    &#125;<br><br>    <span class="hljs-comment">// 参数类型不同的重载2</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">double</span> <span class="hljs-title">Add</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> a, <span class="hljs-built_in">double</span> b</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> a + b;<br>    &#125;<br><br>    <span class="hljs-comment">// 参数顺序不同的重载1</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Display</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> a, <span class="hljs-built_in">string</span> b</span>)</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">&quot;int: &quot;</span> + a + <span class="hljs-string">&quot;, string: &quot;</span> + b);<br>    &#125;<br><br>    <span class="hljs-comment">// 参数顺序不同的重载2</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Display</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> a, <span class="hljs-built_in">int</span> b</span>)</span><br>    &#123;<br>        Console.WriteLine(<span class="hljs-string">&quot;string: &quot;</span> + a + <span class="hljs-string">&quot;, int: &quot;</span> + b);<br>    &#125;<br><br>    <span class="hljs-comment">// 错误示例：仅返回类型不同，不能构成重载</span><br>    <span class="hljs-comment">// static void Func() &#123; &#125;</span><br>    <span class="hljs-comment">// static int Func() &#123; return 0; &#125; // 编译报错</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意事项-13">注意事项</h4>
+<ul>
+<li><strong>仅参数列表区分重载</strong>：返回类型、访问修饰符、<code>params</code> 修饰符（仅 <code>params</code> 不同时）不能作为重载依据</li>
+<li><strong><code>ref</code>/<code>out</code> 不能单独区分重载</strong>：如 <code>void Func(ref int a)</code> 和 <code>void Func(out int a)</code> 视为同一签名，编译报错</li>
+<li><strong>避免可选参数与重载的歧义</strong>：如 <code>void Func(int a)</code> 和 <code>void Func(int a, int b = 1)</code>，调用 <code>Func(1)</code> 时编译器无法确定选择哪个版本，产生歧义</li>
+<li><strong>隐式转换的优先级</strong>：重载解析时优先选择无需隐式转换的版本，如 <code>Print(10)</code> 优先选择 <code>Print(int)</code> 而非 <code>Print(double)</code></li>
+<li><strong>运算符重载</strong>：运算符重载是函数重载的特殊形式（如 <code>operator+</code>），用于自定义类型的运算符行为</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

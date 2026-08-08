@@ -1,0 +1,652 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="刚体 刚体（Rigid Body）是物理模拟中对形状和体积保持不变的物体的抽象，其运动遵循经典力学定律，是计算机图形学中物理模拟的基础模块。以下是该小节的核心内容： 一、刚体基础概念与数学表示 1. 刚体定义与特性  核心假设：  物体在运动中不发生形变，任意两点间距离保持不变。 运动由平动（位置变化）和转动（旋转变化）组成，无内部变形能量。   物理属性：  质量（Mass）：决定物体惯性，影响">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/%E5%9B%BE%E5%BD%A2%E5%AD%A6/24%E7%89%A9%E7%90%86%E6%A8%A1%E6%8B%9F/241%E5%88%9A%E4%BD%93/README.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="刚体 刚体（Rigid Body）是物理模拟中对形状和体积保持不变的物体的抽象，其运动遵循经典力学定律，是计算机图形学中物理模拟的基础模块。以下是该小节的核心内容： 一、刚体基础概念与数学表示 1. 刚体定义与特性  核心假设：  物体在运动中不发生形变，任意两点间距离保持不变。 运动由平动（位置变化）和转动（旋转变化）组成，无内部变形能量。   物理属性：  质量（Mass）：决定物体惯性，影响">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.406Z">
+<meta property="article:modified_time" content="2025-04-15T12:14:22.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h3 id="刚体">刚体</h3>
+<p>刚体（Rigid Body）是物理模拟中对形状和体积保持不变的物体的抽象，其运动遵循经典力学定律，是计算机图形学中物理模拟的基础模块。以下是该小节的核心内容：</p>
+<h3 id="一、刚体基础概念与数学表示">一、刚体基础概念与数学表示</h3>
+<h4 id="1-刚体定义与特性">1. <strong>刚体定义与特性</strong></h4>
+<ul>
+<li><strong>核心假设</strong>：
+<ul>
+<li>物体在运动中不发生形变，任意两点间距离保持不变。</li>
+<li>运动由平动（位置变化）和转动（旋转变化）组成，无内部变形能量。</li>
+</ul>
+</li>
+<li><strong>物理属性</strong>：
+<ul>
+<li><strong>质量（Mass）</strong>：决定物体惯性，影响加速度（(F = ma)）。</li>
+<li><strong>惯性张量（Inertia Tensor）</strong>：描述物体绕轴旋转的惯性，与质量分布相关（对角线元素为绕x/y/z轴的转动惯量，非对角线为离心惯性矩）。</li>
+<li><strong>质心（Center of Mass）</strong>：平动运动的参考点，转动围绕质心或固定支点进行。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-运动状态表示">2. <strong>运动状态表示</strong></h4>
+<ul>
+<li><strong>平动</strong>：
+<ul>
+<li>位置向量 (\mathbf{p} = (x, y, z))，速度 (\mathbf{v} = d\mathbf{p}/dt)。</li>
+</ul>
+</li>
+<li><strong>转动</strong>：
+<ul>
+<li>旋转表示：四元数 (\mathbf{q})（避免万向节锁）或旋转矩阵 (\mathbf{R})（正交矩阵，(\mathbf{R}^T\mathbf{R} = \mathbf{I})）。</li>
+<li>角速度 (\mathbf{\omega})：描述旋转快慢和方向（向量方向为旋转轴，右手定则确定正方向）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="二、刚体运动学与动力学">二、刚体运动学与动力学</h3>
+<h4 id="1-运动学（Kinematic）">1. <strong>运动学（Kinematic）</strong></h4>
+<ul>
+<li><strong>平动更新</strong>：<br>
+[<br>
+\mathbf{p}(t+dt) = \mathbf{p}(t) + \mathbf{v}(t) \cdot dt<br>
+]</li>
+<li><strong>转动更新</strong>：
+<ul>
+<li>四元数微分方程：(\dot{\mathbf{q}} = \frac{1}{2} \mathbf{q} \otimes \mathbf{\omega})，积分方法如球面线性插值（Slerp）。</li>
+<li>旋转矩阵更新：(\mathbf{R}(t+dt) = \mathbf{R}(t) \cdot \exp(\mathbf{\omega}^{\times} dt))，其中 (\mathbf{\omega}^{\times}) 为角速度反对称矩阵。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-动力学（Dynamic）">2. <strong>动力学（Dynamic）</strong></h4>
+<ul>
+<li><strong>牛顿第二定律（平动）</strong>：<br>
+[<br>
+\mathbf{F}<em>{\text{total}} = m \mathbf{a} = m \dot{\mathbf{v}}<br>
+]<br>
+其中 (\mathbf{F}</em>{\text{total}}) 为合外力（重力、接触力、约束力等）。</li>
+<li><strong>欧拉旋转方程（转动）</strong>：<br>
+[<br>
+\mathbf{\tau}<em>{\text{total}} = \mathbf{I} \dot{\mathbf{\omega}} + \mathbf{\omega} \times (\mathbf{I} \mathbf{\omega})<br>
+]<br>
+其中 (\mathbf{\tau}</em>{\text{total}}) 为合扭矩，(\mathbf{I}) 为惯性张量（相对于质心坐标系）。</li>
+</ul>
+<h3 id="三、碰撞检测与响应">三、碰撞检测与响应</h3>
+<h4 id="1-碰撞检测">1. <strong>碰撞检测</strong></h4>
+<ul>
+<li><strong>离散碰撞检测（DCD）</strong>：
+<ul>
+<li>检测相邻时间步的物体是否相交，常用算法：
+<ul>
+<li><strong>GJK算法</strong>：基于闵可夫斯基差集，快速判断凸体是否相交（如Bullet、PhysX引擎核心算法）。</li>
+<li><strong>分离轴定理（SAT）</strong>：适用于凸多面体，检测是否存在分离轴使投影不重叠。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>连续碰撞检测（CCD）</strong>：
+<ul>
+<li>计算运动物体在时间间隔内的最小相交时间（TOI），避免高速穿透（如射线与运动刚体的相交测试）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-碰撞响应">2. <strong>碰撞响应</strong></h4>
+<ul>
+<li><strong>冲量法（Impulse-Based）</strong>：
+<ul>
+<li><strong>动量守恒</strong>：碰撞瞬间施加冲量 (\mathbf{J})，更新速度和角速度：<br>
+[<br>
+\mathbf{v}_A’ = \mathbf{v}_A + \frac{\mathbf{J}}{m_A}, \quad \mathbf{\omega}_A’ = \mathbf{\omega}_A + \mathbf{I}_A^{-1} (\mathbf{r}_A \times \mathbf{J})<br>
+]<br>
+（(\mathbf{r}_A) 为碰撞点相对于质心的位置）。</li>
+<li><strong>恢复系数（Restitution Coefficient, e）</strong>：控制碰撞后的弹性程度（(e=0) 完全非弹性，(e=1) 完全弹性）。</li>
+</ul>
+</li>
+<li><strong>摩擦处理</strong>：
+<ul>
+<li>切向冲量计算：基于库仑摩擦定律，摩擦力 (\mathbf{f} = -\mu |\mathbf{J}_n| \cdot \mathbf{t})（(\mu) 为摩擦系数，(\mathbf{t}) 为切向单位向量）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="四、数值积分与稳定性">四、数值积分与稳定性</h3>
+<h4 id="1-积分方法">1. <strong>积分方法</strong></h4>
+<ul>
+<li><strong>显式欧拉（Explicit Euler）</strong>：<br>
+[<br>
+\mathbf{v}_{t+1} = \mathbf{v}_t + \frac{\mathbf{F}<em>t}{m} dt, \quad \mathbf{\omega}</em>{t+1} = \mathbf{\omega}_t + \mathbf{I}^{-1} \mathbf{\tau}_t dt<br>
+]
+<ul>
+<li>优势：简单快速，适合实时模拟。</li>
+<li>缺点：稳定性差（大时间步长易发散），能量不守恒。</li>
+</ul>
+</li>
+<li><strong>半隐式欧拉（Semi-Implicit Euler）</strong>：
+<ul>
+<li>先更新加速度/角速度，再更新位置/旋转，提升稳定性（物理引擎常用）。</li>
+</ul>
+</li>
+<li><strong>Runge-Kutta（RK4）</strong>：
+<ul>
+<li>高精度积分方法，减少能量误差，适合离线模拟（如Maya的刚体解算）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-约束求解">2. <strong>约束求解</strong></h4>
+<ul>
+<li><strong>铰接约束（Joints）</strong>：
+<ul>
+<li><strong>类型</strong>：铰链（Hinge）、球铰（Ball-and-Socket）、滑动关节（Slider）等，限制刚体的自由度（DOF）。</li>
+<li><strong>数学表示</strong>：约束方程 (C(\mathbf{q}) = 0)，导数 (\dot{C} = \mathbf{J} \dot{\mathbf{q}} = 0)（(\mathbf{J}) 为雅可比矩阵）。</li>
+</ul>
+</li>
+<li><strong>求解方法</strong>：
+<ul>
+<li><strong>拉格朗日乘数法</strong>：引入约束力，通过线性方程组求解（精确但计算量大）。</li>
+<li><strong>投影法（Projection-Based）</strong>：直接修正运动状态以满足约束（如Gauss-Seidel迭代，实时模拟中常用）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="五、多刚体系统与优化技术">五、多刚体系统与优化技术</h3>
+<h4 id="1-系统建模">1. <strong>系统建模</strong></h4>
+<ul>
+<li><strong>刚体集合</strong>：
+<ul>
+<li>处理多个刚体的交互（如堆积木块、车辆碰撞），需高效管理碰撞对（Collision Pairs）。</li>
+</ul>
+</li>
+<li><strong>层次化刚体</strong>：
+<ul>
+<li>父子刚体通过关节连接（如机械臂、角色骨骼），运动传递遵循刚体动力学。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-性能优化">2. <strong>性能优化</strong></h4>
+<ul>
+<li><strong>空间划分</strong>：
+<ul>
+<li><strong>空间哈希（Spatial Hashing）</strong>：将刚体分配到网格单元，仅检测同单元及相邻单元的刚体对。</li>
+<li><strong>包围体层次（BVH）</strong>：加速大规模刚体的碰撞检测（如车辆碰撞模拟中的层次化AABB树）。</li>
+</ul>
+</li>
+<li><strong>GPU并行化</strong>：
+<ul>
+<li>利用CUDA/OpenCL并行计算碰撞检测和约束求解（如NVIDIA FleX引擎的GPU刚体模拟）。</li>
+</ul>
+</li>
+<li><strong>简化假设</strong>：
+<ul>
+<li><strong>无限质量刚体</strong>：固定物体（如地面、墙壁），忽略其运动以减少计算量。</li>
+</ul>
+</li>
+</ul>
+<h3 id="六、应用场景与典型案例">六、应用场景与典型案例</h3>
+<ol>
+<li><strong>游戏开发</strong>：
+<ul>
+<li><strong>物理引擎</strong>：Unity的PhysX、虚幻引擎的Chaos物理系统，实现角色与物体的交互（如推箱子、车辆碰撞）。</li>
+<li><strong>布娃娃系统（Ragdoll）</strong>：通过刚体链模拟角色受击后的动态摔倒（如《侠盗猎车手》的角色物理效果）。</li>
+</ul>
+</li>
+<li><strong>工业仿真</strong>：
+<ul>
+<li><strong>机械运动模拟</strong>：齿轮传动、铰链机构的动力学分析（如Autodesk Inventor的刚体仿真）。</li>
+</ul>
+</li>
+<li><strong>机器人学</strong>：
+<ul>
+<li><strong>运动规划</strong>：刚体动力学模型辅助机器人路径优化（如机械臂避障中的动量控制）。</li>
+</ul>
+</li>
+<li><strong>影视动画</strong>：
+<ul>
+<li><strong>刚体动力学解算</strong>：模拟物体坠落、碰撞的真实运动（如《变形金刚》的金属部件碰撞动画）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="七、避免重复内容">七、避免重复内容</h3>
+<p>本小节聚焦「刚体的力学模型与模拟技术」，不涉及以下内容：</p>
+<ul>
+<li>物理模拟中的软体、流体、布料（属于2.4.2-2.4.4小节）</li>
+<li>碰撞检测的通用算法（如包围体类型，属于2.1.4碰撞检测，此处侧重刚体专用方法）</li>
+<li>坐标变换的数学原理（属于2.1.2坐标变换，此处仅涉及运动学中的变换应用）</li>
+</ul>
+<p>刚体模拟通过力学定律与数值方法的结合，成为连接虚拟世界与真实物理的桥梁，其高效的解算算法和硬件加速技术，支撑了从简单交互到复杂动力学场景的全范围应用。</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

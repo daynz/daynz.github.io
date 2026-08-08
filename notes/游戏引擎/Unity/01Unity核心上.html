@@ -1,0 +1,892 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="daynz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Unity核心 [toc] 组件化 GameObject（游戏对象）  GameObject 是Unity引擎中所有场景实体的基础载体，本身不具备任何业务逻辑与表现能力，仅作为容器与层级节点存在。 引擎底层由C++维护原生GameObject实体，内置唯一标识、层级树节点信息、激活状态掩码、层标签、静态标记等元数据，所有Component都依附挂载在GameObject之下。 引擎内部以场景层级树">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://daynz.github.io/notes/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/Unity/01Unity%E6%A0%B8%E5%BF%83%E4%B8%8A.html">
+<meta property="og:site_name" content="daynz 的博客">
+<meta property="og:description" content="Unity核心 [toc] 组件化 GameObject（游戏对象）  GameObject 是Unity引擎中所有场景实体的基础载体，本身不具备任何业务逻辑与表现能力，仅作为容器与层级节点存在。 引擎底层由C++维护原生GameObject实体，内置唯一标识、层级树节点信息、激活状态掩码、层标签、静态标记等元数据，所有Component都依附挂载在GameObject之下。 引擎内部以场景层级树">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T09:30:45.328Z">
+<meta property="article:modified_time" content="2026-05-07T06:05:52.000Z">
+<meta property="article:author" content="daynz">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - daynz 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"daynz.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="unity核心">Unity核心</h1>
+<p>[toc]</p>
+<h2 id="组件化">组件化</h2>
+<h3 id="GameObject（游戏对象）"><code>GameObject</code>（游戏对象）</h3>
+<ul>
+<li><code>GameObject</code> 是Unity引擎中<strong>所有场景实体的基础载体</strong>，本身不具备任何业务逻辑与表现能力，仅作为容器与层级节点存在。</li>
+<li>引擎底层由C++维护原生<code>GameObject</code>实体，内置唯一标识、层级树节点信息、激活状态掩码、层标签、静态标记等元数据，所有<code>Component</code>都依附挂载在<code>GameObject</code>之下。</li>
+<li>引擎内部以<strong>场景层级树</strong>的形式管理所有<code>GameObject</code>，维护父子嵌套、节点禁用、场景分区等关系；对象的实例化、销毁、激活禁用、层级变更，都会触发引擎底层实体状态同步与组件调度刷新。</li>
+<li><code>GameObject</code>不承载行为，所有功能全部通过挂载组件的方式扩展，这是Unity组件化架构最底层的设计基石。</li>
+</ul>
+<h4 id="底层本质与架构定位">底层本质与架构定位</h4>
+<ul>
+<li><code>GameObject</code> 是<strong>纯空逻辑容器</strong>，无渲染、无物理、无动画、无任何自研行为，所有能力完全依赖<code>Component</code>组件组合扩展。</li>
+<li>引擎采用<strong>C++原生内核 + C#托管脚本</strong>双层结构：真正的<code>GameObject</code>实体创建、存储、管理全部在C++引擎层，C#层只是持有原生对象句柄的映射包装，仅做逻辑访问与参数读写。</li>
+<li>全局所有<code>GameObject</code>纳入<strong>场景多叉层级树</strong>管理，引擎以树节点形式记录父子关系、变换继承、渲染层级、激活传播规则。</li>
+</ul>
+<h4 id="底层内置核心元数据（C-层原生维护）">底层内置核心元数据（C++层原生维护）</h4>
+<table>
+<thead>
+<tr>
+<th>元数据项</th>
+<th>底层作用与原理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全局唯一ID</td>
+<td>引擎运行时分配唯一标识，用于对象索引、引用关联、网络同步、场景映射</td>
+</tr>
+<tr>
+<td>层级树节点信息</td>
+<td>记录父节点、子节点链表、树深度、层级变换继承关系，驱动父子坐标同步</td>
+</tr>
+<tr>
+<td>激活状态位掩码</td>
+<td>存储自身激活、全局层级激活、局部禁用复合状态，控制组件生命周期是否调度</td>
+</tr>
+<tr>
+<td>Layer 层标识</td>
+<td>32位层掩码，用于物理碰撞过滤、相机视锥裁剪、渲染分层、射线检测屏蔽</td>
+</tr>
+<tr>
+<td>Tag 标签标识</td>
+<td>引擎预定义字符串映射为整型ID，底层快速比对，避免字符串频繁对比开销</td>
+</tr>
+<tr>
+<td>静态标记位</td>
+<td>标记静态/动态类型，控制烘焙、批处理、遮挡剔除、导航网格参与规则</td>
+</tr>
+<tr>
+<td>组件链表指针</td>
+<td>维护挂载所有<code>Component</code>的双向链表，引擎快速遍历、批量调度生命周期</td>
+</tr>
+</tbody>
+</table>
+<h4 id="核心运行机制底层原理">核心运行机制底层原理</h4>
+<h5 id="层级树管理机制">层级树管理机制</h5>
+<ul>
+<li>引擎将整个场景所有<code>GameObject</code>组织为<strong>多叉树形结构</strong>，根节点为场景默认根，其余节点支持无限父子嵌套。</li>
+<li>父对象的<strong>激活状态、位置旋转缩放、静态标记</strong>会向下传播影响子对象；底层自动做<strong>变换矩阵递归计算</strong>，子物体世界矩阵由父物体矩阵叠加生成，无需脚本手动计算。</li>
+<li>层级树变更（父级更换、节点增删、层级排序）时，引擎立即刷新链表结构、重计算变换矩阵、同步所有子组件状态。</li>
+</ul>
+<h5 id="激活与禁用底层逻辑">激活与禁用底层逻辑</h5>
+<ul>
+<li>
+<p><code>SetActive</code> 并非单纯隐藏，底层修改<strong>状态位掩码</strong>，同时触发整套生命周期链路：</p>
+<ul>
+<li>禁用时依次触发自身及子物体所有组件<code>OnDisable</code>；</li>
+<li>启用时触发<code>OnEnable</code>，并刷新渲染、物理、动画子系统的调度状态。</li>
+</ul>
+</li>
+<li>
+<p>底层采用<strong>层级激活穿透规则</strong>：父物体禁用，所有子物体无论自身状态如何，都会被引擎判定为全局禁用，不再执行<code>Update</code>、物理模拟、渲染提交。</p>
+</li>
+</ul>
+<h5 id="实例化与销毁底层流程">实例化与销毁底层流程</h5>
+<ol>
+<li><strong>实例化</strong>：引擎根据场景数据或Prefab模板，在C++层创建原生<code>GameObject</code>节点 → 分配唯一ID → 初始化元数据 → 构建组件链表 → 建立C#托管对象与C++原生对象双向句柄映射 → 调度<code>Awake</code>、<code>OnEnable</code>生命周期。</li>
+<li><strong>销毁</strong>：调用<code>Destroy</code>后，引擎不立即释放内存，先标记为<strong>待销毁节点</strong> → 触发所有组件<code>OnDisable</code>、<code>OnDestroy</code> → 断开层级树链表、切断组件绑定 → 解除C#与C++句柄映射 → 回收原生内存与托管GC内存。</li>
+</ol>
+<h4 id="组件挂载与绑定原理">组件挂载与绑定原理</h4>
+<ul>
+<li><code>GameObject</code> 底层维护<strong>组件双向链表</strong>，新增组件直接插入链表尾部，销毁组件从链表摘除。</li>
+<li>引擎每帧遍历所有激活的<code>GameObject</code>，再遍历其组件链表，按阶段批量调度<code>FixedUpdate</code>、<code>Update</code>、<code>LateUpdate</code>等生命周期回调。</li>
+<li>不允许脱离<code>GameObject</code>单独创建<code>Component</code>，底层构造函数做强制限制，保证组件永远依附于游戏对象容器。</li>
+</ul>
+<h4 id="设计思想与组件化关联">设计思想与组件化关联</h4>
+<ul>
+<li>遵循<strong>组合优于继承</strong>的核心设计理念：不通过类继承扩展能力，而是给空容器<code>GameObject</code>动态挂载不同组件，按需拼装出角色、道具、UI、灯光、物理实体等所有场景对象。</li>
+<li>作为引擎所有子系统的<strong>统一接入入口</strong>：渲染系统、物理系统、动画系统、UI系统、导航系统均以<code>GameObject</code>+<code>Component</code>为最小调度单元，实现各子系统解耦统一管理。</li>
+<li>支持静态合批、光照烘焙、导航烘焙等底层优化逻辑，全部依托<code>GameObject</code>的静态标记、Layer层级、层级树结构完成全局调度与性能裁剪。</li>
+</ul>
+<h3 id="Component（组件）"><code>Component</code>（组件）</h3>
+<ul>
+<li><code>Component</code> 是<strong>功能行为与数据的最小封装单元</strong>，依附于<code>GameObject</code>存在，无法脱离游戏对象单独创建。</li>
+<li>引擎底层将组件划分为<strong>原生内置组件</strong>与<strong>托管脚本组件</strong>两类
+<ul>
+<li>原生组件如<code>Transform</code>、<code>MeshRenderer</code>、<code>Rigidbody</code>由C++内核实现，直接对接渲染、物理、动画等底层子系统；</li>
+<li><code>MonoBehaviour</code>托管脚本组件作为C#与引擎交互的桥梁，由.NET托管运行时与C++原生对象建立双向句柄映射。</li>
+</ul>
+</li>
+<li>引擎维护<code>GameObject</code>与多<code>Component</code>的从属链表结构，同一游戏对象下所有组件共享对象生命周期、层级变换与状态标记。</li>
+<li>组件化底层设计遵循<strong>组合优于继承</strong>，通过动态增删组件实现功能插拔，避免传统面向对象的类层级臃肿；</li>
+<li>引擎在主线程按固定阶段批量遍历组件，调度生命周期回调、渲染提交、物理步进等逻辑。</li>
+</ul>
+<h4 id="底层本质与架构定位-2">底层本质与架构定位</h4>
+<ul>
+<li><code>Component</code> 是引擎<strong>能力与数据的承载实体</strong>，所有渲染、物理、变换、动画、逻辑行为全部封装在组件内部，<code>GameObject</code>仅作为挂载容器，自身不具备任何功能逻辑。</li>
+<li>整体采用<strong>C++原生组件 + C#托管组件</strong>双层隔离架构，引擎核心功能、性能敏感模块全部由C++原生实现，C#仅做逻辑层调用与业务扩展。</li>
+<li>组件与<code>GameObject</code>是<strong>强从属绑定关系</strong>，引擎底层做构造限制，禁止单独实例化组件，只能依附已有<code>GameObject</code>创建、挂载、移除。</li>
+</ul>
+<h4 id="组件底层分类及内核差异">组件底层分类及内核差异</h4>
+<table>
+<thead>
+<tr>
+<th>组件类型</th>
+<th>代表组件</th>
+<th>底层实现</th>
+<th>内核对接能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础变换组件</td>
+<td><code>Transform</code></td>
+<td>C++原生内核</td>
+<td>管控位置、旋转、缩放、父子矩阵计算，是所有组件依赖的基础</td>
+</tr>
+<tr>
+<td>渲染类原生组件</td>
+<td><code>MeshRenderer</code>、<code>SkinnedMeshRenderer</code>、<code>Light</code></td>
+<td>C++原生内核</td>
+<td>直接对接渲染管线，提交网格、材质、光照数据到GPU</td>
+</tr>
+<tr>
+<td>物理类原生组件</td>
+<td><code>Rigidbody</code>、<code>Collider</code>、<code>Joint</code></td>
+<td>C++原生PhysX集成</td>
+<td>接入物理引擎固定步长模拟、碰撞检测、约束求解</td>
+</tr>
+<tr>
+<td>动画类原生组件</td>
+<td><code>Animator</code>、<code>Animation</code></td>
+<td>C++原生动画内核</td>
+<td>骨骼采样、状态机过渡、姿态矩阵计算</td>
+</tr>
+<tr>
+<td>导航原生组件</td>
+<td><code>NavMeshAgent</code>、<code>NavMeshObstacle</code></td>
+<td>C++寻路内核</td>
+<td>网格寻路、动态避障、路径平滑计算</td>
+</tr>
+<tr>
+<td>托管脚本组件</td>
+<td><code>MonoBehaviour</code> 自定义脚本</td>
+<td>C#.NET托管层</td>
+<td>通过桥接层调用引擎API，接收生命周期回调，编写业务逻辑</td>
+</tr>
+</tbody>
+</table>
+<h4 id="底层数据结构与组织方式">底层数据结构与组织方式</h4>
+<ul>
+<li>每个<code>GameObject</code>底层维护一条<strong>组件双向链表</strong>，按挂载顺序存储所有组件节点，引擎可快速遍历、增删、查找指定组件。</li>
+<li>所有组件共享所属<code>GameObject</code>的<strong>激活状态、Layer层级、Tag标识、静态标记、层级树父子关系</strong>，无需自身重复存储冗余元数据。</li>
+<li>每个组件都持有指向所属<code>GameObject</code>与<code>Transform</code>的底层指针，形成<strong>对象—组件双向引用闭环</strong>，保障变换数据、状态数据实时同步。</li>
+</ul>
+<h4 id="原生组件与托管组件底层运行差异">原生组件与托管组件底层运行差异</h4>
+<ol>
+<li>
+<p>执行层级<br>
+原生组件逻辑运行在<strong>引擎C++主线程各子系统阶段</strong>，由渲染、物理、动画内核主动调度，无托管层开销；<br>
+<code>MonoBehaviour</code>托管组件运行在**.NET托管运行时**，由引擎按生命周期阶段主动回调C#方法。</p>
+</li>
+<li>
+<p>性能开销<br>
+原生组件无GC、无托管转换、直接操作引擎底层数据，运算效率接近原生C++；<br>
+托管组件存在跨层调用开销、托管堆分配、生命周期反射缓存调度，高频逻辑易产生GC开销。</p>
+</li>
+<li>
+<p>序列化与存储<br>
+原生组件编辑器配置、运行时数据由引擎<strong>原生序列化流</strong>保存，适配场景、Prefab资源格式；<br>
+托管脚本组件通过<code>SerializeField</code>、字段特性参与引擎序列化，由托管层元数据解析映射。</p>
+</li>
+</ol>
+<h4 id="组件生命周期与引擎调度原理">组件生命周期与引擎调度原理</h4>
+<ul>
+<li>引擎主线程严格按照<strong>固定帧阶段</strong>批量遍历所有激活态<code>GameObject</code>，再遍历其组件链表，分阶段执行：物理步进、生命周期回调、动画更新、渲染提交。</li>
+<li>同一物体上所有组件<strong>共享同一套生命周期时序</strong>，<code>Awake</code>、<code>OnEnable</code>、<code>Start</code>、<code>Update</code>、<code>LateUpdate</code>、<code>OnDisable</code>、<code>OnDestroy</code>由引擎统一广播调度。</li>
+<li>引擎内置<strong>脚本执行顺序调度器</strong>，可控制不同组件、不同脚本的回调先后顺序，底层通过优先级排序链表实现遍历顺序控制。</li>
+</ul>
+<h4 id="组件增删底层机制">组件增删底层机制</h4>
+<ul>
+<li>新增组件：引擎在C++层创建原生组件实体 → 并入<code>GameObject</code>组件链表 → 初始化默认数据 → 建立C#托管映射（若是<code>MonoBehaviour</code>） → 触发<code>Awake</code>、<code>OnEnable</code>。</li>
+<li>移除组件：从组件双向链表摘除节点 → 触发<code>OnDisable</code>、<code>OnDestroy</code> → 断开与<code>GameObject</code>的绑定指针 → 回收C++原生内存与托管对象标记GC回收。</li>
+<li>运行时禁止删除<code>Transform</code>组件，底层做强制保护，因为所有组件依赖变换矩阵与层级树结构。</li>
+</ul>
+<h4 id="组件化设计底层核心思想">组件化设计底层核心思想</h4>
+<ul>
+<li>贯彻<strong>组合优于继承</strong>，摒弃传统面向对象庞大继承树，通过给空<code>GameObject</code>自由拼装组件，按需组合出角色、场景、特效、UI、物理实体等一切游戏对象。</li>
+<li>实现<strong>功能解耦与插拔式扩展</strong>，新增业务能力只需新增组件，不修改原有代码结构，底层支持动态挂载、动态移除，适配运行时逻辑动态变化。</li>
+<li>作为引擎所有子系统的<strong>统一调度单元</strong>，渲染、物理、动画、导航、输入系统均以<code>Component</code>为最小调度与数据封装单元，统一引擎内部架构规范。</li>
+</ul>
+<h3 id="Scene-场景"><code>Scene</code> 场景</h3>
+<ul>
+<li>Scene是Unity<strong>资源与实体的逻辑容器与隔离单元</strong>，负责统一管理当前运行环境下所有<code>GameObject</code>、组件、光照、烘焙数据、渲染配置、物理环境参数等全局资源。</li>
+<li>引擎底层将Scene划分为<strong>磁盘序列化资源文件</strong>与<strong>运行时内存场景实例</strong>，编辑模式下维护场景编辑快照，运行时完成场景加载、资源反序列化、实体实例构建、引擎子系统环境初始化全流程。</li>
+<li>底层采用<strong>场景隔离机制</strong>，不同Scene拥有独立的实体层级树、物理世界空间、渲染相机队列、光照探针与导航网格数据；</li>
+<li>场景加载与卸载时，引擎会批量处理对象创建、生命周期调度、资源引用计数、内存回收与句柄断开，保证多场景叠加、异步加载、单场景切换时各子系统状态隔离不互相干扰。</li>
+</ul>
+<h4 id="底层本质与核心定位">底层本质与核心定位</h4>
+<ul>
+<li>Scene 是Unity<strong>场景级资源与实体的统一管理单元</strong>，底层核心作用是“隔离与聚合”——聚合当前运行环境的所有游戏对象、组件、全局配置，隔离不同场景的资源与子系统状态，避免跨场景干扰。</li>
+<li>引擎底层将Scene分为两个核心形态，二者协同工作，构成完整的场景生命周期：
+<ol>
+<li>磁盘形态：序列化的<code>.unity</code>资源文件，存储场景所有实体、组件、配置的静态数据；</li>
+<li>内存形态：运行时加载后生成的场景实例，维护动态实体、子系统状态、资源引用，是实际参与引擎调度的核心。</li>
+</ol>
+</li>
+<li>作为引擎子系统的“场景级开关”，渲染、物理、动画、导航等子系统，均会根据当前加载的Scene实例，初始化对应环境参数、调度对应实体逻辑。</li>
+</ul>
+<h4 id="底层核心组成与数据结构">底层核心组成与数据结构</h4>
+<h5 id="磁盘序列化文件（-unity）核心内容">磁盘序列化文件（.unity）核心内容</h5>
+<p>磁盘上的Scene文件是<strong>二进制序列化格式</strong>，底层存储以下核心数据，无冗余、高压缩，适配快速加载与编辑：</p>
+<ul>
+<li>场景元数据：场景名称、版本号、渲染配置（相机、天空盒、雾效）、物理配置（重力、物理材质）、导航配置、光照烘焙参数；</li>
+<li>实体数据：所有<code>GameObject</code>的元数据（ID、层级、激活状态、Layer、Tag）、组件配置（组件类型、参数值、依赖资源引用）；</li>
+<li>资源依赖表：记录场景依赖的所有外部资源（Prefab、纹理、材质、Shader、动画剪辑），用于加载时递归解析依赖；</li>
+<li>编辑快照：仅编辑器模式存在，记录编辑状态（选中对象、视图角度、编辑历史），运行时不加载。</li>
+</ul>
+<h5 id="运行时内存场景实例核心结构">运行时内存场景实例核心结构</h5>
+<p>加载后在内存中生成的Scene实例，底层由C++内核维护，核心结构包括：</p>
+<ul>
+<li>场景根节点：场景层级树的顶级根，所有场景内<code>GameObject</code>均为其直接/间接子节点；</li>
+<li>实体管理链表：维护场景内所有<code>GameObject</code>的双向链表，支持快速遍历、查找、增删实体；</li>
+<li>子系统环境上下文：每个Scene实例对应独立的物理世界（PhysX World）、渲染相机队列、光照探针集合、导航网格数据、音频环境，实现子系统状态隔离；</li>
+<li>资源引用计数器：记录场景内所有资源的引用次数，场景卸载时同步递减计数，无引用则触发资源回收；</li>
+<li>加载状态标记：记录场景“加载中、加载完成、卸载中、已卸载”状态，用于引擎调度与多场景叠加管理。</li>
+</ul>
+<h4 id="场景底层分类及差异">场景底层分类及差异</h4>
+<table>
+<thead>
+<tr>
+<th>场景类型</th>
+<th>核心特点</th>
+<th>底层处理逻辑</th>
+<th>应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主场景（Main Scene）</td>
+<td>唯一不可卸载，承载全局核心逻辑、常驻资源</td>
+<td>优先加载，初始化全局子系统环境，资源标记为“常驻”，不参与临时资源回收</td>
+<td>游戏主界面、全局管理器、核心玩法场景</td>
+</tr>
+<tr>
+<td>子场景（Sub Scene）</td>
+<td>可动态加载/卸载，独立子系统环境</td>
+<td>加载时初始化独立物理、渲染环境，卸载时批量回收实体与资源，不影响主场景</td>
+<td>关卡、副本、场景切换过渡、临时UI场景</td>
+</tr>
+<tr>
+<td>叠加场景（Additive Scene）</td>
+<td>加载后与现有场景共存，共享部分子系统</td>
+<td>仅初始化自身实体与独立配置，复用主场景的全局子系统（如音频环境），卸载时仅清理自身实体</td>
+<td>动态剧情、临时特效、可切换场景模块</td>
+</tr>
+</tbody>
+</table>
+<h4 id="场景加载与卸载底层全流程">场景加载与卸载底层全流程</h4>
+<h5 id="加载流程（同步-异步通用底层逻辑）">加载流程（同步/异步通用底层逻辑）</h5>
+<ol>
+<li>资源解析：引擎读取<code>.unity</code>文件，解析资源依赖表，递归加载场景依赖的Prefab、纹理、材质等外部资源；</li>
+<li>内存实例化：在C++层创建Scene内存实例，初始化子系统环境（物理世界、渲染队列、导航网格）；</li>
+<li>实体构建：解析序列化的<code>GameObject</code>与组件数据，批量创建原生<code>GameObject</code>实体，挂载组件、初始化参数，建立C#与C++句柄映射；</li>
+<li>生命周期调度：批量触发所有实体的<code>Awake</code>、<code>OnEnable</code>，再批量触发<code>Start</code>，完成场景初始化；</li>
+<li>子系统注册：将场景内的渲染组件、物理组件、导航组件，分别注册到对应引擎子系统，纳入帧循环调度。</li>
+</ol>
+<h5 id="卸载流程">卸载流程</h5>
+<ol>
+<li>状态标记：将Scene实例标记为“卸载中”，禁止新实体创建与子系统调度；</li>
+<li>生命周期触发：批量触发场景内所有<code>GameObject</code>及组件的<code>OnDisable</code>、<code>OnDestroy</code>；</li>
+<li>子系统注销：将场景内组件从渲染、物理、导航等子系统中移除，停止调度；</li>
+<li>资源引用清理：递减场景内所有资源的引用计数，无引用资源标记为可回收；</li>
+<li>内存释放：销毁Scene内存实例，回收C++层原生实体、子系统环境内存，断开C#与C++句柄映射，托管对象标记为GC可回收。</li>
+</ol>
+<h4 id="场景隔离机制底层原理">场景隔离机制底层原理</h4>
+<p>Scene的隔离性是底层核心设计，确保多场景共存时不互相干扰，核心实现的3个层面：</p>
+<ol>
+<li>实体隔离：不同Scene的<code>GameObject</code>属于各自场景的层级树，底层通过“场景ID”区分，遍历、调度时仅针对当前场景的实体链表；</li>
+<li>子系统隔离：每个Scene拥有独立的PhysX物理世界（碰撞检测、刚体模拟互不干扰）、导航网格（寻路仅在自身场景内）、光照探针集合（光照计算独立）；</li>
+<li>资源隔离：场景加载的资源仅关联自身场景实例，卸载时仅清理自身引用的资源，不影响其他场景的资源使用（常驻资源除外）。</li>
+</ol>
+<h4 id="场景烘焙底层逻辑（光照-导航）">场景烘焙底层逻辑（光照/导航）</h4>
+<ul>
+<li>光照烘焙：编辑模式下，引擎对场景内静态<code>GameObject</code>、光照、材质进行离线计算，生成光照贴图、光照探针数据，序列化存储到Scene文件；运行时直接加载烘焙数据，无需实时计算，降低渲染开销；</li>
+<li>导航烘焙：离线分析场景静态障碍物、可行走区域，生成导航网格（<code>NavMesh</code>）数据，存储到Scene实例；运行时<code>NavMeshAgent</code>仅基于当前场景的导航网格寻路，不跨场景关联。</li>
+</ul>
+<h4 id="多场景叠加（Additive）底层实现">多场景叠加（Additive）底层实现</h4>
+<ul>
+<li>多场景叠加时，引擎维护“场景栈”，记录所有加载的Scene实例，按加载顺序排序；</li>
+<li>渲染时，引擎合并所有激活场景的渲染队列，按场景优先级、渲染层级排序，统一提交到GPU；</li>
+<li>物理系统仍保持隔离，不同场景的物理实体不会发生碰撞（可通过层掩码配置跨场景碰撞）；</li>
+<li>场景切换时，可通过“加载新场景+卸载旧场景”实现无缝切换，底层通过异步加载避免主线程卡顿。</li>
+</ul>
+<h4 id="场景底层核心设计思想">场景底层核心设计思想</h4>
+<ul>
+<li>隔离性：通过子系统、实体、资源的三层隔离，实现场景独立管理，降低模块耦合，支持动态加载/卸载；</li>
+<li>聚合性：将场景内所有实体、资源、配置聚合为一个统一单元，简化资源管理与引擎调度；</li>
+<li>可扩展性：支持多场景叠加、异步加载、动态切换，适配大型游戏的关卡管理、模块化设计需求；</li>
+<li>性能优化：离线烘焙、资源依赖管理、批量调度，从底层降低场景加载与运行时的性能开销。</li>
+</ul>
+<h3 id="Prefab-预制体">Prefab 预制体</h3>
+<ul>
+<li>Prefab是<strong>游戏对象与组件配置的模板化资源</strong>，底层本质是序列化后的<code>GameObject</code>及子层级、组件数据、属性配置的资源模板。</li>
+<li>引擎将Prefab分为<strong>源预制体资源</strong>与<strong>场景内实例</strong>两层结构
+<ul>
+<li>源预制体存储在工程资源库中，维护基准数据与变体配置；</li>
+<li>场景实例是模板的运行时克隆，保留与源预制体的关联映射，支持属性覆盖、嵌套预制体、变体预制体的层级继承。</li>
+</ul>
+</li>
+<li>底层实例化原理是引擎读取Prefab序列化数据，批量创建原生<code>GameObject</code>与对应<code>Component</code>实体，复刻层级结构、组件参数与资源引用；</li>
+<li>同时维护<strong>预制体关联映射表</strong>，实现修改源预制体批量同步所有实例、还原实例覆盖属性、断开预制体关联等编辑器与运行时逻辑，大幅减少重复实体构造开销与配置冗余。</li>
+</ul>
+<h4 id="底层本质与架构定位-3">底层本质与架构定位</h4>
+<ul>
+<li>Prefab 是Unity实现<strong>对象复用、配置复用、批量同步</strong>的底层资源模板，以<code>.prefab</code>二进制资源文件独立存储，不属于临时场景对象。</li>
+<li>本质是<strong>完整<code>GameObject</code>层级树 + 全组件配置 + 外部资源引用关系</strong>的序列化静态快照，是可无限克隆、可统一维护的对象原型。</li>
+<li>引擎采用<strong>数据驱动</strong>内核管理，仅负责模板序列化、实例克隆、关联映射、属性合并覆盖，不耦合任何业务逻辑。</li>
+</ul>
+<h4 id="Prefab-底层分层结构">Prefab 底层分层结构</h4>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>载体形态</th>
+<th>底层作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>源预制体</td>
+<td>工程<code>.prefab</code>资源文件</td>
+<td>存储基准层级、组件默认参数、资源依赖，作为所有实例的原始模板</td>
+</tr>
+<tr>
+<td>场景实例</td>
+<td>场景内克隆<code>GameObject</code></td>
+<td>继承源预制体基础数据，支持局部属性覆写，保留关联映射</td>
+</tr>
+<tr>
+<td>嵌套预制体</td>
+<td>预制体内嵌入子预制体</td>
+<td>构建多层级模板依赖树，子预制体变更可递归同步</td>
+</tr>
+<tr>
+<td>预制体变体</td>
+<td>派生差异化模板</td>
+<td>继承基准预制体，仅存储差异覆写字段，节省存储与内存</td>
+</tr>
+</tbody>
+</table>
+<h4 id="建模工具导出预制体底层原理">建模工具导出预制体底层原理</h4>
+<h5 id="主流建模工具链路">主流建模工具链路</h5>
+<p>3ds Max、Maya、Blender、Cinema 4D 等建模软件，完成模型网格、骨骼、层级、材质插槽、虚拟节点搭建后，通过<strong>FBX/GLB/OBJ</strong>中间格式导出，再由Unity资源管线导入自动生成预制体。</p>
+<h5 id="导入生成预制体底层流程">导入生成预制体底层流程</h5>
+<ol>
+<li>建模工具导出：保留<strong>层级父子结构、网格数据、骨骼绑定、材质球插槽、节点坐标旋转缩放、空物体虚拟节点</strong>；</li>
+<li>Unity资源管线导入：解析FBX层级与网格，自动生成对应<code>GameObject</code>层级树、<code>MeshFilter</code>、<code>MeshRenderer</code>、骨骼动画组件；</li>
+<li>引擎自动序列化：将导入后的整棵对象层级树打包序列化为<code>.prefab</code>资源，形成<strong>模型类原生预制体</strong>；</li>
+<li>资源依赖绑定：自动关联网格资源、材质球、贴图、动画剪辑，写入Prefab依赖表，运行时自动递归加载依赖资源。</li>
+</ol>
+<h5 id="建模导出预制体底层特性">建模导出预制体底层特性</h5>
+<ul>
+<li>完全保留建模软件的<strong>空间层级与坐标原点</strong>，引擎不修改原始变换数据，仅做单位比例适配；</li>
+<li>骨骼、绑定、烘培动画数据嵌入Prefab引用，可直接挂载<code>Animator</code>使用；</li>
+<li>导入设置中的网格压缩、法线格式、动画采样率、材质导入规则，会直接写入Prefab元数据，影响运行时内存与渲染表现；</li>
+<li>建模工具的空节点、挂载点、骨骼插槽，全部转为Unity空<code>GameObject</code>，作为后续挂载武器、特效、挂件的底层节点。</li>
+</ul>
+<h4 id="Prefab-资源序列化与存储机制">Prefab 资源序列化与存储机制</h4>
+<ul>
+<li>采用Unity自研<strong>二进制紧凑序列化格式</strong>，存储内容包含：对象层级父子关系、所有<code>Component</code>类型与字段数值、Layer/Tag/静态标记、变换矩阵、外部资源引用路径、序列化元数据与覆写标记。</li>
+<li>引擎维护<strong>全局资源依赖图谱</strong>，自动记录Prefab依赖的网格、贴图、材质、Shader、动画剪辑，打包与卸载时自动处理引用计数与资源回收。</li>
+<li>编辑器采用<strong>增量序列化</strong>，仅保存改动节点与属性，减少文件体积与磁盘写入开销。</li>
+</ul>
+<h4 id="预制体实例化底层运行机制">预制体实例化底层运行机制</h4>
+<ul>
+<li>编辑器拖拽到场景、运行时<code>Instantiate</code>，底层遵循同一克隆逻辑：<br>
+读取Prefab模板序列化数据 → C++内核批量创建原生<code>GameObject</code>与<code>Component</code> → 复刻完整层级与变换 → 复制组件配置与资源引用 → 建立C#与C++双向句柄映射 → 并入场景层级树 → 依次执行<code>Awake</code>、<code>OnEnable</code>初始化生命周期。</li>
+<li>批量原生创建避免了C#逐对象构造、逐组件挂载的托管开销，内存布局更紧凑、实例化速度更快。</li>
+</ul>
+<h4 id="关联映射与属性覆写底层规则">关联映射与属性覆写底层规则</h4>
+<ul>
+<li>引擎维护<strong>全局预制体关联映射表</strong>，记录每个场景实例对应的源预制体路径、节点映射关系、已覆写字段列表。</li>
+<li>默认所有字段<strong>继承源预制体</strong>；一旦在编辑器或代码修改实例属性，引擎对该字段打上<strong>覆写标记</strong>，不再跟随源预制体同步。</li>
+<li>修改源预制体时，引擎遍历所有关联实例，仅同步<strong>未覆写字段</strong>，覆写配置保留独立状态。</li>
+<li>支持还原覆写、断开预制体关联、应用变更到源预制体，底层本质是修改覆写标记与模板引用指针。</li>
+</ul>
+<h4 id="嵌套预制体底层实现">嵌套预制体底层实现</h4>
+<ul>
+<li>支持Prefab内部嵌入子Prefab，引擎构建<strong>多层级预制体依赖树</strong>；</li>
+<li>子预制体改动会递归向上同步所有父预制体、场景实例的未覆写属性；</li>
+<li>底层自带<strong>循环依赖检测</strong>，禁止预制体互相嵌套引用，避免解析死锁与内存异常。</li>
+</ul>
+<h4 id="预制体变体底层原理">预制体变体底层原理</h4>
+<ul>
+<li>以基准Prefab为原型，采用<strong>差异存储</strong>模式，不复制完整层级与组件；</li>
+<li>仅保存覆写字段、新增组件、差异化配置，共享基准的网格、材质、层级结构；</li>
+<li>实例化时先加载基准模板，再合并变体差异数据生成最终对象，大幅节省工程存储与运行时内存。</li>
+</ul>
+<h4 id="预制体使用底层逻辑（编辑器-运行时）">预制体使用底层逻辑（编辑器+运行时）</h4>
+<h5 id="编辑器使用底层逻辑">编辑器使用底层逻辑</h5>
+<ul>
+<li>拖拽Prefab到场景：生成关联实例，建立映射关系，允许局部修改覆写；</li>
+<li>编辑源预制体：孤立编辑窗口加载模板完整层级，修改后自动同步所有场景实例未覆写属性；</li>
+<li>应用/还原操作：底层批量同步覆写标记、合并实例改动到源模板、清空实例覆写状态；</li>
+<li>断开预制体关联：删除映射表引用标记，实例转为普通独立场景对象，不再参与同步。</li>
+</ul>
+<h5 id="运行时使用底层逻辑">运行时使用底层逻辑</h5>
+<ul>
+<li>动态实例化：<code>Instantiate</code>读取工程预制体模板，内存中克隆对象层级与组件配置；</li>
+<li>运行时修改实例属性：仅修改当前实例内存数据，<strong>不会写回源预制体模板</strong>，无全局同步效果；</li>
+<li>运行时销毁：仅销毁场景实例对象，不影响工程内源Prefab资源本身；</li>
+<li>对象池配合Prefab：预先实例化缓存复用，避免频繁<code>Instantiate/Destroy</code>带来的引擎实体创建销毁开销与生命周期频繁调度。</li>
+</ul>
+<h5 id="预制体与建模资源适配底层约束">预制体与建模资源适配底层约束</h5>
+<ul>
+<li>模型导出缩放、坐标轴朝向必须与Unity坐标系匹配，否则底层变换矩阵会产生偏移、旋转错位；</li>
+<li>复杂拆分模型建议在建模工具分层级导出，再转为嵌套Prefab，便于Unity后期模块化维护；</li>
+<li>带动画的人形/怪物模型，导出时必须保留骨骼层级，导入生成Prefab后才能正常驱动<code>Animator</code>姿态计算；</li>
+<li>材质与贴图建议外部单独赋值，不嵌入模型Prefab，减少资源冗余，便于全局材质统一迭代。</li>
+</ul>
+<h5 id="核心设计价值与底层意义">核心设计价值与底层意义</h5>
+<ul>
+<li>配置复用：一次搭建，多处复用，避免重复搭建层级、挂载组件、填写参数；</li>
+<li>批量维护：修改源预制体自动同步所有实例，大幅降低迭代与维护成本；</li>
+<li>性能优化：二进制紧凑存储、批量原生实例化、依赖资源统一管理，减少内存碎片与GC开销；</li>
+<li>管线闭环：承接建模工具导出资源，形成<strong>建模→导入→预制体→实例复用</strong>的完整工业化资源管线；</li>
+<li>架构支撑：支持模块化开发、对象池、热更新、分包加载，是Unity工程化开发的核心基础资源形态。</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
