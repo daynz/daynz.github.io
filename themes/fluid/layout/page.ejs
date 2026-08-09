@@ -5,9 +5,48 @@ page.subtitle = page.subtitle || page.title || __(`${ layout }.subtitle`)
 page.banner_img = page.banner_img || theme.page.banner_img
 page.banner_img_height = page.banner_img_height || theme.page.banner_img_height
 page.banner_mask_alpha = page.banner_mask_alpha || theme.page.banner_mask_alpha
+
+// 笔记页（/notes/ 下）使用文章式三栏布局：左侧留白 + 正文 + TOC 侧边栏
+var isNote = page.path.indexOf('notes/') === 0
+var isNoteIndex = page.path === 'notes/index.html'
 %>
 
-<article class="page-content">
+<% if (isNote && !isNoteIndex) { %>
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto notes-detail">
+            <nav class="notes-breadcrumb" aria-label="面包屑">
+              <a class="notes-breadcrumb-home" href="<%= url_for('/notes/') %>">📚 笔记</a>
+              <%
+              var segs = page.path.replace(/^notes\//, '').replace(/\.html$/, '').split('/')
+              var catSegs = segs.slice(0, -1)
+              for (var i = 0; i < catSegs.length; i++) {
+              %>
+              <span class="notes-breadcrumb-sep">/</span><span class="notes-breadcrumb-crumb"><%= catSegs[i] %></span>
+              <% } %>
+              <span class="notes-breadcrumb-sep">/</span><span class="notes-breadcrumb-current"><%= page.title %></span>
+            </nav>
+            <div class="markdown-body">
+              <%- inject_point('postMarkdownBegin') %>
+              <%- page.content %>
+              <%- inject_point('postMarkdownEnd') %>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="side-col d-none d-lg-block col-lg-2">
+      <%- inject_point('postRight') %>
+    </div>
+  </div>
+</div>
+<%- partial('_partials/markdown-plugins') %>
+<% } else { %>
+<article class="page-content<%- isNoteIndex ? ' notes-hub' : '' %>">
   <%- page.content %>
 
   <%- inject_point('pageComments') %>
@@ -15,4 +54,5 @@ page.banner_mask_alpha = page.banner_mask_alpha || theme.page.banner_mask_alpha
 
 <% if (/<[^>]+? class="[^"]*?markdown-body[^"]*?"/gims.test(page.content)) { %>
   <%- partial('_partials/markdown-plugins') %>
+<% } %>
 <% } %>

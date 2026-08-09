@@ -3,408 +3,446 @@ title: 学习笔记
 layout: page
 ---
 
-# 📚 学习笔记
+<div class="notes-hub">
 
-共 **386** 篇笔记，按主题分类：
+  <header class="notes-hub-header">
+    <h1>📚 学习笔记</h1>
+    <p class="notes-hub-subtitle">共 <strong>366</strong> 篇学习笔记，按主题分类整理</p>
+  </header>
 
-## 📁 八股（4 篇）
+  <nav class="notes-hub-nav" aria-label="笔记分类导航">
+    <a class="notes-nav-chip" href="#notes-0">📋 八股<span class="notes-nav-count">4</span></a>
+    <a class="notes-nav-chip" href="#notes-1">💻 编程语言<span class="notes-nav-count">75</span></a>
+    <a class="notes-nav-chip" href="#notes-2">🖥️ 计算机基础<span class="notes-nav-count">194</span></a>
+    <a class="notes-nav-chip" href="#notes-3">🎨 图形学<span class="notes-nav-count">58</span></a>
+    <a class="notes-nav-chip" href="#notes-4">🎮 游戏引擎<span class="notes-nav-count">34</span></a>
+    <a class="notes-nav-chip" href="#notes-5">📄 其他<span class="notes-nav-count">1</span></a>
+  </nav>
 
-- [C++](八股/C++.html)
-- [Unity](八股/Unity.html)
-- [操作系统](八股/操作系统.html)
-- [计算机网络](八股/计算机网络.html)
+  <section class="notes-category" id="notes-0">
+    <div class="notes-category-head">
+      <span class="notes-cat-icon">📋</span>
+      <h2 class="notes-cat-title">八股</h2>
+      <span class="notes-cat-count">4 篇</span>
+    </div>
+    <div class="notes-cat-body">
+      <a class="note-chip" href="八股/操作系统.html" title="八股/操作系统">操作系统</a>
+      <a class="note-chip" href="八股/计算机网络.html" title="八股/计算机网络">计算机网络</a>
+      <a class="note-chip" href="八股/C++.html" title="八股/C++">C++</a>
+      <a class="note-chip" href="八股/Unity.html" title="八股/Unity">Unity</a>
+    </div>
+  </section>
 
-## 📁 游戏引擎（97 篇）
+  <section class="notes-category" id="notes-1">
+    <div class="notes-category-head">
+      <span class="notes-cat-icon">💻</span>
+      <h2 class="notes-cat-title">编程语言</h2>
+      <span class="notes-cat-count">75 篇</span>
+    </div>
+    <div class="notes-cat-body">
+      <a class="note-chip" href="编程语言/cpp/01头文件/标准库头文件.html" title="编程语言/cpp/01头文件/标准库头文件">标准库头文件</a>
+      <a class="note-chip" href="编程语言/cpp/03语言/01基础语法与关键字.html" title="编程语言/cpp/03语言/01基础语法与关键字">01基础语法与关键字</a>
+      <a class="note-chip" href="编程语言/cpp/03语言/02数据类型与内存.html" title="编程语言/cpp/03语言/02数据类型与内存">02数据类型与内存</a>
+      <a class="note-chip" href="编程语言/cpp/03语言/04面向对象编程.html" title="编程语言/cpp/03语言/04面向对象编程">04面向对象编程</a>
+      <a class="note-chip" href="编程语言/cpp/03语言/05模板与泛型编程01.html" title="编程语言/cpp/03语言/05模板与泛型编程01">05模板与泛型编程01</a>
+      <a class="note-chip" href="编程语言/cpp/03语言/05模板与泛型编程02.html" title="编程语言/cpp/03语言/05模板与泛型编程02">05模板与泛型编程02</a>
+      <a class="note-chip" href="编程语言/cpp/03语言/05模板与泛型编程03.html" title="编程语言/cpp/03语言/05模板与泛型编程03">05模板与泛型编程03</a>
+      <a class="note-chip" href="编程语言/cpp/03语言/07异常处理与错误管理.html" title="编程语言/cpp/03语言/07异常处理与错误管理">07异常处理与错误管理</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/容器库.html" title="编程语言/cpp/06容器库/容器库">容器库</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/array.html" title="编程语言/cpp/06容器库/array">array</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/Deque - 副本 (2).html" title="编程语言/cpp/06容器库/Deque - 副本 (2)">Deque - 副本 (2)</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/Deque - 副本 (3).html" title="编程语言/cpp/06容器库/Deque - 副本 (3)">Deque - 副本 (3)</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/Deque - 副本 (4).html" title="编程语言/cpp/06容器库/Deque - 副本 (4)">Deque - 副本 (4)</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/Deque - 副本 (5).html" title="编程语言/cpp/06容器库/Deque - 副本 (5)">Deque - 副本 (5)</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/Deque - 副本 (6).html" title="编程语言/cpp/06容器库/Deque - 副本 (6)">Deque - 副本 (6)</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/deque.html" title="编程语言/cpp/06容器库/deque">deque</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/forward_list.html" title="编程语言/cpp/06容器库/forward_list">forward_list</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/list.html" title="编程语言/cpp/06容器库/list">list</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/STL.html" title="编程语言/cpp/06容器库/STL">STL</a>
+      <a class="note-chip" href="编程语言/cpp/06容器库/vector.html" title="编程语言/cpp/06容器库/vector">vector</a>
+      <a class="note-chip" href="编程语言/cpp/20对象模型/00对象模型.html" title="编程语言/cpp/20对象模型/00对象模型">00对象模型</a>
+      <a class="note-chip" href="编程语言/cpp/20对象模型/01关于对象.html" title="编程语言/cpp/20对象模型/01关于对象">01关于对象</a>
+      <a class="note-chip" href="编程语言/cpp/20对象模型/对象模型相关面试题.html" title="编程语言/cpp/20对象模型/对象模型相关面试题">对象模型相关面试题</a>
+      <a class="note-chip" href="编程语言/cpp/面试/面向对象.html" title="编程语言/cpp/面试/面向对象">面向对象</a>
+      <a class="note-chip" href="编程语言/cpp/面试/未分类.html" title="编程语言/cpp/面试/未分类">未分类</a>
+      <a class="note-chip" href="编程语言/cpp/面向对象.html" title="编程语言/cpp/面向对象">面向对象</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/多线程上.html" title="编程语言/cpp/现代C++/多线程上">多线程上</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/多线程下.html" title="编程语言/cpp/现代C++/多线程下">多线程下</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/聚合体.html" title="编程语言/cpp/现代C++/聚合体">聚合体</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/属性.html" title="编程语言/cpp/现代C++/属性">属性</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++11-函数式编程.html" title="编程语言/cpp/现代C++/C++11-函数式编程">C++11-函数式编程</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++11-右值引用.html" title="编程语言/cpp/现代C++/C++11-右值引用">C++11-右值引用</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++11-智能指针.html" title="编程语言/cpp/现代C++/C++11-智能指针">C++11-智能指针</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++11-Lambda.html" title="编程语言/cpp/现代C++/C++11-Lambda">C++11-Lambda</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++11上.html" title="编程语言/cpp/现代C++/C++11上">C++11上</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++11下.html" title="编程语言/cpp/现代C++/C++11下">C++11下</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++14上.html" title="编程语言/cpp/现代C++/C++14上">C++14上</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++14下.html" title="编程语言/cpp/现代C++/C++14下">C++14下</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++17标准库上.html" title="编程语言/cpp/现代C++/C++17标准库上">C++17标准库上</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++17标准库下.html" title="编程语言/cpp/现代C++/C++17标准库下">C++17标准库下</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++17上.html" title="编程语言/cpp/现代C++/C++17上">C++17上</a>
+      <a class="note-chip" href="编程语言/cpp/现代C++/C++17下.html" title="编程语言/cpp/现代C++/C++17下">C++17下</a>
+      <a class="note-chip" href="编程语言/cpp/C++.html" title="编程语言/cpp/C++">C++</a>
+      <a class="note-chip" href="编程语言/cpp/CMake构建系统.html" title="编程语言/cpp/CMake构建系统">CMake构建系统</a>
+      <a class="note-chip" href="编程语言/cpp/EffectiveC++.html" title="编程语言/cpp/EffectiveC++">EffectiveC++</a>
+      <a class="note-chip" href="编程语言/cpp/old/1HelloWorld.html" title="编程语言/cpp/old/1HelloWorld">1HelloWorld</a>
+      <a class="note-chip" href="编程语言/cpp/old/2入门.html" title="编程语言/cpp/old/2入门">2入门</a>
+      <a class="note-chip" href="编程语言/cpp/old/3变量.html" title="编程语言/cpp/old/3变量">3变量</a>
+      <a class="note-chip" href="编程语言/cpp/old/4函数.html" title="编程语言/cpp/old/4函数">4函数</a>
+      <a class="note-chip" href="编程语言/cpp/old/5类与对象.html" title="编程语言/cpp/old/5类与对象">5类与对象</a>
+      <a class="note-chip" href="编程语言/cpp/old/6继承与多态.html" title="编程语言/cpp/old/6继承与多态">6继承与多态</a>
+      <a class="note-chip" href="编程语言/cpp/old/7模板与泛型编程.html" title="编程语言/cpp/old/7模板与泛型编程">7模板与泛型编程</a>
+      <a class="note-chip" href="编程语言/Csharp/01Csharp基础上.html" title="编程语言/Csharp/01Csharp基础上">01Csharp基础上</a>
+      <a class="note-chip" href="编程语言/Csharp/02Csharp基础下.html" title="编程语言/Csharp/02Csharp基础下">02Csharp基础下</a>
+      <a class="note-chip" href="编程语言/Csharp/03-1Csharp3.0上.html" title="编程语言/Csharp/03-1Csharp3.0上">03-1Csharp3.0上</a>
+      <a class="note-chip" href="编程语言/Csharp/03-2Csharp3.0下.html" title="编程语言/Csharp/03-2Csharp3.0下">03-2Csharp3.0下</a>
+      <a class="note-chip" href="编程语言/Csharp/03-3CsharpLINQ.html" title="编程语言/Csharp/03-3CsharpLINQ">03-3CsharpLINQ</a>
+      <a class="note-chip" href="编程语言/Csharp/03Csharp集合.html" title="编程语言/Csharp/03Csharp集合">03Csharp集合</a>
+      <a class="note-chip" href="编程语言/Csharp/04Csharp泛型.html" title="编程语言/Csharp/04Csharp泛型">04Csharp泛型</a>
+      <a class="note-chip" href="编程语言/Csharp/05Csharp异常处理.html" title="编程语言/Csharp/05Csharp异常处理">05Csharp异常处理</a>
+      <a class="note-chip" href="编程语言/Csharp/06Csharp-委托与事件.html" title="编程语言/Csharp/06Csharp-委托与事件">06Csharp-委托与事件</a>
+      <a class="note-chip" href="编程语言/Csharp/07Csharp反射.html" title="编程语言/Csharp/07Csharp反射">07Csharp反射</a>
+      <a class="note-chip" href="编程语言/Csharp/08Csharp内存管理.html" title="编程语言/Csharp/08Csharp内存管理">08Csharp内存管理</a>
+      <a class="note-chip" href="编程语言/Csharp/09Csharp垃圾回收.html" title="编程语言/Csharp/09Csharp垃圾回收">09Csharp垃圾回收</a>
+      <a class="note-chip" href="编程语言/Csharp/10Csharp多线程.html" title="编程语言/Csharp/10Csharp多线程">10Csharp多线程</a>
+      <a class="note-chip" href="编程语言/Csharp/11Csharp特性.html" title="编程语言/Csharp/11Csharp特性">11Csharp特性</a>
+      <a class="note-chip" href="编程语言/Csharp/12Csharp2.0.html" title="编程语言/Csharp/12Csharp2.0">12Csharp2.0</a>
+      <a class="note-chip" href="编程语言/Csharp/八股.html" title="编程语言/Csharp/八股">八股</a>
+      <a class="note-chip" href="编程语言/Csharp/CSharp目录.html" title="编程语言/Csharp/CSharp目录">CSharp目录</a>
+      <a class="note-chip" href="编程语言/Lua/Lua.html" title="编程语言/Lua/Lua">Lua</a>
+      <a class="note-chip" href="编程语言/Lua/Lua基础.html" title="编程语言/Lua/Lua基础">Lua基础</a>
+      <a class="note-chip" href="编程语言/Lua/Lua进阶.html" title="编程语言/Lua/Lua进阶">Lua进阶</a>
+      <a class="note-chip" href="编程语言/Lua/Lua数据结构.html" title="编程语言/Lua/Lua数据结构">Lua数据结构</a>
+      <a class="note-chip" href="编程语言/Lua/xLua.html" title="编程语言/Lua/xLua">xLua</a>
+      <a class="note-chip" href="编程语言/Lua/xLua背包.html" title="编程语言/Lua/xLua背包">xLua背包</a>
+    </div>
+  </section>
 
-- [README](游戏引擎/README.html)
-- [README](游戏引擎/UE/README.html)
-- [01Unity核心上](游戏引擎/Unity/01Unity核心上.html)
-- [02Unity核心中](游戏引擎/Unity/02Unity核心中.html)
-- [03Unity核心下](游戏引擎/Unity/03Unity核心下.html)
-- [Core](游戏引擎/Unity/Core/Core.html)
-- [README](游戏引擎/Unity/README.html)
-- [未归类](游戏引擎/Unity/Render/未归类.html)
-- [ScriptableObject](游戏引擎/Unity/ScriptableObject.html)
-- [UnityShaderLab](游戏引擎/Unity/UnityShaderLab.html)
-- [UnityUGUI](游戏引擎/Unity/UnityUGUI.html)
-- [Unity内存管理](游戏引擎/Unity/Unity内存管理.html)
-- [Unity大纲参考](游戏引擎/Unity/Unity大纲参考.html)
-- [Unity委托与事件](游戏引擎/Unity/Unity委托与事件.html)
-- [01脚本系统](游戏引擎/Unity/Unity子系统/01脚本系统.html)
-- [02渲染系统](游戏引擎/Unity/Unity子系统/02渲染系统.html)
-- [03物理系统](游戏引擎/Unity/Unity子系统/03物理系统.html)
-- [04动画系统](游戏引擎/Unity/Unity子系统/04动画系统.html)
-- [05UI系统](游戏引擎/Unity/Unity子系统/05UI系统.html)
-- [06音频系统](游戏引擎/Unity/Unity子系统/06音频系统.html)
-- [07输入系统](游戏引擎/Unity/Unity子系统/07输入系统.html)
-- [08导航系统](游戏引擎/Unity/Unity子系统/08导航系统.html)
-- [09网络系统](游戏引擎/Unity/Unity子系统/09网络系统.html)
-- [Unity生命周期](游戏引擎/Unity/Unity生命周期.html)
-- [Unity编辑器](游戏引擎/Unity/Unity编辑器.html)
-- [Unity网络](游戏引擎/Unity/Unity网络.html)
-- [Zenject](游戏引擎/Unity/Zenject.html)
-- [内存管理八股](游戏引擎/Unity/内存管理八股.html)
-- [AssetBundle](游戏引擎/Unity/热更新/AssetBundle.html)
-- [Hotfix](游戏引擎/Unity/热更新/Hotfix.html)
-- [README](游戏引擎/图形学/12计算机基础/121编程语言/ShaderLab/README.html)
-- [UnityCG](游戏引擎/图形学/12计算机基础/121编程语言/ShaderLab/UnityCG.html)
-- [光照Lighting](游戏引擎/图形学/12计算机基础/121编程语言/ShaderLab/光照Lighting.html)
-- [01OpenGL配置](游戏引擎/图形学/12计算机基础/123图形API/OpenGL/01OpenGL配置.html)
-- [02创建窗口](游戏引擎/图形学/12计算机基础/123图形API/OpenGL/02创建窗口.html)
-- [03顶点数据管理](游戏引擎/图形学/12计算机基础/123图形API/OpenGL/03顶点数据管理.html)
-- [04着色器](游戏引擎/图形学/12计算机基础/123图形API/OpenGL/04着色器.html)
-- [05贴图](游戏引擎/图形学/12计算机基础/123图形API/OpenGL/05贴图.html)
-- [1基础表示方法](游戏引擎/图形学/21几何处理/211几何表示/1基础表示方法.html)
-- [2层次化与高级表示](游戏引擎/图形学/21几何处理/211几何表示/2层次化与高级表示.html)
-- [3几何表示的存储与对比技术](游戏引擎/图形学/21几何处理/211几何表示/3几何表示的存储与对比技术.html)
-- [README](游戏引擎/图形学/21几何处理/211几何表示/README.html)
-- [README](游戏引擎/图形学/21几何处理/212坐标变换/README.html)
-- [README](游戏引擎/图形学/21几何处理/213网格处理/README.html)
-- [README](游戏引擎/图形学/21几何处理/214碰撞检测/README.html)
-- [README](游戏引擎/图形学/22渲染管线/221顶点处理/README.html)
-- [1基础概念与核心任务](游戏引擎/图形学/22渲染管线/222光栅化/1基础概念与核心任务.html)
-- [2扫描转换算法](游戏引擎/图形学/22渲染管线/222光栅化/2扫描转换算法.html)
-- [3属性插值与透视校正](游戏引擎/图形学/22渲染管线/222光栅化/3属性插值与透视校正.html)
-- [4可见性处理与深度缓冲](游戏引擎/图形学/22渲染管线/222光栅化/4可见性处理与深度缓冲.html)
-- [5抗锯齿技术](游戏引擎/图形学/22渲染管线/222光栅化/5抗锯齿技术.html)
-- [6硬件加速与优化技术](游戏引擎/图形学/22渲染管线/222光栅化/6硬件加速与优化技术.html)
-- [README](游戏引擎/图形学/22渲染管线/222光栅化/README.html)
-- [README](游戏引擎/图形学/22渲染管线/223像素处理/README.html)
-- [README](游戏引擎/图形学/22渲染管线/224后处理链/README.html)
-- [README](游戏引擎/图形学/22渲染管线/225GPU-Driven管线/README.html)
-- [README](游戏引擎/图形学/23光照与材质/231微表面模型/README.html)
-- [README](游戏引擎/图形学/23光照与材质/232光源系统/README.html)
-- [README](游戏引擎/图形学/23光照与材质/233阴影技术/README.html)
-- [README](游戏引擎/图形学/23光照与材质/234全局光照/README.html)
-- [README](游戏引擎/图形学/24物理模拟/241刚体/README.html)
-- [README](游戏引擎/图形学/24物理模拟/242软体/README.html)
-- [README](游戏引擎/图形学/24物理模拟/243流体/README.html)
-- [README](游戏引擎/图形学/24物理模拟/244布料/README.html)
-- [01简介](游戏引擎/图形学/31实时渲染/01简介.html)
-- [02图形渲染管线](游戏引擎/图形学/31实时渲染/02图形渲染管线.html)
-- [03图形处理单元](游戏引擎/图形学/31实时渲染/03图形处理单元.html)
-- [README](游戏引擎/图形学/31实时渲染/README.html)
-- [README](游戏引擎/图形学/32离线渲染/README.html)
-- [README](游戏引擎/图形学/33非真实渲染/README.html)
-- [综述](游戏引擎/图形学/33非真实渲染/仿米游渲染/综述.html)
-- [README](游戏引擎/图形学/34光线追踪/README.html)
-- [RayTracingInOneWeekend](游戏引擎/图形学/34光线追踪/RayTracingInOneWeekend.html)
-- [10Color](游戏引擎/图形学/Games101/10Color.html)
-- [11Animation](游戏引擎/图形学/Games101/11Animation.html)
-- [1Transform](游戏引擎/图形学/Games101/1Transform.html)
-- [2Rasterization](游戏引擎/图形学/Games101/2Rasterization.html)
-- [3Shading](游戏引擎/图形学/Games101/3Shading.html)
-- [4Texture](游戏引擎/图形学/Games101/4Texture.html)
-- [5Geometry](游戏引擎/图形学/Games101/5Geometry.html)
-- [6RayTracing](游戏引擎/图形学/Games101/6RayTracing.html)
-- [7Materials](游戏引擎/图形学/Games101/7Materials.html)
-- [8AdvancedTopic](游戏引擎/图形学/Games101/8AdvancedTopic.html)
-- [9Camera](游戏引擎/图形学/Games101/9Camera.html)
-- [README](游戏引擎/图形学/README.html)
-- [SSGIUnity实现](游戏引擎/图形学/SSGI/SSGIUnity实现.html)
-- [SSGI简介](游戏引擎/图形学/SSGI/SSGI简介.html)
-- [全局光照技术笔记](游戏引擎/图形学/全局光照/全局光照技术笔记.html)
-- [图元渲染](游戏引擎/图形学/现代图形学/图元渲染.html)
-- [README](游戏引擎/引擎架构/README.html)
-- [GAS](游戏引擎/框架/GAS.html)
-- [MVVM](游戏引擎/框架/MVVM.html)
-- [事件系统](游戏引擎/框架/事件系统.html)
-- [依赖注入](游戏引擎/框架/依赖注入.html)
-- [八股](游戏引擎/框架/八股.html)
-- [单元测试](游戏引擎/框架/单元测试.html)
-- [场景题](游戏引擎/框架/场景题.html)
+  <section class="notes-category" id="notes-2">
+    <div class="notes-category-head">
+      <span class="notes-cat-icon">🖥️</span>
+      <h2 class="notes-cat-title">计算机基础</h2>
+      <span class="notes-cat-count">194 篇</span>
+    </div>
+    <div class="notes-cat-body">
+      <a class="note-chip" href="计算机基础/编译原理/01语言及文法.html" title="计算机基础/编译原理/01语言及文法">01语言及文法</a>
+      <a class="note-chip" href="计算机基础/编译原理/02词法分析.html" title="计算机基础/编译原理/02词法分析">02词法分析</a>
+      <a class="note-chip" href="计算机基础/编译原理/03语法分析.html" title="计算机基础/编译原理/03语法分析">03语法分析</a>
+      <a class="note-chip" href="计算机基础/编译原理/04语义分析.html" title="计算机基础/编译原理/04语义分析">04语义分析</a>
+      <a class="note-chip" href="计算机基础/编译原理/05符号表管理.html" title="计算机基础/编译原理/05符号表管理">05符号表管理</a>
+      <a class="note-chip" href="计算机基础/编译原理/06运行环境.html" title="计算机基础/编译原理/06运行环境">06运行环境</a>
+      <a class="note-chip" href="计算机基础/编译原理/07代码优化.html" title="计算机基础/编译原理/07代码优化">07代码优化</a>
+      <a class="note-chip" href="计算机基础/编译原理/08代码生成.html" title="计算机基础/编译原理/08代码生成">08代码生成</a>
+      <a class="note-chip" href="计算机基础/编译原理/编译原理.html" title="计算机基础/编译原理/编译原理">编译原理</a>
+      <a class="note-chip" href="计算机基础/操作系统/1-0操作系统概述.html" title="计算机基础/操作系统/1-0操作系统概述">1-0操作系统概述</a>
+      <a class="note-chip" href="计算机基础/操作系统/1-1操作系统基础.html" title="计算机基础/操作系统/1-1操作系统基础">1-1操作系统基础</a>
+      <a class="note-chip" href="计算机基础/操作系统/1-2运行环境.html" title="计算机基础/操作系统/1-2运行环境">1-2运行环境</a>
+      <a class="note-chip" href="计算机基础/操作系统/1-3操作系统结构及虚拟机.html" title="计算机基础/操作系统/1-3操作系统结构及虚拟机">1-3操作系统结构及虚拟机</a>
+      <a class="note-chip" href="计算机基础/操作系统/2-0进程与线程.html" title="计算机基础/操作系统/2-0进程与线程">2-0进程与线程</a>
+      <a class="note-chip" href="计算机基础/操作系统/2-1进程.html" title="计算机基础/操作系统/2-1进程">2-1进程</a>
+      <a class="note-chip" href="计算机基础/操作系统/2-2线程.html" title="计算机基础/操作系统/2-2线程">2-2线程</a>
+      <a class="note-chip" href="计算机基础/操作系统/2-3CPU调度.html" title="计算机基础/操作系统/2-3CPU调度">2-3CPU调度</a>
+      <a class="note-chip" href="计算机基础/操作系统/2-4同步与互斥.html" title="计算机基础/操作系统/2-4同步与互斥">2-4同步与互斥</a>
+      <a class="note-chip" href="计算机基础/操作系统/2-5死锁.html" title="计算机基础/操作系统/2-5死锁">2-5死锁</a>
+      <a class="note-chip" href="计算机基础/操作系统/3-0内存管理.html" title="计算机基础/操作系统/3-0内存管理">3-0内存管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/3-1内存管理基础.html" title="计算机基础/操作系统/3-1内存管理基础">3-1内存管理基础</a>
+      <a class="note-chip" href="计算机基础/操作系统/3-2连续分配管理.html" title="计算机基础/操作系统/3-2连续分配管理">3-2连续分配管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/3-3虚拟内存管理.html" title="计算机基础/操作系统/3-3虚拟内存管理">3-3虚拟内存管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/4-0文件管理.html" title="计算机基础/操作系统/4-0文件管理">4-0文件管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/4-1文件管理基础.html" title="计算机基础/操作系统/4-1文件管理基础">4-1文件管理基础</a>
+      <a class="note-chip" href="计算机基础/操作系统/4-2目录.html" title="计算机基础/操作系统/4-2目录">4-2目录</a>
+      <a class="note-chip" href="计算机基础/操作系统/4-3文件系统.html" title="计算机基础/操作系统/4-3文件系统">4-3文件系统</a>
+      <a class="note-chip" href="计算机基础/操作系统/5-0IO管理.html" title="计算机基础/操作系统/5-0IO管理">5-0IO管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/5-1IO管理基础.html" title="计算机基础/操作系统/5-1IO管理基础">5-1IO管理基础</a>
+      <a class="note-chip" href="计算机基础/操作系统/5-2设备独立性软件.html" title="计算机基础/操作系统/5-2设备独立性软件">5-2设备独立性软件</a>
+      <a class="note-chip" href="计算机基础/操作系统/5-3磁盘和固态硬盘.html" title="计算机基础/操作系统/5-3磁盘和固态硬盘">5-3磁盘和固态硬盘</a>
+      <a class="note-chip" href="计算机基础/操作系统/八股.html" title="计算机基础/操作系统/八股">八股</a>
+      <a class="note-chip" href="计算机基础/操作系统/进程与线程笔记.html" title="计算机基础/操作系统/进程与线程笔记">进程与线程笔记</a>
+      <a class="note-chip" href="计算机基础/操作系统/例题/02进程与线程.html" title="计算机基础/操作系统/例题/02进程与线程">02进程与线程</a>
+      <a class="note-chip" href="计算机基础/操作系统/例题/03内存管理.html" title="计算机基础/操作系统/例题/03内存管理">03内存管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/例题/04文件管理.html" title="计算机基础/操作系统/例题/04文件管理">04文件管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/例题/05IO管理.html" title="计算机基础/操作系统/例题/05IO管理">05IO管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/内存管理.html" title="计算机基础/操作系统/内存管理">内存管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/文件管理.html" title="计算机基础/操作系统/文件管理">文件管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/CPU调度.html" title="计算机基础/操作系统/CPU调度">CPU调度</a>
+      <a class="note-chip" href="计算机基础/操作系统/IO管理.html" title="计算机基础/操作系统/IO管理">IO管理</a>
+      <a class="note-chip" href="计算机基础/操作系统/Linux/ssm.html" title="计算机基础/操作系统/Linux/ssm">ssm</a>
+      <a class="note-chip" href="计算机基础/计算机网络/1-0计算机网络体系结构.html" title="计算机基础/计算机网络/1-0计算机网络体系结构">1-0计算机网络体系结构</a>
+      <a class="note-chip" href="计算机基础/计算机网络/1-1网络概述.html" title="计算机基础/计算机网络/1-1网络概述">1-1网络概述</a>
+      <a class="note-chip" href="计算机基础/计算机网络/1-2网络体系结构.html" title="计算机基础/计算机网络/1-2网络体系结构">1-2网络体系结构</a>
+      <a class="note-chip" href="计算机基础/计算机网络/1-3网络模型.html" title="计算机基础/计算机网络/1-3网络模型">1-3网络模型</a>
+      <a class="note-chip" href="计算机基础/计算机网络/2-0物理层.html" title="计算机基础/计算机网络/2-0物理层">2-0物理层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/2-1通信基础.html" title="计算机基础/计算机网络/2-1通信基础">2-1通信基础</a>
+      <a class="note-chip" href="计算机基础/计算机网络/2-2传输介质和物理层设备.html" title="计算机基础/计算机网络/2-2传输介质和物理层设备">2-2传输介质和物理层设备</a>
+      <a class="note-chip" href="计算机基础/计算机网络/3-0数据链路层.html" title="计算机基础/计算机网络/3-0数据链路层">3-0数据链路层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/3-1数据链路层的功能.html" title="计算机基础/计算机网络/3-1数据链路层的功能">3-1数据链路层的功能</a>
+      <a class="note-chip" href="计算机基础/计算机网络/3-2介质访问控制.html" title="计算机基础/计算机网络/3-2介质访问控制">3-2介质访问控制</a>
+      <a class="note-chip" href="计算机基础/计算机网络/3-3局域网.html" title="计算机基础/计算机网络/3-3局域网">3-3局域网</a>
+      <a class="note-chip" href="计算机基础/计算机网络/3-4广域网与数据链路层设备.html" title="计算机基础/计算机网络/3-4广域网与数据链路层设备">3-4广域网与数据链路层设备</a>
+      <a class="note-chip" href="计算机基础/计算机网络/4-0网络层.html" title="计算机基础/计算机网络/4-0网络层">4-0网络层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/4-1网络层的功能.html" title="计算机基础/计算机网络/4-1网络层的功能">4-1网络层的功能</a>
+      <a class="note-chip" href="计算机基础/计算机网络/4-2IPv4.html" title="计算机基础/计算机网络/4-2IPv4">4-2IPv4</a>
+      <a class="note-chip" href="计算机基础/计算机网络/4-3IPv6.html" title="计算机基础/计算机网络/4-3IPv6">4-3IPv6</a>
+      <a class="note-chip" href="计算机基础/计算机网络/4-4路由算法和路由协议.html" title="计算机基础/计算机网络/4-4路由算法和路由协议">4-4路由算法和路由协议</a>
+      <a class="note-chip" href="计算机基础/计算机网络/4-5IP多播.html" title="计算机基础/计算机网络/4-5IP多播">4-5IP多播</a>
+      <a class="note-chip" href="计算机基础/计算机网络/4-6移动IP.html" title="计算机基础/计算机网络/4-6移动IP">4-6移动IP</a>
+      <a class="note-chip" href="计算机基础/计算机网络/4-7网络层设备.html" title="计算机基础/计算机网络/4-7网络层设备">4-7网络层设备</a>
+      <a class="note-chip" href="计算机基础/计算机网络/5-0传输层.html" title="计算机基础/计算机网络/5-0传输层">5-0传输层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/5-1传输层提供的服务.html" title="计算机基础/计算机网络/5-1传输层提供的服务">5-1传输层提供的服务</a>
+      <a class="note-chip" href="计算机基础/计算机网络/5-2UDP.html" title="计算机基础/计算机网络/5-2UDP">5-2UDP</a>
+      <a class="note-chip" href="计算机基础/计算机网络/5-3TCP.html" title="计算机基础/计算机网络/5-3TCP">5-3TCP</a>
+      <a class="note-chip" href="计算机基础/计算机网络/6-0应用层.html" title="计算机基础/计算机网络/6-0应用层">6-0应用层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/6-1网络应用模型.html" title="计算机基础/计算机网络/6-1网络应用模型">6-1网络应用模型</a>
+      <a class="note-chip" href="计算机基础/计算机网络/6-2域名系统.html" title="计算机基础/计算机网络/6-2域名系统">6-2域名系统</a>
+      <a class="note-chip" href="计算机基础/计算机网络/6-3应用层协议.html" title="计算机基础/计算机网络/6-3应用层协议">6-3应用层协议</a>
+      <a class="note-chip" href="计算机基础/计算机网络/计算机网络重点.html" title="计算机基础/计算机网络/计算机网络重点">计算机网络重点</a>
+      <a class="note-chip" href="计算机基础/计算机网络/例题/01计算机网络体系结构.html" title="计算机基础/计算机网络/例题/01计算机网络体系结构">01计算机网络体系结构</a>
+      <a class="note-chip" href="计算机基础/计算机网络/例题/02物理层.html" title="计算机基础/计算机网络/例题/02物理层">02物理层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/例题/03数据链路层.html" title="计算机基础/计算机网络/例题/03数据链路层">03数据链路层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/例题/04网络层.html" title="计算机基础/计算机网络/例题/04网络层">04网络层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/例题/05传输层.html" title="计算机基础/计算机网络/例题/05传输层">05传输层</a>
+      <a class="note-chip" href="计算机基础/计算机网络/Socket编程.html" title="计算机基础/计算机网络/Socket编程">Socket编程</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/1-0计算机系统概述.html" title="计算机基础/计算机组成原理/1-0计算机系统概述">1-0计算机系统概述</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/1-1计算机发展历程.html" title="计算机基础/计算机组成原理/1-1计算机发展历程">1-1计算机发展历程</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/1-2计算机系统的层次结构.html" title="计算机基础/计算机组成原理/1-2计算机系统的层次结构">1-2计算机系统的层次结构</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/1-3计算机的性能指标.html" title="计算机基础/计算机组成原理/1-3计算机的性能指标">1-3计算机的性能指标</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/2-0数据的表示和运算.html" title="计算机基础/计算机组成原理/2-0数据的表示和运算">2-0数据的表示和运算</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/2-1数制与码制.html" title="计算机基础/计算机组成原理/2-1数制与码制">2-1数制与码制</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/2-2运算方法与运算电路.html" title="计算机基础/计算机组成原理/2-2运算方法与运算电路">2-2运算方法与运算电路</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/2-3浮点数的表示与计算.html" title="计算机基础/计算机组成原理/2-3浮点数的表示与计算">2-3浮点数的表示与计算</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/3-0存储系统1.html" title="计算机基础/计算机组成原理/3-0存储系统1">3-0存储系统1</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/3-0存储系统2.html" title="计算机基础/计算机组成原理/3-0存储系统2">3-0存储系统2</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/3-1存储器概述.html" title="计算机基础/计算机组成原理/3-1存储器概述">3-1存储器概述</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/3-2主存储器.html" title="计算机基础/计算机组成原理/3-2主存储器">3-2主存储器</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/3-3主存储器与CPU的连接.html" title="计算机基础/计算机组成原理/3-3主存储器与CPU的连接">3-3主存储器与CPU的连接</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/3-4外部存储器.html" title="计算机基础/计算机组成原理/3-4外部存储器">3-4外部存储器</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/3-5高速缓冲存储器.html" title="计算机基础/计算机组成原理/3-5高速缓冲存储器">3-5高速缓冲存储器</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/3-6虚拟存储器.html" title="计算机基础/计算机组成原理/3-6虚拟存储器">3-6虚拟存储器</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/4-0指令系统1.html" title="计算机基础/计算机组成原理/4-0指令系统1">4-0指令系统1</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/4-0指令系统2.html" title="计算机基础/计算机组成原理/4-0指令系统2">4-0指令系统2</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/4-1指令系统基础.html" title="计算机基础/计算机组成原理/4-1指令系统基础">4-1指令系统基础</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/4-2指令的寻址方式.html" title="计算机基础/计算机组成原理/4-2指令的寻址方式">4-2指令的寻址方式</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/4-3程序的机器级代码表.html" title="计算机基础/计算机组成原理/4-3程序的机器级代码表">4-3程序的机器级代码表</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/4-4CISC和RISC的基本概念.html" title="计算机基础/计算机组成原理/4-4CISC和RISC的基本概念">4-4CISC和RISC的基本概念</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-0中央处理器1.html" title="计算机基础/计算机组成原理/5-0中央处理器1">5-0中央处理器1</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-0中央处理器2.html" title="计算机基础/计算机组成原理/5-0中央处理器2">5-0中央处理器2</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-1CPU的功能和基本结构.html" title="计算机基础/计算机组成原理/5-1CPU的功能和基本结构">5-1CPU的功能和基本结构</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-2指令执行过程.html" title="计算机基础/计算机组成原理/5-2指令执行过程">5-2指令执行过程</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-3数据通路的功能和基本结构.html" title="计算机基础/计算机组成原理/5-3数据通路的功能和基本结构">5-3数据通路的功能和基本结构</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-4控制器的功能和工作原理.html" title="计算机基础/计算机组成原理/5-4控制器的功能和工作原理">5-4控制器的功能和工作原理</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-5异常和中断.html" title="计算机基础/计算机组成原理/5-5异常和中断">5-5异常和中断</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-6指令流水线.html" title="计算机基础/计算机组成原理/5-6指令流水线">5-6指令流水线</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/5-7多处理器的基本概念.html" title="计算机基础/计算机组成原理/5-7多处理器的基本概念">5-7多处理器的基本概念</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/6-0总线.html" title="计算机基础/计算机组成原理/6-0总线">6-0总线</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/6-1总线概述.html" title="计算机基础/计算机组成原理/6-1总线概述">6-1总线概述</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/6-2总线事务和定时.html" title="计算机基础/计算机组成原理/6-2总线事务和定时">6-2总线事务和定时</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/7-0输入输出系统.html" title="计算机基础/计算机组成原理/7-0输入输出系统">7-0输入输出系统</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/7-1IO系统基础概念.html" title="计算机基础/计算机组成原理/7-1IO系统基础概念">7-1IO系统基础概念</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/7-2IO接口.html" title="计算机基础/计算机组成原理/7-2IO接口">7-2IO接口</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/7-3IO方式.html" title="计算机基础/计算机组成原理/7-3IO方式">7-3IO方式</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/题/01计算机系统概述.html" title="计算机基础/计算机组成原理/题/01计算机系统概述">01计算机系统概述</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/题/02数据表示与运算.html" title="计算机基础/计算机组成原理/题/02数据表示与运算">02数据表示与运算</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/题/03存储系统.html" title="计算机基础/计算机组成原理/题/03存储系统">03存储系统</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/题/04指令系统.html" title="计算机基础/计算机组成原理/题/04指令系统">04指令系统</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/题/05指令系统.html" title="计算机基础/计算机组成原理/题/05指令系统">05指令系统</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/题/06总线.html" title="计算机基础/计算机组成原理/题/06总线">06总线</a>
+      <a class="note-chip" href="计算机基础/计算机组成原理/题/07IO系统.html" title="计算机基础/计算机组成原理/题/07IO系统">07IO系统</a>
+      <a class="note-chip" href="计算机基础/设计模式/单例模式.html" title="计算机基础/设计模式/单例模式">单例模式</a>
+      <a class="note-chip" href="计算机基础/设计模式/面向对象.html" title="计算机基础/设计模式/面向对象">面向对象</a>
+      <a class="note-chip" href="计算机基础/设计模式/设计模式.html" title="计算机基础/设计模式/设计模式">设计模式</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/复杂度分析.html" title="计算机基础/数据结构与算法/复杂度分析">复杂度分析</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/面试.html" title="计算机基础/数据结构与算法/面试">面试</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/00数据结构总览.html" title="计算机基础/数据结构与算法/数据结构/00数据结构总览">00数据结构总览</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/01基础数据结构.html" title="计算机基础/数据结构与算法/数据结构/01基础数据结构">01基础数据结构</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/02树/01树概念与性质.html" title="计算机基础/数据结构与算法/数据结构/02树/01树概念与性质">01树概念与性质</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/02树/02树结构实现.html" title="计算机基础/数据结构与算法/数据结构/02树/02树结构实现">02树结构实现</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/02树/03树遍历与性质求解.html" title="计算机基础/数据结构与算法/数据结构/02树/03树遍历与性质求解">03树遍历与性质求解</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/02树/04树路径与距离问题.html" title="计算机基础/数据结构与算法/数据结构/02树/04树路径与距离问题">04树路径与距离问题</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/02树/05树形DP.html" title="计算机基础/数据结构与算法/数据结构/02树/05树形DP">05树形DP</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/02树/06树的修改与重构.html" title="计算机基础/数据结构与算法/数据结构/02树/06树的修改与重构">06树的修改与重构</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/02树/07并查集.html" title="计算机基础/数据结构与算法/数据结构/02树/07并查集">07并查集</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/04区间.html" title="计算机基础/数据结构与算法/数据结构/04区间">04区间</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/05图/01存储结构与创建图.html" title="计算机基础/数据结构与算法/数据结构/05图/01存储结构与创建图">01存储结构与创建图</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/05图/02图遍历.html" title="计算机基础/数据结构与算法/数据结构/05图/02图遍历">02图遍历</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/05图/03图连通性与图结构.html" title="计算机基础/数据结构与算法/数据结构/05图/03图连通性与图结构">03图连通性与图结构</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/05图/04路径与最短路.html" title="计算机基础/数据结构与算法/数据结构/05图/04路径与最短路">04路径与最短路</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/05图/05最小生成树.html" title="计算机基础/数据结构与算法/数据结构/05图/05最小生成树">05最小生成树</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/05图/06拓扑排序与DAG.html" title="计算机基础/数据结构与算法/数据结构/05图/06拓扑排序与DAG">06拓扑排序与DAG</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/06缓存.html" title="计算机基础/数据结构与算法/数据结构/06缓存">06缓存</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/数据结构/07工程常用.html" title="计算机基础/数据结构与算法/数据结构/07工程常用">07工程常用</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/思维框架.html" title="计算机基础/数据结构与算法/思维框架">思维框架</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/算法/01滑动窗口.html" title="计算机基础/数据结构与算法/算法/01滑动窗口">01滑动窗口</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/算法/典型题.html" title="计算机基础/数据结构与算法/算法/典型题">典型题</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/算法/排序，查找，选择.html" title="计算机基础/数据结构与算法/算法/排序，查找，选择">排序，查找，选择</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/算法/数学问题.html" title="计算机基础/数据结构与算法/算法/数学问题">数学问题</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/算法/算法模板.html" title="计算机基础/数据结构与算法/算法/算法模板">算法模板</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/算法/算法小技巧.html" title="计算机基础/数据结构与算法/算法/算法小技巧">算法小技巧</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/算法/算法总览.html" title="计算机基础/数据结构与算法/算法/算法总览">算法总览</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/算法/A星算法.html" title="计算机基础/数据结构与算法/算法/A星算法">A星算法</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/迭代器.html" title="计算机基础/数据结构与算法/STL/迭代器">迭代器</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/仿函数.html" title="计算机基础/数据结构与算法/STL/仿函数">仿函数</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/复杂度分析及应用场景.html" title="计算机基础/数据结构与算法/STL/复杂度分析及应用场景">复杂度分析及应用场景</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/关联式容器.html" title="计算机基础/数据结构与算法/STL/关联式容器">关联式容器</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/空间配置器.html" title="计算机基础/数据结构与算法/STL/空间配置器">空间配置器</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/配接器.html" title="计算机基础/数据结构与算法/STL/配接器">配接器</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/序列式容器.html" title="计算机基础/数据结构与算法/STL/序列式容器">序列式容器</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Array.html" title="计算机基础/数据结构与算法/STL/Array">Array</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Auto_ptr.html" title="计算机基础/数据结构与算法/STL/Auto_ptr">Auto_ptr</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Deque.html" title="计算机基础/数据结构与算法/STL/Deque">Deque</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/ForwardList.html" title="计算机基础/数据结构与算法/STL/ForwardList">ForwardList</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/List.html" title="计算机基础/数据结构与算法/STL/List">List</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Map.html" title="计算机基础/数据结构与算法/STL/Map">Map</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Multimap.html" title="计算机基础/数据结构与算法/STL/Multimap">Multimap</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Multiset.html" title="计算机基础/数据结构与算法/STL/Multiset">Multiset</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/PriorityQueue.html" title="计算机基础/数据结构与算法/STL/PriorityQueue">PriorityQueue</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Queue.html" title="计算机基础/数据结构与算法/STL/Queue">Queue</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Set.html" title="计算机基础/数据结构与算法/STL/Set">Set</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Shared_ptr.html" title="计算机基础/数据结构与算法/STL/Shared_ptr">Shared_ptr</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Span.html" title="计算机基础/数据结构与算法/STL/Span">Span</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Stack.html" title="计算机基础/数据结构与算法/STL/Stack">Stack</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/String.html" title="计算机基础/数据结构与算法/STL/String">String</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Unique_ptr.html" title="计算机基础/数据结构与算法/STL/Unique_ptr">Unique_ptr</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/UnorderMap.html" title="计算机基础/数据结构与算法/STL/UnorderMap">UnorderMap</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/UnorderSet.html" title="计算机基础/数据结构与算法/STL/UnorderSet">UnorderSet</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Vector.html" title="计算机基础/数据结构与算法/STL/Vector">Vector</a>
+      <a class="note-chip" href="计算机基础/数据结构与算法/STL/Weak_ptr.html" title="计算机基础/数据结构与算法/STL/Weak_ptr">Weak_ptr</a>
+      <a class="note-chip" href="计算机基础/数据库/基础/数据库基础.html" title="计算机基础/数据库/基础/数据库基础">数据库基础</a>
+      <a class="note-chip" href="计算机基础/数据库/基础/README.html" title="计算机基础/数据库/基础/README">基础</a>
+      <a class="note-chip" href="计算机基础/数据库/MongoDB/README.html" title="计算机基础/数据库/MongoDB/README">MongoDB</a>
+      <a class="note-chip" href="计算机基础/数据库/MySQL/MySQL.html" title="计算机基础/数据库/MySQL/MySQL">MySQL</a>
+      <a class="note-chip" href="计算机基础/数据库/MySQL/README.html" title="计算机基础/数据库/MySQL/README">MySQL</a>
+      <a class="note-chip" href="计算机基础/数据库/Redis/README.html" title="计算机基础/数据库/Redis/README">Redis</a>
+      <a class="note-chip" href="计算机基础/Web相关/缓存技术/README.html" title="计算机基础/Web相关/缓存技术/README">缓存技术</a>
+      <a class="note-chip" href="计算机基础/Web相关/容器/README.html" title="计算机基础/Web相关/容器/README">容器</a>
+      <a class="note-chip" href="计算机基础/Web相关/微服务/README.html" title="计算机基础/Web相关/微服务/README">微服务</a>
+      <a class="note-chip" href="计算机基础/Web相关/消息队列/README.html" title="计算机基础/Web相关/消息队列/README">消息队列</a>
+      <a class="note-chip" href="计算机基础/Web相关/README.html" title="计算机基础/Web相关/README">Web相关</a>
+      <a class="note-chip" href="计算机基础/Web相关/Web编程/JavaWeb.html" title="计算机基础/Web相关/Web编程/JavaWeb">JavaWeb</a>
+      <a class="note-chip" href="计算机基础/Web相关/Web编程/README.html" title="计算机基础/Web相关/Web编程/README">Web编程</a>
+    </div>
+  </section>
 
-## 📁 编程语言（76 篇）
+  <section class="notes-category" id="notes-3">
+    <div class="notes-category-head">
+      <span class="notes-cat-icon">🎨</span>
+      <h2 class="notes-cat-title">图形学</h2>
+      <span class="notes-cat-count">58 篇</span>
+    </div>
+    <div class="notes-cat-body">
+      <a class="note-chip" href="图形学/12计算机基础/121编程语言/ShaderLab/光照Lighting.html" title="图形学/12计算机基础/121编程语言/ShaderLab/光照Lighting">光照Lighting</a>
+      <a class="note-chip" href="图形学/12计算机基础/121编程语言/ShaderLab/README.html" title="图形学/12计算机基础/121编程语言/ShaderLab/README">ShaderLab</a>
+      <a class="note-chip" href="图形学/12计算机基础/121编程语言/ShaderLab/UnityCG.html" title="图形学/12计算机基础/121编程语言/ShaderLab/UnityCG">UnityCG</a>
+      <a class="note-chip" href="图形学/12计算机基础/123图形API/OpenGL/01OpenGL配置.html" title="图形学/12计算机基础/123图形API/OpenGL/01OpenGL配置">01OpenGL配置</a>
+      <a class="note-chip" href="图形学/12计算机基础/123图形API/OpenGL/02创建窗口.html" title="图形学/12计算机基础/123图形API/OpenGL/02创建窗口">02创建窗口</a>
+      <a class="note-chip" href="图形学/12计算机基础/123图形API/OpenGL/03顶点数据管理.html" title="图形学/12计算机基础/123图形API/OpenGL/03顶点数据管理">03顶点数据管理</a>
+      <a class="note-chip" href="图形学/12计算机基础/123图形API/OpenGL/04着色器.html" title="图形学/12计算机基础/123图形API/OpenGL/04着色器">04着色器</a>
+      <a class="note-chip" href="图形学/12计算机基础/123图形API/OpenGL/05贴图.html" title="图形学/12计算机基础/123图形API/OpenGL/05贴图">05贴图</a>
+      <a class="note-chip" href="图形学/21几何处理/211几何表示/1基础表示方法.html" title="图形学/21几何处理/211几何表示/1基础表示方法">1基础表示方法</a>
+      <a class="note-chip" href="图形学/21几何处理/211几何表示/2层次化与高级表示.html" title="图形学/21几何处理/211几何表示/2层次化与高级表示">2层次化与高级表示</a>
+      <a class="note-chip" href="图形学/21几何处理/211几何表示/3几何表示的存储与对比技术.html" title="图形学/21几何处理/211几何表示/3几何表示的存储与对比技术">3几何表示的存储与对比技术</a>
+      <a class="note-chip" href="图形学/21几何处理/211几何表示/README.html" title="图形学/21几何处理/211几何表示/README">211几何表示</a>
+      <a class="note-chip" href="图形学/21几何处理/212坐标变换/README.html" title="图形学/21几何处理/212坐标变换/README">212坐标变换</a>
+      <a class="note-chip" href="图形学/21几何处理/213网格处理/README.html" title="图形学/21几何处理/213网格处理/README">213网格处理</a>
+      <a class="note-chip" href="图形学/21几何处理/214碰撞检测/README.html" title="图形学/21几何处理/214碰撞检测/README">214碰撞检测</a>
+      <a class="note-chip" href="图形学/22渲染管线/221顶点处理/README.html" title="图形学/22渲染管线/221顶点处理/README">221顶点处理</a>
+      <a class="note-chip" href="图形学/22渲染管线/222光栅化/1基础概念与核心任务.html" title="图形学/22渲染管线/222光栅化/1基础概念与核心任务">1基础概念与核心任务</a>
+      <a class="note-chip" href="图形学/22渲染管线/222光栅化/2扫描转换算法.html" title="图形学/22渲染管线/222光栅化/2扫描转换算法">2扫描转换算法</a>
+      <a class="note-chip" href="图形学/22渲染管线/222光栅化/3属性插值与透视校正.html" title="图形学/22渲染管线/222光栅化/3属性插值与透视校正">3属性插值与透视校正</a>
+      <a class="note-chip" href="图形学/22渲染管线/222光栅化/4可见性处理与深度缓冲.html" title="图形学/22渲染管线/222光栅化/4可见性处理与深度缓冲">4可见性处理与深度缓冲</a>
+      <a class="note-chip" href="图形学/22渲染管线/222光栅化/5抗锯齿技术.html" title="图形学/22渲染管线/222光栅化/5抗锯齿技术">5抗锯齿技术</a>
+      <a class="note-chip" href="图形学/22渲染管线/222光栅化/6硬件加速与优化技术.html" title="图形学/22渲染管线/222光栅化/6硬件加速与优化技术">6硬件加速与优化技术</a>
+      <a class="note-chip" href="图形学/22渲染管线/222光栅化/README.html" title="图形学/22渲染管线/222光栅化/README">222光栅化</a>
+      <a class="note-chip" href="图形学/22渲染管线/223像素处理/README.html" title="图形学/22渲染管线/223像素处理/README">223像素处理</a>
+      <a class="note-chip" href="图形学/22渲染管线/224后处理链/README.html" title="图形学/22渲染管线/224后处理链/README">224后处理链</a>
+      <a class="note-chip" href="图形学/22渲染管线/225GPU-Driven管线/README.html" title="图形学/22渲染管线/225GPU-Driven管线/README">225GPU-Driven管线</a>
+      <a class="note-chip" href="图形学/23光照与材质/231微表面模型/README.html" title="图形学/23光照与材质/231微表面模型/README">231微表面模型</a>
+      <a class="note-chip" href="图形学/23光照与材质/232光源系统/README.html" title="图形学/23光照与材质/232光源系统/README">232光源系统</a>
+      <a class="note-chip" href="图形学/23光照与材质/233阴影技术/README.html" title="图形学/23光照与材质/233阴影技术/README">233阴影技术</a>
+      <a class="note-chip" href="图形学/23光照与材质/234全局光照/README.html" title="图形学/23光照与材质/234全局光照/README">234全局光照</a>
+      <a class="note-chip" href="图形学/24物理模拟/241刚体/README.html" title="图形学/24物理模拟/241刚体/README">241刚体</a>
+      <a class="note-chip" href="图形学/24物理模拟/242软体/README.html" title="图形学/24物理模拟/242软体/README">242软体</a>
+      <a class="note-chip" href="图形学/24物理模拟/243流体/README.html" title="图形学/24物理模拟/243流体/README">243流体</a>
+      <a class="note-chip" href="图形学/24物理模拟/244布料/README.html" title="图形学/24物理模拟/244布料/README">244布料</a>
+      <a class="note-chip" href="图形学/31实时渲染/01简介.html" title="图形学/31实时渲染/01简介">01简介</a>
+      <a class="note-chip" href="图形学/31实时渲染/02图形渲染管线.html" title="图形学/31实时渲染/02图形渲染管线">02图形渲染管线</a>
+      <a class="note-chip" href="图形学/31实时渲染/03图形处理单元.html" title="图形学/31实时渲染/03图形处理单元">03图形处理单元</a>
+      <a class="note-chip" href="图形学/31实时渲染/README.html" title="图形学/31实时渲染/README">31实时渲染</a>
+      <a class="note-chip" href="图形学/32离线渲染/README.html" title="图形学/32离线渲染/README">32离线渲染</a>
+      <a class="note-chip" href="图形学/33非真实渲染/仿米游渲染/综述.html" title="图形学/33非真实渲染/仿米游渲染/综述">综述</a>
+      <a class="note-chip" href="图形学/33非真实渲染/README.html" title="图形学/33非真实渲染/README">33非真实渲染</a>
+      <a class="note-chip" href="图形学/34光线追踪/RayTracingInOneWeekend.html" title="图形学/34光线追踪/RayTracingInOneWeekend">RayTracingInOneWeekend</a>
+      <a class="note-chip" href="图形学/34光线追踪/README.html" title="图形学/34光线追踪/README">34光线追踪</a>
+      <a class="note-chip" href="图形学/全局光照/全局光照技术笔记.html" title="图形学/全局光照/全局光照技术笔记">全局光照技术笔记</a>
+      <a class="note-chip" href="图形学/现代图形学/图元渲染.html" title="图形学/现代图形学/图元渲染">图元渲染</a>
+      <a class="note-chip" href="图形学/Games101/10Color.html" title="图形学/Games101/10Color">10Color</a>
+      <a class="note-chip" href="图形学/Games101/11Animation.html" title="图形学/Games101/11Animation">11Animation</a>
+      <a class="note-chip" href="图形学/Games101/1Transform.html" title="图形学/Games101/1Transform">1Transform</a>
+      <a class="note-chip" href="图形学/Games101/2Rasterization.html" title="图形学/Games101/2Rasterization">2Rasterization</a>
+      <a class="note-chip" href="图形学/Games101/3Shading.html" title="图形学/Games101/3Shading">3Shading</a>
+      <a class="note-chip" href="图形学/Games101/4Texture.html" title="图形学/Games101/4Texture">4Texture</a>
+      <a class="note-chip" href="图形学/Games101/5Geometry.html" title="图形学/Games101/5Geometry">5Geometry</a>
+      <a class="note-chip" href="图形学/Games101/6RayTracing.html" title="图形学/Games101/6RayTracing">6RayTracing</a>
+      <a class="note-chip" href="图形学/Games101/7Materials.html" title="图形学/Games101/7Materials">7Materials</a>
+      <a class="note-chip" href="图形学/Games101/8AdvancedTopic.html" title="图形学/Games101/8AdvancedTopic">8AdvancedTopic</a>
+      <a class="note-chip" href="图形学/Games101/9Camera.html" title="图形学/Games101/9Camera">9Camera</a>
+      <a class="note-chip" href="图形学/SSGI/SSGI简介.html" title="图形学/SSGI/SSGI简介">SSGI简介</a>
+      <a class="note-chip" href="图形学/SSGI/SSGIUnity实现.html" title="图形学/SSGI/SSGIUnity实现">SSGIUnity实现</a>
+    </div>
+  </section>
 
-- [01Csharp基础上](编程语言/Csharp/01Csharp基础上.html)
-- [02Csharp基础下](编程语言/Csharp/02Csharp基础下.html)
-- [03-1Csharp3.0上](编程语言/Csharp/03-1Csharp3.0上.html)
-- [03-2Csharp3.0下](编程语言/Csharp/03-2Csharp3.0下.html)
-- [03-3CsharpLINQ](编程语言/Csharp/03-3CsharpLINQ.html)
-- [03Csharp集合](编程语言/Csharp/03Csharp集合.html)
-- [04Csharp泛型](编程语言/Csharp/04Csharp泛型.html)
-- [05Csharp异常处理](编程语言/Csharp/05Csharp异常处理.html)
-- [06Csharp-委托与事件](编程语言/Csharp/06Csharp-委托与事件.html)
-- [07Csharp反射](编程语言/Csharp/07Csharp反射.html)
-- [08Csharp内存管理](编程语言/Csharp/08Csharp内存管理.html)
-- [09Csharp垃圾回收](编程语言/Csharp/09Csharp垃圾回收.html)
-- [10Csharp多线程](编程语言/Csharp/10Csharp多线程.html)
-- [11Csharp特性](编程语言/Csharp/11Csharp特性.html)
-- [12Csharp2.0](编程语言/Csharp/12Csharp2.0.html)
-- [README](编程语言/Csharp/README.html)
-- [八股](编程语言/Csharp/八股.html)
-- [README](编程语言/Java/README.html)
-- [Lua](编程语言/Lua/Lua.html)
-- [Lua基础](编程语言/Lua/Lua基础.html)
-- [Lua进阶](编程语言/Lua/Lua进阶.html)
-- [xLua](编程语言/Lua/xLua.html)
-- [xLua背包](编程语言/Lua/xLua背包.html)
-- [README](编程语言/README.html)
-- [标准库头文件](编程语言/cpp/01头文件/标准库头文件.html)
-- [01基础语法与关键字](编程语言/cpp/03语言/01基础语法与关键字.html)
-- [02数据类型与内存](编程语言/cpp/03语言/02数据类型与内存.html)
-- [04面向对象编程](编程语言/cpp/03语言/04面向对象编程.html)
-- [05模板与泛型编程01](编程语言/cpp/03语言/05模板与泛型编程01.html)
-- [05模板与泛型编程02](编程语言/cpp/03语言/05模板与泛型编程02.html)
-- [05模板与泛型编程03](编程语言/cpp/03语言/05模板与泛型编程03.html)
-- [07异常处理与错误管理](编程语言/cpp/03语言/07异常处理与错误管理.html)
-- [Deque - 副本 (2)](编程语言/cpp/06容器库/Deque - 副本 (2).html)
-- [Deque - 副本 (3)](编程语言/cpp/06容器库/Deque - 副本 (3).html)
-- [Deque - 副本 (4)](编程语言/cpp/06容器库/Deque - 副本 (4).html)
-- [Deque - 副本 (5)](编程语言/cpp/06容器库/Deque - 副本 (5).html)
-- [Deque - 副本 (6)](编程语言/cpp/06容器库/Deque - 副本 (6).html)
-- [STL](编程语言/cpp/06容器库/STL.html)
-- [array](编程语言/cpp/06容器库/array.html)
-- [deque](编程语言/cpp/06容器库/deque.html)
-- [forward_list](编程语言/cpp/06容器库/forward_list.html)
-- [list](编程语言/cpp/06容器库/list.html)
-- [vector](编程语言/cpp/06容器库/vector.html)
-- [容器库](编程语言/cpp/06容器库/容器库.html)
-- [00对象模型](编程语言/cpp/20对象模型/00对象模型.html)
-- [01关于对象](编程语言/cpp/20对象模型/01关于对象.html)
-- [对象模型相关面试题](编程语言/cpp/20对象模型/对象模型相关面试题.html)
-- [CMake构建系统](编程语言/cpp/CMake构建系统.html)
-- [EffectiveC++](编程语言/cpp/EffectiveC++.html)
-- [README](编程语言/cpp/README.html)
-- [1HelloWorld](编程语言/cpp/old/1HelloWorld.html)
-- [2入门](编程语言/cpp/old/2入门.html)
-- [3变量](编程语言/cpp/old/3变量.html)
-- [4函数](编程语言/cpp/old/4函数.html)
-- [5类与对象](编程语言/cpp/old/5类与对象.html)
-- [6继承与多态](编程语言/cpp/old/6继承与多态.html)
-- [7模板与泛型编程](编程语言/cpp/old/7模板与泛型编程.html)
-- [C++11-Lambda](编程语言/cpp/现代C++/C++11-Lambda.html)
-- [C++11-函数式编程](编程语言/cpp/现代C++/C++11-函数式编程.html)
-- [C++11-右值引用](编程语言/cpp/现代C++/C++11-右值引用.html)
-- [C++11-智能指针](编程语言/cpp/现代C++/C++11-智能指针.html)
-- [C++11上](编程语言/cpp/现代C++/C++11上.html)
-- [C++11下](编程语言/cpp/现代C++/C++11下.html)
-- [C++14上](编程语言/cpp/现代C++/C++14上.html)
-- [C++14下](编程语言/cpp/现代C++/C++14下.html)
-- [C++17上](编程语言/cpp/现代C++/C++17上.html)
-- [C++17下](编程语言/cpp/现代C++/C++17下.html)
-- [C++17标准库上](编程语言/cpp/现代C++/C++17标准库上.html)
-- [C++17标准库下](编程语言/cpp/现代C++/C++17标准库下.html)
-- [多线程上](编程语言/cpp/现代C++/多线程上.html)
-- [多线程下](编程语言/cpp/现代C++/多线程下.html)
-- [属性](编程语言/cpp/现代C++/属性.html)
-- [聚合体](编程语言/cpp/现代C++/聚合体.html)
-- [面向对象](编程语言/cpp/面向对象.html)
-- [未分类](编程语言/cpp/面试/未分类.html)
-- [面向对象](编程语言/cpp/面试/面向对象.html)
+  <section class="notes-category" id="notes-4">
+    <div class="notes-category-head">
+      <span class="notes-cat-icon">🎮</span>
+      <h2 class="notes-cat-title">游戏引擎</h2>
+      <span class="notes-cat-count">34 篇</span>
+    </div>
+    <div class="notes-cat-body">
+      <a class="note-chip" href="游戏引擎/框架/八股.html" title="游戏引擎/框架/八股">八股</a>
+      <a class="note-chip" href="游戏引擎/框架/场景题.html" title="游戏引擎/框架/场景题">场景题</a>
+      <a class="note-chip" href="游戏引擎/框架/单元测试.html" title="游戏引擎/框架/单元测试">单元测试</a>
+      <a class="note-chip" href="游戏引擎/框架/事件系统.html" title="游戏引擎/框架/事件系统">事件系统</a>
+      <a class="note-chip" href="游戏引擎/框架/依赖注入.html" title="游戏引擎/框架/依赖注入">依赖注入</a>
+      <a class="note-chip" href="游戏引擎/框架/GAS.html" title="游戏引擎/框架/GAS">GAS</a>
+      <a class="note-chip" href="游戏引擎/框架/MVVM.html" title="游戏引擎/框架/MVVM">MVVM</a>
+      <a class="note-chip" href="游戏引擎/Unity/01Unity核心上.html" title="游戏引擎/Unity/01Unity核心上">01Unity核心上</a>
+      <a class="note-chip" href="游戏引擎/Unity/02Unity核心中.html" title="游戏引擎/Unity/02Unity核心中">02Unity核心中</a>
+      <a class="note-chip" href="游戏引擎/Unity/03Unity核心下.html" title="游戏引擎/Unity/03Unity核心下">03Unity核心下</a>
+      <a class="note-chip" href="游戏引擎/Unity/内存管理八股.html" title="游戏引擎/Unity/内存管理八股">内存管理八股</a>
+      <a class="note-chip" href="游戏引擎/Unity/热更新/AssetBundle.html" title="游戏引擎/Unity/热更新/AssetBundle">AssetBundle</a>
+      <a class="note-chip" href="游戏引擎/Unity/热更新/Hotfix.html" title="游戏引擎/Unity/热更新/Hotfix">Hotfix</a>
+      <a class="note-chip" href="游戏引擎/Unity/Core/Core.html" title="游戏引擎/Unity/Core/Core">Core</a>
+      <a class="note-chip" href="游戏引擎/Unity/Render/未归类.html" title="游戏引擎/Unity/Render/未归类">未归类</a>
+      <a class="note-chip" href="游戏引擎/Unity/ScriptableObject.html" title="游戏引擎/Unity/ScriptableObject">ScriptableObject</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity编辑器.html" title="游戏引擎/Unity/Unity编辑器">Unity编辑器</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity大纲参考.html" title="游戏引擎/Unity/Unity大纲参考">Unity大纲参考</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity内存管理.html" title="游戏引擎/Unity/Unity内存管理">Unity内存管理</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity生命周期.html" title="游戏引擎/Unity/Unity生命周期">Unity生命周期</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity网络.html" title="游戏引擎/Unity/Unity网络">Unity网络</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity委托与事件.html" title="游戏引擎/Unity/Unity委托与事件">Unity委托与事件</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/01脚本系统.html" title="游戏引擎/Unity/Unity子系统/01脚本系统">01脚本系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/02渲染系统.html" title="游戏引擎/Unity/Unity子系统/02渲染系统">02渲染系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/03物理系统.html" title="游戏引擎/Unity/Unity子系统/03物理系统">03物理系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/04动画系统.html" title="游戏引擎/Unity/Unity子系统/04动画系统">04动画系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/05UI系统.html" title="游戏引擎/Unity/Unity子系统/05UI系统">05UI系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/06音频系统.html" title="游戏引擎/Unity/Unity子系统/06音频系统">06音频系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/07输入系统.html" title="游戏引擎/Unity/Unity子系统/07输入系统">07输入系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/08导航系统.html" title="游戏引擎/Unity/Unity子系统/08导航系统">08导航系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/Unity子系统/09网络系统.html" title="游戏引擎/Unity/Unity子系统/09网络系统">09网络系统</a>
+      <a class="note-chip" href="游戏引擎/Unity/UnityShaderLab.html" title="游戏引擎/Unity/UnityShaderLab">UnityShaderLab</a>
+      <a class="note-chip" href="游戏引擎/Unity/UnityUGUI.html" title="游戏引擎/Unity/UnityUGUI">UnityUGUI</a>
+      <a class="note-chip" href="游戏引擎/Unity/Zenject.html" title="游戏引擎/Unity/Zenject">Zenject</a>
+    </div>
+  </section>
 
-## 📁 计算机基础（207 篇）
+  <section class="notes-category" id="notes-5">
+    <div class="notes-category-head">
+      <span class="notes-cat-icon">📄</span>
+      <h2 class="notes-cat-title">其他</h2>
+      <span class="notes-cat-count">1 篇</span>
+    </div>
+    <div class="notes-cat-body">
+      <a class="note-chip" href="Plan.html" title="Plan">Plan</a>
+    </div>
+  </section>
 
-- [README](计算机基础/README.html)
-- [README](计算机基础/Web相关/README.html)
-- [JavaWeb](计算机基础/Web相关/Web编程/JavaWeb.html)
-- [README](计算机基础/Web相关/Web编程/README.html)
-- [README](计算机基础/Web相关/容器/README.html)
-- [README](计算机基础/Web相关/微服务/README.html)
-- [README](计算机基础/Web相关/消息队列/README.html)
-- [README](计算机基础/Web相关/缓存技术/README.html)
-- [01Html](计算机基础/前端/01Html.html)
-- [02CSS](计算机基础/前端/02CSS.html)
-- [03JavaScript](计算机基础/前端/03JavaScript.html)
-- [04Vue](计算机基础/前端/04Vue.html)
-- [05Ajax](计算机基础/前端/05Ajax.html)
-- [README](计算机基础/前端/README.html)
-- [1-0操作系统概述](计算机基础/操作系统/1-0操作系统概述.html)
-- [1-1操作系统基础](计算机基础/操作系统/1-1操作系统基础.html)
-- [1-2运行环境](计算机基础/操作系统/1-2运行环境.html)
-- [1-3操作系统结构及虚拟机](计算机基础/操作系统/1-3操作系统结构及虚拟机.html)
-- [2-0进程与线程](计算机基础/操作系统/2-0进程与线程.html)
-- [2-1进程](计算机基础/操作系统/2-1进程.html)
-- [2-2线程](计算机基础/操作系统/2-2线程.html)
-- [2-3CPU调度](计算机基础/操作系统/2-3CPU调度.html)
-- [2-4同步与互斥](计算机基础/操作系统/2-4同步与互斥.html)
-- [2-5死锁](计算机基础/操作系统/2-5死锁.html)
-- [3-0内存管理](计算机基础/操作系统/3-0内存管理.html)
-- [3-1内存管理基础](计算机基础/操作系统/3-1内存管理基础.html)
-- [3-2连续分配管理](计算机基础/操作系统/3-2连续分配管理.html)
-- [3-3虚拟内存管理](计算机基础/操作系统/3-3虚拟内存管理.html)
-- [4-0文件管理](计算机基础/操作系统/4-0文件管理.html)
-- [4-1文件管理基础](计算机基础/操作系统/4-1文件管理基础.html)
-- [4-2目录](计算机基础/操作系统/4-2目录.html)
-- [4-3文件系统](计算机基础/操作系统/4-3文件系统.html)
-- [5-0IO管理](计算机基础/操作系统/5-0IO管理.html)
-- [5-1IO管理基础](计算机基础/操作系统/5-1IO管理基础.html)
-- [5-2设备独立性软件](计算机基础/操作系统/5-2设备独立性软件.html)
-- [5-3磁盘和固态硬盘](计算机基础/操作系统/5-3磁盘和固态硬盘.html)
-- [CPU调度](计算机基础/操作系统/CPU调度.html)
-- [IO管理](计算机基础/操作系统/IO管理.html)
-- [ssm](计算机基础/操作系统/Linux/ssm.html)
-- [README](计算机基础/操作系统/README.html)
-- [02进程与线程](计算机基础/操作系统/例题/02进程与线程.html)
-- [03内存管理](计算机基础/操作系统/例题/03内存管理.html)
-- [04文件管理](计算机基础/操作系统/例题/04文件管理.html)
-- [05IO管理](计算机基础/操作系统/例题/05IO管理.html)
-- [八股](计算机基础/操作系统/八股.html)
-- [内存管理](计算机基础/操作系统/内存管理.html)
-- [文件管理](计算机基础/操作系统/文件管理.html)
-- [进程与线程笔记](计算机基础/操作系统/进程与线程笔记.html)
-- [README](计算机基础/数据库/MongoDB/README.html)
-- [MySQL](计算机基础/数据库/MySQL/MySQL.html)
-- [README](计算机基础/数据库/MySQL/README.html)
-- [README](计算机基础/数据库/README.html)
-- [README](计算机基础/数据库/Redis/README.html)
-- [README](计算机基础/数据库/基础/README.html)
-- [数据库基础](计算机基础/数据库/基础/数据库基础.html)
-- [README](计算机基础/数据结构与算法/README.html)
-- [Array](计算机基础/数据结构与算法/STL/Array.html)
-- [Auto_ptr](计算机基础/数据结构与算法/STL/Auto_ptr.html)
-- [Deque](计算机基础/数据结构与算法/STL/Deque.html)
-- [ForwardList](计算机基础/数据结构与算法/STL/ForwardList.html)
-- [List](计算机基础/数据结构与算法/STL/List.html)
-- [Map](计算机基础/数据结构与算法/STL/Map.html)
-- [Multimap](计算机基础/数据结构与算法/STL/Multimap.html)
-- [Multiset](计算机基础/数据结构与算法/STL/Multiset.html)
-- [PriorityQueue](计算机基础/数据结构与算法/STL/PriorityQueue.html)
-- [Queue](计算机基础/数据结构与算法/STL/Queue.html)
-- [Set](计算机基础/数据结构与算法/STL/Set.html)
-- [Shared_ptr](计算机基础/数据结构与算法/STL/Shared_ptr.html)
-- [Span](计算机基础/数据结构与算法/STL/Span.html)
-- [Stack](计算机基础/数据结构与算法/STL/Stack.html)
-- [String](计算机基础/数据结构与算法/STL/String.html)
-- [Unique_ptr](计算机基础/数据结构与算法/STL/Unique_ptr.html)
-- [UnorderMap](计算机基础/数据结构与算法/STL/UnorderMap.html)
-- [UnorderSet](计算机基础/数据结构与算法/STL/UnorderSet.html)
-- [Vector](计算机基础/数据结构与算法/STL/Vector.html)
-- [Weak_ptr](计算机基础/数据结构与算法/STL/Weak_ptr.html)
-- [仿函数](计算机基础/数据结构与算法/STL/仿函数.html)
-- [关联式容器](计算机基础/数据结构与算法/STL/关联式容器.html)
-- [复杂度分析及应用场景](计算机基础/数据结构与算法/STL/复杂度分析及应用场景.html)
-- [序列式容器](计算机基础/数据结构与算法/STL/序列式容器.html)
-- [空间配置器](计算机基础/数据结构与算法/STL/空间配置器.html)
-- [迭代器](计算机基础/数据结构与算法/STL/迭代器.html)
-- [配接器](计算机基础/数据结构与算法/STL/配接器.html)
-- [复杂度分析](计算机基础/数据结构与算法/复杂度分析.html)
-- [思维框架](计算机基础/数据结构与算法/思维框架.html)
-- [00数据结构总览](计算机基础/数据结构与算法/数据结构/00数据结构总览.html)
-- [01基础数据结构](计算机基础/数据结构与算法/数据结构/01基础数据结构.html)
-- [01树概念与性质](计算机基础/数据结构与算法/数据结构/02树/01树概念与性质.html)
-- [02树结构实现](计算机基础/数据结构与算法/数据结构/02树/02树结构实现.html)
-- [03树遍历与性质求解](计算机基础/数据结构与算法/数据结构/02树/03树遍历与性质求解.html)
-- [04树路径与距离问题](计算机基础/数据结构与算法/数据结构/02树/04树路径与距离问题.html)
-- [05树形DP](计算机基础/数据结构与算法/数据结构/02树/05树形DP.html)
-- [06树的修改与重构](计算机基础/数据结构与算法/数据结构/02树/06树的修改与重构.html)
-- [07并查集](计算机基础/数据结构与算法/数据结构/02树/07并查集.html)
-- [04区间](计算机基础/数据结构与算法/数据结构/04区间.html)
-- [01存储结构与创建图](计算机基础/数据结构与算法/数据结构/05图/01存储结构与创建图.html)
-- [02图遍历](计算机基础/数据结构与算法/数据结构/05图/02图遍历.html)
-- [03图连通性与图结构](计算机基础/数据结构与算法/数据结构/05图/03图连通性与图结构.html)
-- [04路径与最短路](计算机基础/数据结构与算法/数据结构/05图/04路径与最短路.html)
-- [05最小生成树](计算机基础/数据结构与算法/数据结构/05图/05最小生成树.html)
-- [06拓扑排序与DAG](计算机基础/数据结构与算法/数据结构/05图/06拓扑排序与DAG.html)
-- [06缓存](计算机基础/数据结构与算法/数据结构/06缓存.html)
-- [07工程常用](计算机基础/数据结构与算法/数据结构/07工程常用.html)
-- [01滑动窗口](计算机基础/数据结构与算法/算法/01滑动窗口.html)
-- [A星算法](计算机基础/数据结构与算法/算法/A星算法.html)
-- [典型题](计算机基础/数据结构与算法/算法/典型题.html)
-- [排序，查找，选择](计算机基础/数据结构与算法/算法/排序，查找，选择.html)
-- [数学问题](计算机基础/数据结构与算法/算法/数学问题.html)
-- [算法小技巧](计算机基础/数据结构与算法/算法/算法小技巧.html)
-- [算法总览](计算机基础/数据结构与算法/算法/算法总览.html)
-- [算法模板](计算机基础/数据结构与算法/算法/算法模板.html)
-- [面试](计算机基础/数据结构与算法/面试.html)
-- [01语言及文法](计算机基础/编译原理/01语言及文法.html)
-- [02词法分析](计算机基础/编译原理/02词法分析.html)
-- [03语法分析](计算机基础/编译原理/03语法分析.html)
-- [04语义分析](计算机基础/编译原理/04语义分析.html)
-- [05符号表管理](计算机基础/编译原理/05符号表管理.html)
-- [06运行环境](计算机基础/编译原理/06运行环境.html)
-- [07代码优化](计算机基础/编译原理/07代码优化.html)
-- [08代码生成](计算机基础/编译原理/08代码生成.html)
-- [README](计算机基础/编译原理/README.html)
-- [1-0计算机系统概述](计算机基础/计算机组成原理/1-0计算机系统概述.html)
-- [1-1计算机发展历程](计算机基础/计算机组成原理/1-1计算机发展历程.html)
-- [1-2计算机系统的层次结构](计算机基础/计算机组成原理/1-2计算机系统的层次结构.html)
-- [1-3计算机的性能指标](计算机基础/计算机组成原理/1-3计算机的性能指标.html)
-- [2-0数据的表示和运算](计算机基础/计算机组成原理/2-0数据的表示和运算.html)
-- [2-1数制与码制](计算机基础/计算机组成原理/2-1数制与码制.html)
-- [2-2运算方法与运算电路](计算机基础/计算机组成原理/2-2运算方法与运算电路.html)
-- [2-3浮点数的表示与计算](计算机基础/计算机组成原理/2-3浮点数的表示与计算.html)
-- [3-0存储系统1](计算机基础/计算机组成原理/3-0存储系统1.html)
-- [3-0存储系统2](计算机基础/计算机组成原理/3-0存储系统2.html)
-- [3-1存储器概述](计算机基础/计算机组成原理/3-1存储器概述.html)
-- [3-2主存储器](计算机基础/计算机组成原理/3-2主存储器.html)
-- [3-3主存储器与CPU的连接](计算机基础/计算机组成原理/3-3主存储器与CPU的连接.html)
-- [3-4外部存储器](计算机基础/计算机组成原理/3-4外部存储器.html)
-- [3-5高速缓冲存储器](计算机基础/计算机组成原理/3-5高速缓冲存储器.html)
-- [3-6虚拟存储器](计算机基础/计算机组成原理/3-6虚拟存储器.html)
-- [4-0指令系统1](计算机基础/计算机组成原理/4-0指令系统1.html)
-- [4-0指令系统2](计算机基础/计算机组成原理/4-0指令系统2.html)
-- [4-1指令系统基础](计算机基础/计算机组成原理/4-1指令系统基础.html)
-- [4-2指令的寻址方式](计算机基础/计算机组成原理/4-2指令的寻址方式.html)
-- [4-3程序的机器级代码表](计算机基础/计算机组成原理/4-3程序的机器级代码表.html)
-- [4-4CISC和RISC的基本概念](计算机基础/计算机组成原理/4-4CISC和RISC的基本概念.html)
-- [5-0中央处理器1](计算机基础/计算机组成原理/5-0中央处理器1.html)
-- [5-0中央处理器2](计算机基础/计算机组成原理/5-0中央处理器2.html)
-- [5-1CPU的功能和基本结构](计算机基础/计算机组成原理/5-1CPU的功能和基本结构.html)
-- [5-2指令执行过程](计算机基础/计算机组成原理/5-2指令执行过程.html)
-- [5-3数据通路的功能和基本结构](计算机基础/计算机组成原理/5-3数据通路的功能和基本结构.html)
-- [5-4控制器的功能和工作原理](计算机基础/计算机组成原理/5-4控制器的功能和工作原理.html)
-- [5-5异常和中断](计算机基础/计算机组成原理/5-5异常和中断.html)
-- [5-6指令流水线](计算机基础/计算机组成原理/5-6指令流水线.html)
-- [5-7多处理器的基本概念](计算机基础/计算机组成原理/5-7多处理器的基本概念.html)
-- [6-0总线](计算机基础/计算机组成原理/6-0总线.html)
-- [6-1总线概述](计算机基础/计算机组成原理/6-1总线概述.html)
-- [6-2总线事务和定时](计算机基础/计算机组成原理/6-2总线事务和定时.html)
-- [7-0输入输出系统](计算机基础/计算机组成原理/7-0输入输出系统.html)
-- [7-1IO系统基础概念](计算机基础/计算机组成原理/7-1IO系统基础概念.html)
-- [7-2IO接口](计算机基础/计算机组成原理/7-2IO接口.html)
-- [7-3IO方式](计算机基础/计算机组成原理/7-3IO方式.html)
-- [README](计算机基础/计算机组成原理/README.html)
-- [01计算机系统概述](计算机基础/计算机组成原理/题/01计算机系统概述.html)
-- [02数据表示与运算](计算机基础/计算机组成原理/题/02数据表示与运算.html)
-- [03存储系统](计算机基础/计算机组成原理/题/03存储系统.html)
-- [04指令系统](计算机基础/计算机组成原理/题/04指令系统.html)
-- [05指令系统](计算机基础/计算机组成原理/题/05指令系统.html)
-- [06总线](计算机基础/计算机组成原理/题/06总线.html)
-- [07IO系统](计算机基础/计算机组成原理/题/07IO系统.html)
-- [1-0计算机网络体系结构](计算机基础/计算机网络/1-0计算机网络体系结构.html)
-- [1-1网络概述](计算机基础/计算机网络/1-1网络概述.html)
-- [1-2网络体系结构](计算机基础/计算机网络/1-2网络体系结构.html)
-- [1-3网络模型](计算机基础/计算机网络/1-3网络模型.html)
-- [2-0物理层](计算机基础/计算机网络/2-0物理层.html)
-- [2-1通信基础](计算机基础/计算机网络/2-1通信基础.html)
-- [2-2传输介质和物理层设备](计算机基础/计算机网络/2-2传输介质和物理层设备.html)
-- [3-0数据链路层](计算机基础/计算机网络/3-0数据链路层.html)
-- [3-1数据链路层的功能](计算机基础/计算机网络/3-1数据链路层的功能.html)
-- [3-2介质访问控制](计算机基础/计算机网络/3-2介质访问控制.html)
-- [3-3局域网](计算机基础/计算机网络/3-3局域网.html)
-- [3-4广域网与数据链路层设备](计算机基础/计算机网络/3-4广域网与数据链路层设备.html)
-- [4-0网络层](计算机基础/计算机网络/4-0网络层.html)
-- [4-1网络层的功能](计算机基础/计算机网络/4-1网络层的功能.html)
-- [4-2IPv4](计算机基础/计算机网络/4-2IPv4.html)
-- [4-3IPv6](计算机基础/计算机网络/4-3IPv6.html)
-- [4-4路由算法和路由协议](计算机基础/计算机网络/4-4路由算法和路由协议.html)
-- [4-5IP多播](计算机基础/计算机网络/4-5IP多播.html)
-- [4-6移动IP](计算机基础/计算机网络/4-6移动IP.html)
-- [4-7网络层设备](计算机基础/计算机网络/4-7网络层设备.html)
-- [5-0传输层](计算机基础/计算机网络/5-0传输层.html)
-- [5-1传输层提供的服务](计算机基础/计算机网络/5-1传输层提供的服务.html)
-- [5-2UDP](计算机基础/计算机网络/5-2UDP.html)
-- [5-3TCP](计算机基础/计算机网络/5-3TCP.html)
-- [6-0应用层](计算机基础/计算机网络/6-0应用层.html)
-- [6-1网络应用模型](计算机基础/计算机网络/6-1网络应用模型.html)
-- [6-2域名系统](计算机基础/计算机网络/6-2域名系统.html)
-- [6-3应用层协议](计算机基础/计算机网络/6-3应用层协议.html)
-- [README](计算机基础/计算机网络/README.html)
-- [Socket编程](计算机基础/计算机网络/Socket编程.html)
-- [01计算机网络体系结构](计算机基础/计算机网络/例题/01计算机网络体系结构.html)
-- [02物理层](计算机基础/计算机网络/例题/02物理层.html)
-- [03数据链路层](计算机基础/计算机网络/例题/03数据链路层.html)
-- [04网络层](计算机基础/计算机网络/例题/04网络层.html)
-- [05传输层](计算机基础/计算机网络/例题/05传输层.html)
-- [计算机网络重点](计算机基础/计算机网络/计算机网络重点.html)
-- [README](计算机基础/设计模式/README.html)
-- [单例模式](计算机基础/设计模式/单例模式.html)
-- [面向对象](计算机基础/设计模式/面向对象.html)
-- [README](计算机基础/软件工程/README.html)
-
-## 📄 其他
-
-- [Plan](Plan.html)
-- [README](README.html)
-
+</div>

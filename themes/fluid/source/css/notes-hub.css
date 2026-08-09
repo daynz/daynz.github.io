@@ -1,0 +1,220 @@
+/* ============================================================
+   笔记页定制样式（索引卡片 + 详情面包屑）
+   颜色全部使用 Fluid 主题 CSS 变量，自动适配深/浅色模式
+   ============================================================ */
+
+/* ---------- 索引页：顶部标题 ---------- */
+.notes-hub-header {
+  text-align: center;
+  margin: 0 0 28px;
+}
+
+.notes-hub-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--post-heading-color);
+}
+
+.notes-hub-subtitle {
+  color: var(--sec-text-color);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.notes-hub-subtitle strong {
+  color: var(--link-hover-color);
+  font-weight: 600;
+}
+
+/* ---------- 索引页：分类导航 ---------- */
+.notes-hub-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.notes-nav-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 24px;
+  background: var(--link-hover-bg-color);
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.notes-nav-chip:hover {
+  background: var(--link-hover-color);
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notes-nav-count {
+  background: var(--button-bg-color);
+  color: var(--sec-text-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 1px 8px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.notes-nav-chip:hover .notes-nav-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* ---------- 索引页：分类卡片 ---------- */
+.notes-category {
+  background: var(--board-bg-color);
+  border: 1px solid var(--line-color);
+  border-radius: 12px;
+  padding: 18px 22px 22px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.25s ease;
+}
+
+.notes-category:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.notes-category-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--line-color);
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.notes-cat-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.notes-cat-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--post-heading-color);
+}
+
+.notes-cat-count {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--sec-text-color);
+  background: var(--link-hover-bg-color);
+  padding: 3px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* ---------- 索引页：笔记链接 chips ---------- */
+.notes-cat-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.note-chip {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 18px;
+  background: var(--link-hover-bg-color);
+  color: var(--text-color);
+  font-size: 0.85rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.note-chip:hover {
+  background: var(--link-hover-color);
+  color: #fff;
+  text-decoration: none;
+  border-color: var(--link-hover-color);
+  transform: translateY(-1px);
+}
+
+/* ---------- 详情页：面包屑 ---------- */
+.notes-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  padding: 10px 16px;
+  margin: 0 0 20px;
+  background: var(--link-hover-bg-color);
+  border-radius: 8px;
+  border: 1px solid var(--line-color);
+}
+
+.notes-breadcrumb-home {
+  color: var(--link-hover-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.notes-breadcrumb-home:hover {
+  text-decoration: underline;
+}
+
+.notes-breadcrumb-sep {
+  color: var(--sec-text-color);
+}
+
+.notes-breadcrumb-crumb {
+  color: var(--sec-text-color);
+}
+
+.notes-breadcrumb-current {
+  color: var(--post-heading-color);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 详情页：正文微调 ---------- */
+.notes-detail .markdown-body {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.notes-detail .markdown-body h1 {
+  margin-top: 0;
+}
+
+/* ---------- 移动端：隐藏 TOC 侧栏、面包屑留白 ---------- */
+@media (max-width: 991.98px) {
+  .notes-breadcrumb {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .notes-category {
+    padding: 14px 16px 18px;
+  }
+
+  .notes-cat-body {
+    max-height: 340px;
+  }
+}
