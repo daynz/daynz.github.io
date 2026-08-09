@@ -122,6 +122,15 @@ plantuml:
   outputFormat: "svg"
   className: "plantuml"
 
+# HTML 压缩 (hexo-html-minifier)
+# conservativeCollapse 保留行内元素之间的单个空格，避免图标/文字粘连
+html_minifier:
+  collapseWhitespace: true
+  conservativeCollapse: true
+  removeComments: true
+  minifyJS: false
+  minifyCSS: false
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 ## 部署到 daynz.github.io 仓库的 main 分支（GitHub Pages 从该分支发布）
