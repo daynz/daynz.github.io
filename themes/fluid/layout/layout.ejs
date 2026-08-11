@@ -14,7 +14,8 @@ var colorSchema = theme.dark_mode && theme.dark_mode.enable && theme.dark_mode.d
   </header>
 
   <main>
-    <% if(is_post() || page.layout === '404') { %>
+    <% var isNoteDetail = page.path.indexOf('notes/') === 0 && page.path !== 'notes/index.html' %>
+    <% if(is_post() || page.layout === '404' || isNoteDetail) { %>
       <%- body %>
     <% } else { %>
       <div class="container nopadding-x-md">

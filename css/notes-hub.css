@@ -218,3 +218,20 @@
     max-height: 340px;
   }
 }
+
+/* ---------- 详情页：加宽正文 + 覆盖 post-content 10% 内边距 ---------- */
+/* 突破 Bootstrap .container 在 xl 断点的 1140px 上限（notes-hub.css 最后加载，同特异性源顺序胜出） */
+@media (min-width: 1200px) {
+  .notes-container {
+    max-width: 1280px;
+  }
+}
+
+/* 桌面端覆盖 .post-content 的 padding 10%（特异性 0,2,0 高于主题的 0,1,0）；
+   仅限 ≥768px，让移动端的 2rem/1rem 主题值继续生效 */
+@media (min-width: 768px) {
+  .notes-detail.post-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
