@@ -235,3 +235,109 @@
     padding-right: 2rem;
   }
 }
+
+/* ---------- 索引页：目录树（分类 → 子目录 → 笔记） ---------- */
+.notes-tree {
+  margin: 0 0 28px;
+  padding: 16px 20px 18px;
+  background: var(--board-bg-color);
+  border: 1px solid var(--line-color);
+  border-radius: 12px;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.notes-tree-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--post-heading-color);
+}
+
+.notes-tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.2em;
+  border-left: 1px dashed var(--line-color);
+}
+
+.notes-tree > ul {
+  padding-left: 0;
+  border-left: none;
+}
+
+.notes-tree li {
+  margin: 2px 0;
+  line-height: 1.7;
+}
+
+.notes-tree details > summary {
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--text-color);
+  font-weight: 500;
+  user-select: none;
+  list-style: none;
+}
+
+.notes-tree details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* 用 ▸/▾ 模拟折叠箭头 */
+.notes-tree details > summary::before {
+  content: '▸';
+  display: inline-block;
+  width: 1em;
+  color: var(--sec-text-color);
+  transition: transform 0.2s ease;
+}
+
+.notes-tree details[open] > summary::before {
+  content: '▾';
+}
+
+.notes-tree details > summary:hover {
+  background: var(--link-hover-bg-color);
+  color: var(--link-hover-color);
+}
+
+.notes-tree a {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 4px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.notes-tree a:hover {
+  background: var(--link-hover-bg-color);
+  color: var(--link-hover-color);
+  text-decoration: none;
+}
+
+.tree-count {
+  font-size: 0.72rem;
+  color: var(--sec-text-color);
+  margin-left: 6px;
+  background: var(--link-hover-bg-color);
+  padding: 0 6px;
+  border-radius: 8px;
+}
+
+/* ---------- 详情页正文：亮色模式下用纯黑，暗色恢复主题文字色 ---------- */
+.markdown-body {
+  color: #000;
+}
+
+[data-user-color-scheme="dark"] .markdown-body {
+  color: var(--text-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) .markdown-body {
+    color: var(--text-color);
+  }
+}

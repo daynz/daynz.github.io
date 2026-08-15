@@ -7,71 +7,40 @@ description: 管理 daynz 的 Hexo 博客（daynz.github.io）。当用户要求
 
 管理 daynz 的 Hexo 博客仓库 `D:\Web\daynz.github.io`。
 
-## 仓库背景
+本技能采用**渐进式读取**：本文件只含概览与任务路由，细节按需读取 `references/` 子文件。
 
-- **单分支结构**：只有 `main`，同时包含 Hexo 源码和生成的静态站点
-  - 源码：`source/`、`_config.yml`、`_config.fluid.yml`、`package.json`
-  - 静态站：`index.html`、`notes/`、`css/`、`js/`（GitHub Pages 从 `main` 根目录发布）
-- `.nojekyll` 已在仓库根（关闭 Jekyll，否则源码 md 会 404）
-- 技术栈：主题 **Fluid**（`_config.fluid.yml`）、渲染器 **markdown-it + KaTeX**、支持 **mermaid / plantuml** / 代码高亮
+## 铁律（违反会损坏仓库，务必遵守）
 
-## 关键规则（务必遵守）
-
-1. **禁止 `hexo d`**：它会 force push 覆盖 `main` 为纯静态站、删掉全部源码。**部署一律用 `bash deploy.sh`**
+1. **禁止 `hexo d`**：它会 force push 覆盖 `main` 为纯静态站、删掉全部源码。部署一律用 `bash deploy.sh`
 2. 任何操作前确认在 `main` 分支：`git branch --show-current`
 3. 笔记源 `D:\Study\Notes\Notes` 是独立 git 仓库，**只复制、绝不修改原文件**
+4. **勿改** `node_modules/hexo-theme-fluid/` 里的主题源文件，主题配置只改 `_config.fluid.yml`
+5. 不要删除 `package.json` 里的 `overrides: {"strip-ansi": "6.0.1"}`（修复 hexo 8 的依赖 bug）
 
-## 操作流程
+## 任务路由（按需读取）
 
-### 1. 写新博客文章
+| 想做什么 | 先读 |
+|---|---|
+| 部署 / 本地预览 | `references/deploy.md` |
+| 了解仓库 / 网页结构 | `references/structure.md` |
+| 写文章 / 导入或更新学习笔记 | `references/write.md` |
+| 构建 / 部署报错 | `references/troubleshoot.md` |
 
-```bash
-cd /d/Web/daynz.github.io
-hexo new "文章标题"            # 生成 source/_posts/标题.md
-# 编辑文章，支持：
-#   公式   $..$  /  $$..$$（$$ 内不能有空行）
-#   流程图 ```mermaid
-#   UML    ```plantuml（必须含 @startuml/@enduml）
-#   代码块 ```语言名（自动高亮）
-bash deploy.sh                # 部署
-```
-
-### 2. 导入 / 更新学习笔记
+## 常用命令速查
 
 ```bash
 cd /d/Web/daynz.github.io
-# 复制笔记（md + 图片）到 source/notes/，保持目录结构
-bash .claude/skills/blog-ops/scripts/import-notes.sh "D:/Study/Notes/Notes"
-# 若 hexo g 报 YAMLException（含独立 --- 行的 md 被 hexo 误判为 front-matter），运行修复：
-bash .claude/skills/blog-ops/scripts/fix-front-matter.sh
-bash deploy.sh
+hexo new "标题"        # 新建文章 → source/_posts/标题.md
+bash deploy.sh         # 一键部署（hexo clean && hexo g → 同步到根 → commit → push）
+hexo server --port 4000  # 本地预览 → http://localhost:4000
 ```
 
-### 3. 本地预览
+## 辅助脚本（`scripts/`）
 
-```bash
-cd /d/Web/daynz.github.io && hexo server --port 4000
-# 访问 http://localhost:4000 ，记得用完后停掉进程
-```
-
-### 4. 部署
-
-```bash
-cd /d/Web/daynz.github.io && bash deploy.sh
-# deploy.sh 自动执行：hexo clean && hexo g → 同步 public 到仓库根（保留源码）→ commit → push
-```
-
-### 5. 修改主题 / 配置
-
-- 主题配置改 `_config.fluid.yml`（**勿改** `node_modules/hexo-theme-fluid/` 里的源文件）
-- 站点配置改 `_config.yml`
-- 修改后必须 `hexo g` 验证无报错，再 `bash deploy.sh`
-
-## 已知坑与注意事项
-
-- **strip-ansi bug**：hexo 8.1.2 依赖 ESM 版 strip-ansi 却用 `require()`，`package.json` 的 `overrides: {"strip-ansi": "6.0.1"}` 是必要修复，**不要删除**
-- **front-matter 误判**：hexo-front-matter 会把「不以 `---` 开头但中间含独立 `---` 行」的 md 当 YAML 解析报错 → 用 `fix-front-matter.sh` 插入标准 front-matter
-- **plantuml**：在线渲染（plantuml.com），`hexo g` 需联网；国内慢/失败可换自托管 server 或 `render: Local`（需 Java）
-- **公式**：`$$` 内不能有空行；`$` 后不能直接跟空格
-- 笔记中文路径的 URL 访问需要编码（浏览器自动处理）；图片/相对链接保持原结构
-- 部署前先 `git status` 确认工作区无未预期的改动（`.deploy_git/`、`node_modules/`、`public/` 已被 gitignore）
+| 脚本 | 用途 |
+|---|---|
+| `import-notes.sh` | 导入笔记源：md → `_posts/notes/`（post），图片 → `source/notes/`（静态资源） |
+| `add-note-frontmatter.js` | 给 `_posts/notes/` 下 md 批量写 `permalink: /notes/…` + `tags`（导入后必跑） |
+| `fix-front-matter.sh` | 修复 hexo 把 md 误判为 YAML 的报错 |
+| `transform-index.js` | 扫描 `_posts/notes/` **重新生成**卡片式索引 `source/notes/index.md`（推荐） |
+| `generate-notes-index.sh` | 旧版简单列表索引（已被 `transform-index.js` 取代，仅作回退） |

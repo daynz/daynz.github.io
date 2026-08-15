@@ -7,8 +7,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const NOTES_DIR = path.resolve(__dirname, '../../../../source/notes');
-const OUT_FILE = path.join(NOTES_DIR, 'index.md');
+// 笔记源在 _posts/notes/（作为 post 进入归档/标签），索引页输出到 source/notes/index.md（独立页面）
+const NOTES_DIR = path.resolve(__dirname, '../../../../source/_posts/notes');
+const OUT_FILE = path.resolve(__dirname, '../../../../source/notes/index.md');
 
 // 分类图标
 const ICONS = {
@@ -46,6 +47,66 @@ function linkLabel(relPath) {
     return parts.length > 1 ? parts[parts.length - 2] : 'README';
   }
   return name;
+}
+
+// ===== 树形目录结构生成（分类 → 子目录 → 笔记） =====
+// 递归构建目录树：目录节点(type:dir) + 笔记节点(type:file)
+function buildTree(dir, base = '') {
+  const items = fs.readdirSync(dir, { withFileTypes: true });
+  const children = [];
+  for (const item of items) {
+    if (item.name.startsWith('.') || item.name === 'index.md') continue;
+    const abs = path.join(dir, item.name);
+    const rel = base ? `${base}/${item.name}` : item.name;
+    if (item.isDirectory()) {
+      // 跳过空目录（如删除图片后残留的 assets/）
+      const kids = buildTree(abs, rel);
+      if (kids.length) children.push({ type: 'dir', name: item.name, path: rel, children: kids });
+    } else if (item.name.endsWith('.md')) {
+      children.push({ type: 'file', name: item.name, path: rel, label: linkLabel(rel), href: `/notes/${rel.replace(/\.md$/, '.html')}` });
+    }
+  }
+  // 目录在前、文件在后，各自按中文排序
+  children.sort((a, b) => {
+    if (a.type === b.type) return a.name.localeCompare(b.name, 'zh-CN');
+    return a.type === 'dir' ? -1 : 1;
+  });
+  return children;
+}
+
+// 统计节点下笔记总数
+function countMd(node) {
+  return node.type === 'file' ? 1 : node.children.reduce((s, c) => s + countMd(c), 0);
+}
+
+// 递归渲染树形 HTML：顶层分类默认展开，子目录默认折叠
+function renderTree(children, depth = 0) {
+  let html = '<ul>';
+  for (const c of children) {
+    if (c.type === 'dir') {
+      const open = depth === 0 ? ' open' : '';
+      html += `<li><details${open}><summary>${ICONS[c.name] || ICONS.default} ${c.name}<span class="tree-count">${countMd(c)}</span></summary>${renderTree(c.children, depth + 1)}</details></li>`;
+    } else {
+      html += `<li><a href="${c.href}" title="${c.path.replace(/\.md$/, '')}">${c.label}</a></li>`;
+    }
+  }
+  return html + '</ul>';
+}
+
+// 构建顶层树：顶层目录 → 分类；根级 md → 「其他」
+const treeRoot = [];
+const miscFiles = [];
+for (const entry of fs.readdirSync(NOTES_DIR, { withFileTypes: true })) {
+  if (entry.name.startsWith('.') || entry.name === 'index.md') continue;
+  if (entry.isDirectory()) {
+    treeRoot.push({ type: 'dir', name: entry.name, path: entry.name, children: buildTree(path.join(NOTES_DIR, entry.name), entry.name) });
+  } else if (entry.name.endsWith('.md')) {
+    miscFiles.push({ type: 'file', name: entry.name, path: entry.name, label: linkLabel(entry.name), href: `/notes/${entry.name.replace(/\.md$/, '.html')}` });
+  }
+}
+treeRoot.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+if (miscFiles.length) {
+  treeRoot.push({ type: 'dir', name: '其他', path: '', children: miscFiles });
 }
 
 // 收集分类
@@ -87,6 +148,11 @@ categories.forEach((c, idx) => {
 });
 parts.push('  </nav>');
 parts.push('');
+parts.push('  <section class="notes-tree">');
+parts.push('    <h2 class="notes-tree-title">📂 笔记目录树</h2>');
+parts.push(`    ${renderTree(treeRoot, 0)}`);
+parts.push('  </section>');
+parts.push('');
 
 categories.forEach((c, idx) => {
   parts.push(`  <section class="notes-category" id="notes-${idx}">`);
@@ -97,7 +163,8 @@ categories.forEach((c, idx) => {
   parts.push(`    </div>`);
   parts.push(`    <div class="notes-cat-body">`);
   for (const rel of c.notes.sort((a, b) => a.localeCompare(b, 'zh-CN'))) {
-    const href = rel.replace(/\.md$/, '.html');
+    // 笔记 post 的 permalink 固定为 /notes/<路径>.html，索引用绝对路径链接
+    const href = `/notes/${rel.replace(/\.md$/, '.html')}`;
     const label = linkLabel(rel);
     parts.push(`      <a class="note-chip" href="${href}" title="${rel.replace(/\.md$/, '')}">${label}</a>`);
   }
